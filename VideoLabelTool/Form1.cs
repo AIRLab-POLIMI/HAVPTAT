@@ -21,15 +21,18 @@ namespace VideoLabelTool
     {
         double TotalFrame;
         int Fps;
-        int FrameNo;
+        int currentFrameNum;
         bool IsReadingFrame;
         VideoCapture capture;        
         Timer My_Timer = new Timer();
-        int count = 0;
+        int count = 0;        
+        OpenFileDialog ofd;
+                
 
         public FormFrameCapture()
         {
             InitializeComponent();
+            this.button2.Enabled = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,7 +42,7 @@ namespace VideoLabelTool
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 capture = new VideoCapture(ofd.FileName);                
@@ -49,7 +52,9 @@ namespace VideoLabelTool
                 pictureBox1.Image = m.ToBitmap();
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
-                Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);                 
+                Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
+
+                this.button2.Enabled = true;
             }
         }                
 
@@ -72,13 +77,15 @@ namespace VideoLabelTool
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
-            if (count <= TotalFrame)
+            if (currentFrameNum < TotalFrame-1)
             {
+                if (currentFrameNum != 0)
+                    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum + 1);
+                else
+                    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
-                FrameNo += Convert.ToInt16(numericUpDown1.Value);
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, FrameNo);
-                label1.Text = FrameNo.ToString() + '/' + TotalFrame.ToString();
-                count++;
+                currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
+                label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();               
             }
 
             else
@@ -88,26 +95,44 @@ namespace VideoLabelTool
             }
         }
 
-        private async void ReadAllFrames()
+        private void bntNextFrame_Click(object sender, EventArgs e)
         {
-            Mat m = new Mat();
-            while (IsReadingFrame == true && FrameNo < TotalFrame)
-            {
-                FrameNo += Convert.ToInt16(numericUpDown1.Value);
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, FrameNo);
-                capture.Read(m);
-                pictureBox1.Image = m.ToBitmap();
-                await Task.Delay(1000 / Convert.ToInt16(Fps));
-                //await Task.Delay(1);
-                label1.Text = FrameNo.ToString() + '/' + TotalFrame.ToString(); 
+            if (currentFrameNum < TotalFrame && currentFrameNum != TotalFrame - 1)
+            {                
+                currentFrameNum = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);                
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+                pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                
+                label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();                
             }
+
+            else
+            {
+                this.button2.Enabled = false;
+            }
+           
         }
+
+        //private async void ReadAllFrames()
+        //{
+        //    Mat m = new Mat();
+        //    while (IsReadingFrame == true && currentFrameNum < TotalFrame)
+        //    {
+        //        currentFrameNum += Convert.ToInt16(numericUpDown1.Value);
+        //        capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+        //        capture.Read(m);
+        //        pictureBox1.Image = m.ToBitmap();
+        //        await Task.Delay(1000 / Convert.ToInt16(Fps));
+        //        //await Task.Delay(1);
+        //        label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString(); 
+        //    }
+        //}
 
         private void bntPause_Click(object sender, EventArgs e)
         {
             IsReadingFrame = false;
             My_Timer.Stop();
-        }
-  
+        }        
+        
     }
 }
