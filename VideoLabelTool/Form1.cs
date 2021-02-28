@@ -25,14 +25,16 @@ namespace VideoLabelTool
         bool IsReadingFrame;
         VideoCapture capture;        
         Timer My_Timer = new Timer();
-        int count = 0;        
+        int count = 0;
+        int status = 0;
         OpenFileDialog ofd;
                 
 
         public FormFrameCapture()
         {
             InitializeComponent();
-            this.button2.Enabled = false;
+            this.bntNextFrame.Enabled = false;
+            this.bntPrevFrame.Enabled = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -54,11 +56,16 @@ namespace VideoLabelTool
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
 
-                this.button2.Enabled = true;
+                this.bntNextFrame.Enabled = true;
             }
         }                
 
         private void bntPlay_Click(object sender, EventArgs e)
+        {
+            Play();
+        }
+
+        private void Play()
         {
             if (capture == null)
             {
@@ -66,23 +73,23 @@ namespace VideoLabelTool
             }
             IsReadingFrame = true;
             My_Timer.Interval = 1000 / Fps;
-                       
             My_Timer.Tick += new EventHandler(My_Timer_Tick);
-            
             My_Timer.Start();
-
-            // Playback video with delay version
-            //ReadAllFrames();
-        }
+            this.bntPrevFrame.Enabled = true;
+            status = 1;            
+        }   
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
-            if (currentFrameNum < TotalFrame-1)
+            if (currentFrameNum < TotalFrame)
             {
-                if (currentFrameNum != 0)
-                    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum + 1);
-                else
-                    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+                //if (currentFrameNum != 0)
+                //    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum + 1);
+                //else
+                //    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+                
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);                
+
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
                 currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();               
@@ -92,25 +99,65 @@ namespace VideoLabelTool
             {
                 My_Timer.Stop();
                 capture.Dispose();
+                status = 0;
+
+                this.bntNextFrame.Enabled = false;
+                this.bntPrevFrame.Enabled = false;
             }
         }
 
         private void bntNextFrame_Click(object sender, EventArgs e)
         {
-            if (currentFrameNum < TotalFrame && currentFrameNum != TotalFrame - 1)
-            {                
-                currentFrameNum = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);                
+            NextFrame();              
+        }
+
+        private void NextFrame()
+        {
+            if (currentFrameNum < TotalFrame - 1)
+            {
+                currentFrameNum = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
-                
-                label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();                
+
+                label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
             }
 
             else
             {
-                this.button2.Enabled = false;
+                this.bntNextFrame.Enabled = false;
             }
-           
+
+            this.bntPrevFrame.Enabled = true;
+            status = 0;
+        }
+
+        private void bntPrevFrame_Click(object sender, EventArgs e)
+        {
+            PreviousFrame();
+        }
+
+        private void PreviousFrame()
+        {
+            if (currentFrameNum != 1 && currentFrameNum <= TotalFrame - 1)
+            {
+                currentFrameNum = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum - 2);
+                pictureBox1.Image = capture.QueryFrame().ToBitmap();
+
+                label1.Text = (currentFrameNum - 2).ToString() + '/' + TotalFrame.ToString();
+                currentFrameNum = currentFrameNum - 2;
+
+                if (currentFrameNum == TotalFrame - 2)
+                    this.bntNextFrame.Enabled = true;
+            }          
+
+            else if (currentFrameNum == 1 || currentFrameNum == TotalFrame)
+            {
+
+                this.bntPrevFrame.Enabled = false;
+            }
+
+            status = 0;
         }
 
         //private async void ReadAllFrames()
@@ -130,9 +177,42 @@ namespace VideoLabelTool
 
         private void bntPause_Click(object sender, EventArgs e)
         {
+            Pause();
+        }
+
+        private void Pause()
+        {
             IsReadingFrame = false;
             My_Timer.Stop();
+            status = 0;
         }        
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Right))
+            {
+                NextFrame();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Left))
+            {
+                PreviousFrame();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Space))
+            {                                
+                if (status == 0)
+                    Play();
+                else
+                    Pause();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         
     }
 }

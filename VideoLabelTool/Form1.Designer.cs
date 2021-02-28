@@ -33,12 +33,13 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.bntNextFrame = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bntPrevFrame = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -82,11 +83,12 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.bntPrevFrame);
+            this.splitContainer1.Panel1.Controls.Add(this.bntNextFrame);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel1.Controls.Add(this.bntPause);
-            this.splitContainer1.Panel1.Controls.Add(this.button1);            
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
             // 
             // splitContainer1.Panel2
             // 
@@ -95,6 +97,16 @@ namespace VideoLabelTool
             this.splitContainer1.SplitterDistance = 86;
             this.splitContainer1.TabIndex = 1;
             // 
+            // bntNextFrame
+            // 
+            this.bntNextFrame.Location = new System.Drawing.Point(355, 53);
+            this.bntNextFrame.Name = "bntNextFrame";
+            this.bntNextFrame.Size = new System.Drawing.Size(75, 23);
+            this.bntNextFrame.TabIndex = 4;
+            this.bntNextFrame.Text = "Next F.";
+            this.bntNextFrame.UseVisualStyleBackColor = true;
+            this.bntNextFrame.Click += new System.EventHandler(this.bntNextFrame_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -102,7 +114,7 @@ namespace VideoLabelTool
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 12);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Current Frame";            
+            this.label1.Text = "Current Frame";
             // 
             // numericUpDown1
             // 
@@ -123,7 +135,7 @@ namespace VideoLabelTool
             // 
             // bntPause
             // 
-            this.bntPause.Location = new System.Drawing.Point(439, 31);
+            this.bntPause.Location = new System.Drawing.Point(355, 8);
             this.bntPause.Name = "bntPause";
             this.bntPause.Size = new System.Drawing.Size(75, 23);
             this.bntPause.TabIndex = 1;
@@ -133,7 +145,7 @@ namespace VideoLabelTool
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(324, 31);
+            this.button1.Location = new System.Drawing.Point(250, 8);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -150,15 +162,15 @@ namespace VideoLabelTool
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // button2
+            // bntPrevFrame
             // 
-            this.button2.Location = new System.Drawing.Point(214, 32);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Next Frame";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.bntNextFrame_Click);
+            this.bntPrevFrame.Location = new System.Drawing.Point(241, 53);
+            this.bntPrevFrame.Name = "bntPrevFrame";
+            this.bntPrevFrame.Size = new System.Drawing.Size(84, 23);
+            this.bntPrevFrame.TabIndex = 5;
+            this.bntPrevFrame.Text = "Previous F.";
+            this.bntPrevFrame.UseVisualStyleBackColor = true;
+            this.bntPrevFrame.Click += new System.EventHandler(this.bntPrevFrame_Click);
             // 
             // FormFrameCapture
             // 
@@ -196,7 +208,8 @@ namespace VideoLabelTool
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bntNextFrame;
+        private System.Windows.Forms.Button bntPrevFrame;
     }
 }
 
