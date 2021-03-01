@@ -24,7 +24,8 @@ namespace VideoLabelTool
         VideoCapture capture;        
         Timer My_Timer = new Timer();  
         int status = 0;
-        OpenFileDialog ofd;        
+        OpenFileDialog ofd;
+        string[] lines;
 
         public FormFrameCapture()
         {
@@ -193,19 +194,36 @@ namespace VideoLabelTool
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
+            int currentFrameNum = 1, personID = 0;
+            List<List<string>> lineByFramePersonID = new List<List<string>>();
+            lineByFramePersonID.Add(new List<string>());
+
             if (ofd.ShowDialog() == DialogResult.OK)
             {                
-                string[] lines = System.IO.File.ReadAllLines(@ofd.FileName);
+                lines = System.IO.File.ReadAllLines(@ofd.FileName);
 
                 // Display the file contents by using a foreach loop.
                 // System.Console.WriteLine("Contents of WriteLines2.txt = ");
                 foreach (string line in lines)
                 {
-                    // TODO
-                    Console.WriteLine("\t" + line);
-                }
-                
+                    if (line[0].ToString() == (currentFrameNum).ToString())
+                        lineByFramePersonID[currentFrameNum - 1].Add(line);
+                    else
+                    {
+                        currentFrameNum++;
+                        lineByFramePersonID.Add(new List<string>());
+                        lineByFramePersonID[currentFrameNum - 1].Add(line);
+                    }
+                        
+                }                
             }
+        }
+
+        private void LoadCurrentFrameROI()
+        {
+
         }
     }
 }
+
+
