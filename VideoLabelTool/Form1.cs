@@ -21,11 +21,9 @@ namespace VideoLabelTool
     {
         double TotalFrame;
         int Fps;
-        int currentFrameNum;
-        bool IsReadingFrame;
+        int currentFrameNum;        
         VideoCapture capture;        
-        Timer My_Timer = new Timer();
-        int count = 0;
+        Timer My_Timer = new Timer();        
         int status = 0;
         OpenFileDialog ofd;
                 
@@ -70,8 +68,7 @@ namespace VideoLabelTool
             if (capture == null)
             {
                 return;
-            }
-            IsReadingFrame = true;
+            }            
             My_Timer.Interval = 1000 / Fps;
             My_Timer.Tick += new EventHandler(My_Timer_Tick);
             My_Timer.Start();
@@ -82,12 +79,7 @@ namespace VideoLabelTool
         private void My_Timer_Tick(object sender, EventArgs e)
         {
             if (currentFrameNum < TotalFrame)
-            {
-                //if (currentFrameNum != 0)
-                //    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum + 1);
-                //else
-                //    capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-                
+            {                                
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);                
 
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
@@ -97,12 +89,8 @@ namespace VideoLabelTool
 
             else
             {
-                My_Timer.Stop();
-                capture.Dispose();
-                status = 0;
-
-                this.bntNextFrame.Enabled = false;
-                this.bntPrevFrame.Enabled = false;
+                My_Timer.Stop();             
+                status = 0;                
             }
         }
 
@@ -113,18 +101,18 @@ namespace VideoLabelTool
 
         private void NextFrame()
         {
-            if (currentFrameNum < TotalFrame - 1)
-            {
-                currentFrameNum = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);
+            if (currentFrameNum < TotalFrame)
+            {                
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                currentFrameNum += 1;
 
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
             }
 
             else
-            {
-                this.bntNextFrame.Enabled = false;
+            {             
+                return;
             }
 
             this.bntPrevFrame.Enabled = true;
@@ -138,42 +126,17 @@ namespace VideoLabelTool
 
         private void PreviousFrame()
         {
-            if (currentFrameNum != 1 && currentFrameNum <= TotalFrame - 1)
-            {
-                currentFrameNum = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum - 2);
+            if (currentFrameNum > 1 && currentFrameNum <= TotalFrame)
+            {                
+                currentFrameNum -= 1;
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                
 
-                label1.Text = (currentFrameNum - 2).ToString() + '/' + TotalFrame.ToString();
-                currentFrameNum = currentFrameNum - 2;
-
-                if (currentFrameNum == TotalFrame - 2)
-                    this.bntNextFrame.Enabled = true;
-            }          
-
-            else if (currentFrameNum == 1 || currentFrameNum == TotalFrame)
-            {
-
-                this.bntPrevFrame.Enabled = false;
-            }
-
+                label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
+            }            
             status = 0;
-        }
-
-        //private async void ReadAllFrames()
-        //{
-        //    Mat m = new Mat();
-        //    while (IsReadingFrame == true && currentFrameNum < TotalFrame)
-        //    {
-        //        currentFrameNum += Convert.ToInt16(numericUpDown1.Value);
-        //        capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-        //        capture.Read(m);
-        //        pictureBox1.Image = m.ToBitmap();
-        //        await Task.Delay(1000 / Convert.ToInt16(Fps));
-        //        //await Task.Delay(1);
-        //        label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString(); 
-        //    }
-        //}
+        }        
 
         private void bntPause_Click(object sender, EventArgs e)
         {
@@ -181,8 +144,7 @@ namespace VideoLabelTool
         }
 
         private void Pause()
-        {
-            IsReadingFrame = false;
+        {            
             My_Timer.Stop();
             status = 0;
         }        
@@ -212,7 +174,6 @@ namespace VideoLabelTool
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
         
     }
 }
