@@ -14,7 +14,6 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.CvEnum;
 
-
 namespace VideoLabelTool
 {
     public partial class FormFrameCapture : Form
@@ -23,28 +22,60 @@ namespace VideoLabelTool
         int Fps;
         int currentFrameNum;        
         VideoCapture capture;        
-        Timer My_Timer = new Timer();        
+        Timer My_Timer = new Timer();  
         int status = 0;
-        OpenFileDialog ofd;
-                
+        OpenFileDialog ofd;        
 
         public FormFrameCapture()
         {
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
             this.bntPrevFrame.Enabled = false;
+            pictureBox1.Paint += new PaintEventHandler(this.plotROI);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+        private async void plotROI(object sender, PaintEventArgs e)
+        {
+            await Task.Delay(1);
+            g = pictureBox1.CreateGraphics();
+            g.DrawRectangle(pen, 10, 10, 100, 100);           
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Right))
+            {
+                NextFrame();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Left))
+            {
+                PreviousFrame();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Space))
+            {
+                if (status == 0)
+                    Play();
+                else
+                    Pause();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
-            {
+            {                
                 capture = new VideoCapture(ofd.FileName);                
                 Mat m = new Mat();
                 capture.Read(m);
@@ -53,6 +84,8 @@ namespace VideoLabelTool
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
+                My_Timer.Interval = 1000 / Fps;
+                My_Timer.Tick += new EventHandler(My_Timer_Tick);
 
                 this.bntNextFrame.Enabled = true;
             }
@@ -69,20 +102,23 @@ namespace VideoLabelTool
             {
                 return;
             }            
-            My_Timer.Interval = 1000 / Fps;
-            My_Timer.Tick += new EventHandler(My_Timer_Tick);
+            
             My_Timer.Start();
             this.bntPrevFrame.Enabled = true;
             status = 1;            
-        }   
+        }
+
+        Pen pen = new Pen(Color.Red);
+        Graphics g;
+        Rectangle rett = new Rectangle(0, 0, 350, 450);
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
             if (currentFrameNum < TotalFrame)
             {                                
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);                
-
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
+
                 currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();               
             }
@@ -92,19 +128,21 @@ namespace VideoLabelTool
                 My_Timer.Stop();             
                 status = 0;                
             }
+                        
         }
+        
 
         private void bntNextFrame_Click(object sender, EventArgs e)
         {
             NextFrame();              
         }
+       
 
         private void NextFrame()
         {
             if (currentFrameNum < TotalFrame)
             {                
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-                pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                pictureBox1.Image = capture.QueryFrame().ToBitmap();                
                 currentFrameNum += 1;
 
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
@@ -147,33 +185,27 @@ namespace VideoLabelTool
         {            
             My_Timer.Stop();
             status = 0;
-        }        
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Control | Keys.Right))
-            {
-                NextFrame();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Left))
-            {
-                PreviousFrame();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Space))
-            {                                
-                if (status == 0)
-                    Play();
-                else
-                    Pause();
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
+            g = pictureBox1.CreateGraphics();
+            g.DrawRectangle(pen, 10, 10, 100, 100);
         }
-        
+
+        private void bntLoadLabels_Click(object sender, EventArgs e)
+        {
+            ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {                
+                string[] lines = System.IO.File.ReadAllLines(@ofd.FileName);
+
+                // Display the file contents by using a foreach loop.
+                // System.Console.WriteLine("Contents of WriteLines2.txt = ");
+                foreach (string line in lines)
+                {
+                    // TODO
+                    Console.WriteLine("\t" + line);
+                }
+                
+            }
+        }
     }
 }
