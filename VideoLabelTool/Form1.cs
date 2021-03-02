@@ -36,23 +36,25 @@ namespace VideoLabelTool
         {
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
-            this.bntPrevFrame.Enabled = false;            
+            this.bntPrevFrame.Enabled = false;
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            int a;
+        {            
             pictureBox1.Paint += new PaintEventHandler(this.plotROI);
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void plotROI(object sender, PaintEventArgs e)
-        {                        
-            if (currentFrameNum == 1)
-                e.Graphics.DrawRectangle(pen, 60, 50, 100, 100);
-            else
-                e.Graphics.DrawRectangle(pen, 0, 0, 100, 100);
-
-            int a = currentFrameNum;
+        {   
+            if (listRec != null)
+            {
+                foreach (Rectangle ret in listRec[currentFrameNum])
+                {
+                    e.Graphics.DrawRectangle(pen, ret);
+                }        
+            }                        
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -89,7 +91,6 @@ namespace VideoLabelTool
                 capture = new VideoCapture(ofd.FileName);                
                 Mat m = new Mat();
                 capture.Read(m);
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox1.Image = m.ToBitmap();
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
@@ -120,9 +121,8 @@ namespace VideoLabelTool
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
-            if (currentFrameNum < TotalFrame)
-            {                                
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+            if (currentFrameNum < TotalFrame-1)
+            {                                                
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
 
                 currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
@@ -146,19 +146,22 @@ namespace VideoLabelTool
 
         private void NextFrame()
         {
-            if (currentFrameNum < TotalFrame)
-            {                
-                pictureBox1.Image = capture.QueryFrame().ToBitmap();                
+            if (currentFrameNum < TotalFrame - 1 && capture != null)
+            {
+                // SetCaptureProperty could slow down, but avoid crash
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+                try
+                {         
+                    pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                }
+                catch(NullReferenceException e)
+                {
+                    throw new NullReferenceException(e.Message);
+                }
                 currentFrameNum += 1;
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
 
-                this.Invalidate();
-                //g = pictureBox1.CreateGraphics();
-                
-                //foreach (Rectangle rec in listRec[currentFrameNum])
-                //{
-                //    g.DrawRectangle(pen, rec);
-                //}
+                this.Invalidate();      
             }
 
             else
@@ -177,12 +180,19 @@ namespace VideoLabelTool
 
         private void PreviousFrame()
         {
-            if (currentFrameNum > 1 && currentFrameNum <= TotalFrame)
+            if (currentFrameNum > 1 && currentFrameNum <= TotalFrame && capture != null)
             {                
                 currentFrameNum -= 1;
+                // SetCaptureProperty could slow down, but avoid crash
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-                pictureBox1.Image = capture.QueryFrame().ToBitmap();
-                
+                try
+                {
+                    pictureBox1.Image = capture.QueryFrame().ToBitmap();
+                }
+                catch (NullReferenceException e)
+                {
+                    throw new NullReferenceException(e.Message);
+                }
 
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
             }            
@@ -198,9 +208,6 @@ namespace VideoLabelTool
         {            
             My_Timer.Stop();
             status = 0;
-
-            //g = pictureBox1.CreateGraphics();
-            //g.DrawRectangle(pen, 10, 10, 100, 100);
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
@@ -229,22 +236,16 @@ namespace VideoLabelTool
                     weight = (int)Convert.ToDouble(words[4]);
                     height = (int)Convert.ToDouble(words[5]);
 
-                    if (line[0].ToString() != (currentFrameNum).ToString())
+                    if (Int32.Parse(words[0]) != currentFrameNum)
                     {
                         currentFrameNum++;
                         lineByFramePersonID.Add(new List<string>());
                         listRec.Add(new List<Rectangle>());
-                    }
-                    
+                    }                    
                     lineByFramePersonID[currentFrameNum - 1].Add(line);
                     listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
                 }                           
             }
-        }
-
-        private void PlotCurrentFrameROI(List<List<string>> lines, int frameNum)
-        {
-            
         }
     }
 }
