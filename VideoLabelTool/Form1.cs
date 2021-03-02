@@ -26,24 +26,33 @@ namespace VideoLabelTool
         int status = 0;
         OpenFileDialog ofd;
         string[] lines;
+        List<List<string>> lineByFramePersonID;
 
+        Pen pen = new Pen(Color.Red);
+        List<List<Rectangle>> listRec;
+        Graphics g;
+        
         public FormFrameCapture()
         {
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
-            this.bntPrevFrame.Enabled = false;
-            pictureBox1.Paint += new PaintEventHandler(this.plotROI);
+            this.bntPrevFrame.Enabled = false;            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            int a;
+            pictureBox1.Paint += new PaintEventHandler(this.plotROI);
         }
-        private async void plotROI(object sender, PaintEventArgs e)
-        {
-            await Task.Delay(1);
-            g = pictureBox1.CreateGraphics();
-            g.DrawRectangle(pen, 10, 10, 100, 100);           
+
+        private void plotROI(object sender, PaintEventArgs e)
+        {                        
+            if (currentFrameNum == 1)
+                e.Graphics.DrawRectangle(pen, 60, 50, 100, 100);
+            else
+                e.Graphics.DrawRectangle(pen, 0, 0, 100, 100);
+
+            int a = currentFrameNum;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -107,11 +116,7 @@ namespace VideoLabelTool
             My_Timer.Start();
             this.bntPrevFrame.Enabled = true;
             status = 1;            
-        }
-
-        Pen pen = new Pen(Color.Red);
-        Graphics g;
-        Rectangle rett = new Rectangle(0, 0, 350, 450);
+        }        
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
@@ -145,8 +150,15 @@ namespace VideoLabelTool
             {                
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();                
                 currentFrameNum += 1;
-
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();
+
+                this.Invalidate();
+                //g = pictureBox1.CreateGraphics();
+                
+                //foreach (Rectangle rec in listRec[currentFrameNum])
+                //{
+                //    g.DrawRectangle(pen, rec);
+                //}
             }
 
             else
@@ -187,41 +199,52 @@ namespace VideoLabelTool
             My_Timer.Stop();
             status = 0;
 
-            g = pictureBox1.CreateGraphics();
-            g.DrawRectangle(pen, 10, 10, 100, 100);
+            //g = pictureBox1.CreateGraphics();
+            //g.DrawRectangle(pen, 10, 10, 100, 100);
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
             int currentFrameNum = 1, personID = 0;
-            List<List<string>> lineByFramePersonID = new List<List<string>>();
+            lineByFramePersonID = new List<List<string>>();
             lineByFramePersonID.Add(new List<string>());
+            listRec = new List<List<Rectangle>>();
+            listRec.Add(new List<Rectangle>());            
+            String[] words;
+            int x;
+            int y;
+            int weight;
+            int height;
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {                
                 lines = System.IO.File.ReadAllLines(@ofd.FileName);
-
-                // Display the file contents by using a foreach loop.
-                // System.Console.WriteLine("Contents of WriteLines2.txt = ");
+                
                 foreach (string line in lines)
                 {
-                    if (line[0].ToString() == (currentFrameNum).ToString())
-                        lineByFramePersonID[currentFrameNum - 1].Add(line);
-                    else
+                    words = line.Split(',');
+                    x = (int)Convert.ToDouble(words[2]);
+                    y = (int)Convert.ToDouble(words[3]);
+                    weight = (int)Convert.ToDouble(words[4]);
+                    height = (int)Convert.ToDouble(words[5]);
+
+                    if (line[0].ToString() != (currentFrameNum).ToString())
                     {
                         currentFrameNum++;
                         lineByFramePersonID.Add(new List<string>());
-                        lineByFramePersonID[currentFrameNum - 1].Add(line);
+                        listRec.Add(new List<Rectangle>());
                     }
-                        
-                }                
+                    
+                    lineByFramePersonID[currentFrameNum - 1].Add(line);
+                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
+                }                           
             }
         }
 
-        private void LoadCurrentFrameROI()
+        private void PlotCurrentFrameROI(List<List<string>> lines, int frameNum)
         {
-
+            
         }
     }
 }
