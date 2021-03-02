@@ -33,6 +33,7 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.bntLoadLabels = new System.Windows.Forms.Button();
             this.bntPrevFrame = new System.Windows.Forms.Button();
             this.bntNextFrame = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bntLoadLabels = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -98,6 +98,16 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(821, 493);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // bntLoadLabels
+            // 
+            this.bntLoadLabels.Location = new System.Drawing.Point(462, 29);
+            this.bntLoadLabels.Name = "bntLoadLabels";
+            this.bntLoadLabels.Size = new System.Drawing.Size(75, 23);
+            this.bntLoadLabels.TabIndex = 2;
+            this.bntLoadLabels.Text = "Load";
+            this.bntLoadLabels.UseVisualStyleBackColor = true;
+            this.bntLoadLabels.Click += new System.EventHandler(this.bntLoadLabels_Click);
             // 
             // bntPrevFrame
             // 
@@ -167,22 +177,11 @@ namespace VideoLabelTool
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(821, 389);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // bntLoadLabels
-            // 
-            this.bntLoadLabels.Location = new System.Drawing.Point(462, 29);
-            this.bntLoadLabels.Name = "bntLoadLabels";
-            this.bntLoadLabels.Size = new System.Drawing.Size(75, 23);
-            this.bntLoadLabels.TabIndex = 2;
-            this.bntLoadLabels.Text = "Load";
-            this.bntLoadLabels.UseVisualStyleBackColor = true;
-            this.bntLoadLabels.Click += new System.EventHandler(this.bntLoadLabels_Click);
             // 
             // FormFrameCapture
             // 

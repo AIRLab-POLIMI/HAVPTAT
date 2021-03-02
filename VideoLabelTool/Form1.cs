@@ -27,6 +27,8 @@ namespace VideoLabelTool
         OpenFileDialog ofd;
         string[] lines;
         List<List<string>> lineByFramePersonID;
+        int widthPictureBox;
+        int heightPictureBox;
 
         Pen pen = new Pen(Color.Red);
         List<List<Rectangle>> listRec;
@@ -43,7 +45,14 @@ namespace VideoLabelTool
         private void Form1_Load(object sender, EventArgs e)
         {            
             pictureBox1.Paint += new PaintEventHandler(this.plotROI);
-            this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;            
+            
+            widthPictureBox = pictureBox1.Width;
+            heightPictureBox = pictureBox1.Height;
+
+            pictureBox1.Width = 1280;
+            pictureBox1.Height = 720;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void plotROI(object sender, PaintEventArgs e)
@@ -54,7 +63,7 @@ namespace VideoLabelTool
                 {
                     e.Graphics.DrawRectangle(pen, ret);
                 }        
-            }                        
+            }    
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -85,7 +94,7 @@ namespace VideoLabelTool
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ofd = new OpenFileDialog();
+            ofd = new OpenFileDialog();            
             if (ofd.ShowDialog() == DialogResult.OK)
             {                
                 capture = new VideoCapture(ofd.FileName);                
@@ -121,11 +130,14 @@ namespace VideoLabelTool
 
         private void My_Timer_Tick(object sender, EventArgs e)
         {
-            if (currentFrameNum < TotalFrame-1)
-            {                                                
+            if (currentFrameNum < TotalFrame - 1)
+            {
+                // SetCaptureProperty could slow down, but avoid crash
+                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 pictureBox1.Image = capture.QueryFrame().ToBitmap();
 
-                currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
+                //currentFrameNum += Convert.ToInt16(numericUpDown1.Value);                
+                currentFrameNum += 1;
                 label1.Text = currentFrameNum.ToString() + '/' + TotalFrame.ToString();               
             }
 
@@ -231,10 +243,11 @@ namespace VideoLabelTool
                 foreach (string line in lines)
                 {
                     words = line.Split(',');
-                    x = (int)Convert.ToDouble(words[2]);
-                    y = (int)Convert.ToDouble(words[3]);
-                    weight = (int)Convert.ToDouble(words[4]);
-                    height = (int)Convert.ToDouble(words[5]);
+
+                    x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
+                    y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
+                    weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
+                    height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
 
                     if (Int32.Parse(words[0]) != currentFrameNum)
                     {
