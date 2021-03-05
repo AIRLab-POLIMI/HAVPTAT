@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace VideoLabelTool
 {
     partial class FormFrameCapture
@@ -41,6 +43,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bntWalking = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -56,7 +59,7 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(821, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(944, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -94,8 +97,9 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.bntWalking);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(821, 493);
+            this.splitContainer1.Size = new System.Drawing.Size(944, 493);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -182,12 +186,23 @@ namespace VideoLabelTool
             this.pictureBox1.Size = new System.Drawing.Size(821, 389);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
+            // 
+            // bntWalking
+            // 
+            this.bntWalking.Location = new System.Drawing.Point(840, 18);
+            this.bntWalking.Name = "bntWalking";
+            this.bntWalking.Size = new System.Drawing.Size(75, 23);
+            this.bntWalking.TabIndex = 1;
+            this.bntWalking.Text = "Walking";
+            this.bntWalking.UseVisualStyleBackColor = true;
+            this.bntWalking.Click += new System.EventHandler(this.bntWalking_Click);
             // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 517);
+            this.ClientSize = new System.Drawing.Size(944, 517);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -222,6 +237,7 @@ namespace VideoLabelTool
         private System.Windows.Forms.Button bntNextFrame;
         private System.Windows.Forms.Button bntPrevFrame;
         private System.Windows.Forms.Button bntLoadLabels;
+        private Button bntWalking;
     }
 }
 

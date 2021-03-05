@@ -13,6 +13,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.CvEnum;
+using System.IO;
 
 namespace VideoLabelTool
 {
@@ -26,13 +27,14 @@ namespace VideoLabelTool
         int status = 0;
         OpenFileDialog ofd;
         string[] lines;
-        List<List<string>> lineByFramePersonID;
+        List<List<string>> lineByFrame;
         int widthPictureBox;
         int heightPictureBox;
 
         Pen pen = new Pen(Color.Red);
         List<List<Rectangle>> listRec;
         Graphics g;
+
         
         public FormFrameCapture()
         {
@@ -226,8 +228,8 @@ namespace VideoLabelTool
         {
             ofd = new OpenFileDialog();
             int currentFrameNum = 1, personID = 0;
-            lineByFramePersonID = new List<List<string>>();
-            lineByFramePersonID.Add(new List<string>());
+            lineByFrame = new List<List<string>>();
+            lineByFrame.Add(new List<string>());
             listRec = new List<List<Rectangle>>();
             listRec.Add(new List<Rectangle>());            
             String[] words;
@@ -252,13 +254,110 @@ namespace VideoLabelTool
                     if (Int32.Parse(words[0]) != currentFrameNum)
                     {
                         currentFrameNum++;
-                        lineByFramePersonID.Add(new List<string>());
+                        lineByFrame.Add(new List<string>());
                         listRec.Add(new List<Rectangle>());
                     }                    
-                    lineByFramePersonID[currentFrameNum - 1].Add(line);
+                    lineByFrame[currentFrameNum - 1].Add(line);
                     listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
                 }                           
             }
+        }
+
+        int selectedBBIndex;
+        private void pictureBox1_Click(object sender, MouseEventArgs e)
+        {
+            foreach (Rectangle r in listRec[currentFrameNum])
+                if (r.Contains(e.Location))
+                {
+                    // do things here
+                    Console.WriteLine("You have hit Rectangle Person ID.: " + listRec[currentFrameNum].IndexOf(r) + 1);
+                    selectedBBIndex = listRec[currentFrameNum].IndexOf(r) + 1;
+                }
+        }
+
+        private void bntWalking_Click(object sender, EventArgs e)
+        {
+            string actionLabel = "Walking";            
+            string[] sourceFile = lines;
+            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";            
+            
+            string lineToWrite = null;
+
+            using (StreamWriter writer = new StreamWriter(destinationFile))
+            {
+                //for (int i = 0; i < lineByFrame[currentFrameNum].Count; i++)
+                //{                    
+                //    if (Int32.Parse(lineByFrame[currentFrameNum][i].Split(',')[1]) == selectedBBIndex)
+                //    {
+                //        lineToWrite = lineByFrame[currentFrameNum][i];
+                //    }
+
+                //}
+
+                for (int i = 0; i < lineByFrame.Count; i++)
+                {
+                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {
+                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedBBIndex)
+                        {
+                            lineToWrite = lineByFrame[i][j];
+                            writer.WriteLine(lineToWrite + "," + actionLabel);
+                        }
+                    }
+                }
+                //if (Int32.Parse(lineByFrame[currentFrameNum][i].Split(',')[1]) == selectedBBIndex)
+                //{
+                //    lineToWrite = lineByFrame[currentFrameNum][i];
+                //}
+            }
+
+            if (lineToWrite == null)
+                throw new InvalidDataException("Line does not exist in " + sourceFile);
+
+            //using (StreamWriter writer = new StreamWriter(destinationFile))
+            //{
+            //    writer.WriteLine(lineToWrite + "," + actionLabel);
+            //}
+
+            //int line_number = 1;
+            //string line = null;
+            //using (StreamReader reader = new StreamReader(destinationFile))
+            //using (StreamWriter writer = new StreamWriter(tempFile))
+            //{
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        if (line_number == line_to_edit)
+            //        {
+            //            writer.WriteLine(lineToWrite);
+            //        }
+            //        else
+            //        {
+            //            writer.WriteLine(line);
+            //        }
+            //        line_number++;
+            //    }
+            //}
+
+            // Read from the target file and write to a new file.
+            //int line_number = 1;
+            //string line = null;
+            //using (StreamReader reader = new StreamReader(destinationFile))
+            //using (StreamWriter writer = new StreamWriter(tempFile))
+            //{
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        if (line_number == line_to_edit)
+            //        {
+            //            writer.WriteLine(lineToWrite);
+            //        }
+            //        else
+            //        {
+            //            writer.WriteLine(line);
+            //        }
+            //        line_number++;
+            //    }
+            //}
+
         }
     }
 }
