@@ -283,17 +283,8 @@ namespace VideoLabelTool
             
             string lineToWrite = null;
 
-            using (StreamWriter writer = new StreamWriter(destinationFile))
+            using (StreamWriter writer = new StreamWriter(destinationFile, true))
             {
-                //for (int i = 0; i < lineByFrame[currentFrameNum].Count; i++)
-                //{                    
-                //    if (Int32.Parse(lineByFrame[currentFrameNum][i].Split(',')[1]) == selectedBBIndex)
-                //    {
-                //        lineToWrite = lineByFrame[currentFrameNum][i];
-                //    }
-
-                //}
-
                 for (int i = 0; i < lineByFrame.Count; i++)
                 {
                     for (int j = 0; j < lineByFrame[i].Count; j++)
@@ -305,58 +296,10 @@ namespace VideoLabelTool
                         }
                     }
                 }
-                //if (Int32.Parse(lineByFrame[currentFrameNum][i].Split(',')[1]) == selectedBBIndex)
-                //{
-                //    lineToWrite = lineByFrame[currentFrameNum][i];
-                //}
             }
 
             if (lineToWrite == null)
                 throw new InvalidDataException("Line does not exist in " + sourceFile);
-
-            //using (StreamWriter writer = new StreamWriter(destinationFile))
-            //{
-            //    writer.WriteLine(lineToWrite + "," + actionLabel);
-            //}
-
-            //int line_number = 1;
-            //string line = null;
-            //using (StreamReader reader = new StreamReader(destinationFile))
-            //using (StreamWriter writer = new StreamWriter(tempFile))
-            //{
-            //    while ((line = reader.ReadLine()) != null)
-            //    {
-            //        if (line_number == line_to_edit)
-            //        {
-            //            writer.WriteLine(lineToWrite);
-            //        }
-            //        else
-            //        {
-            //            writer.WriteLine(line);
-            //        }
-            //        line_number++;
-            //    }
-            //}
-
-            // Read from the target file and write to a new file.
-            //int line_number = 1;
-            //string line = null;
-            //using (StreamReader reader = new StreamReader(destinationFile))
-            //using (StreamWriter writer = new StreamWriter(tempFile))
-            //{
-            //    while ((line = reader.ReadLine()) != null)
-            //    {
-            //        if (line_number == line_to_edit)
-            //        {
-            //            writer.WriteLine(lineToWrite);
-            //        }
-            //        else
-            //        {
-            //            writer.WriteLine(line);
-            //        }
-            //        line_number++;
-            //    }
-            //}
 
         }
     }
