@@ -39,17 +39,16 @@ namespace VideoLabelTool
             this.bntPrevFrame = new System.Windows.Forms.Button();
             this.bntNextFrame = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bntWalking = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bntDrinking = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,17 +86,17 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.bntDrinking);
+            this.splitContainer1.Panel1.Controls.Add(this.bntWalking);
             this.splitContainer1.Panel1.Controls.Add(this.bntLoadLabels);
             this.splitContainer1.Panel1.Controls.Add(this.bntPrevFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntNextFrame);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
-            this.splitContainer1.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel1.Controls.Add(this.bntPause);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.bntWalking);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
             this.splitContainer1.Size = new System.Drawing.Size(944, 493);
             this.splitContainer1.SplitterDistance = 100;
@@ -142,23 +141,6 @@ namespace VideoLabelTool
             this.label1.TabIndex = 3;
             this.label1.Text = "Current Frame";
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(647, 32);
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown1.TabIndex = 2;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // bntPause
             // 
             this.bntPause.Location = new System.Drawing.Point(355, 8);
@@ -179,6 +161,16 @@ namespace VideoLabelTool
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.bntPlay_Click);
             // 
+            // bntWalking
+            // 
+            this.bntWalking.Location = new System.Drawing.Point(577, 0);
+            this.bntWalking.Name = "bntWalking";
+            this.bntWalking.Size = new System.Drawing.Size(75, 23);
+            this.bntWalking.TabIndex = 1;
+            this.bntWalking.Text = "Walking";
+            this.bntWalking.UseVisualStyleBackColor = true;
+            this.bntWalking.Click += new System.EventHandler(this.bntWalking_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
@@ -188,15 +180,15 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // bntWalking
+            // bntDrinking
             // 
-            this.bntWalking.Location = new System.Drawing.Point(840, 18);
-            this.bntWalking.Name = "bntWalking";
-            this.bntWalking.Size = new System.Drawing.Size(75, 23);
-            this.bntWalking.TabIndex = 1;
-            this.bntWalking.Text = "Walking";
-            this.bntWalking.UseVisualStyleBackColor = true;
-            this.bntWalking.Click += new System.EventHandler(this.bntWalking_Click);
+            this.bntDrinking.Location = new System.Drawing.Point(658, 0);
+            this.bntDrinking.Name = "bntDrinking";
+            this.bntDrinking.Size = new System.Drawing.Size(75, 23);
+            this.bntDrinking.TabIndex = 6;
+            this.bntDrinking.Text = "Drinking";
+            this.bntDrinking.UseVisualStyleBackColor = true;
+            this.bntDrinking.Click += new System.EventHandler(this.bntDrinking_Click);
             // 
             // FormFrameCapture
             // 
@@ -216,7 +208,6 @@ namespace VideoLabelTool
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -232,12 +223,12 @@ namespace VideoLabelTool
         private System.Windows.Forms.Button bntPause;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bntNextFrame;
         private System.Windows.Forms.Button bntPrevFrame;
         private System.Windows.Forms.Button bntLoadLabels;
         private Button bntWalking;
+        private Button bntDrinking;
     }
 }
 

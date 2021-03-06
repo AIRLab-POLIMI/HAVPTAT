@@ -34,6 +34,8 @@ namespace VideoLabelTool
         Pen pen = new Pen(Color.Red);
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
+        List<List<string>> listAction;
+
         Graphics g;
         Font myFont = new Font("Arial", 14);
 
@@ -66,6 +68,7 @@ namespace VideoLabelTool
                 {
                     e.Graphics.DrawRectangle(pen, ret);
                     word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
+                    word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
                     e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));                    
                 } 
             }    
@@ -233,8 +236,13 @@ namespace VideoLabelTool
             int currentFrameNum = 1, personID = 0;
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
+
             listRec = new List<List<Rectangle>>();
-            listRec.Add(new List<Rectangle>());            
+            listRec.Add(new List<Rectangle>());   
+
+            listAction = new List<List<String>>();
+            listAction.Add(new List<string>());
+
             String[] words;
             int x;
             int y;
@@ -259,10 +267,12 @@ namespace VideoLabelTool
                         currentFrameNum++;
                         lineByFrame.Add(new List<string>());
                         listRec.Add(new List<Rectangle>());
+                        listAction.Add(new List<string>());
                     }                    
                     lineByFrame[currentFrameNum - 1].Add(line);
                     listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
-                }                           
+                    listAction[currentFrameNum - 1].Add(null);
+                }               
             }
         }
         
@@ -294,6 +304,7 @@ namespace VideoLabelTool
                         {
                             lineToWrite = lineByFrame[i][j];
                             writer.WriteLine(lineToWrite + "," + actionLabel);
+                            listAction[i][j] = actionLabel;
                         }
                     }
                 }
@@ -302,6 +313,34 @@ namespace VideoLabelTool
             if (lineToWrite == null)
                 throw new InvalidDataException("Line does not exist in " + sourceFile);
 
+        }
+
+        private void bntDrinking_Click(object sender, EventArgs e)
+        {
+            string actionLabel = "Drinking";
+            string[] sourceFile = lines;
+            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";
+
+            string lineToWrite = null;
+
+            using (StreamWriter writer = new StreamWriter(destinationFile, true))
+            {
+                for (int i = 0; i < lineByFrame.Count; i++)
+                {
+                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {
+                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
+                        {
+                            lineToWrite = lineByFrame[i][j];
+                            writer.WriteLine(lineToWrite + "," + actionLabel);
+                            listAction[i][j] = actionLabel;
+                        }
+                    }
+                }
+            }
+
+            if (lineToWrite == null)
+                throw new InvalidDataException("Line does not exist in " + sourceFile);
         }
     }
 }
