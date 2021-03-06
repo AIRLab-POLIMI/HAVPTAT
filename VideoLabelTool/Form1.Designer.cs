@@ -38,12 +38,13 @@ namespace VideoLabelTool
             this.bntLoadLabels = new System.Windows.Forms.Button();
             this.bntPrevFrame = new System.Windows.Forms.Button();
             this.bntNextFrame = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.counterFrame = new System.Windows.Forms.Label();
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.bntWalking = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bntDrinking = new System.Windows.Forms.Button();
+            this.labelFrame = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -86,12 +87,13 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.labelFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntDrinking);
             this.splitContainer1.Panel1.Controls.Add(this.bntWalking);
             this.splitContainer1.Panel1.Controls.Add(this.bntLoadLabels);
             this.splitContainer1.Panel1.Controls.Add(this.bntPrevFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntNextFrame);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.counterFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntPause);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             // 
@@ -132,14 +134,13 @@ namespace VideoLabelTool
             this.bntNextFrame.UseVisualStyleBackColor = true;
             this.bntNextFrame.Click += new System.EventHandler(this.bntNextFrame_Click);
             // 
-            // label1
+            // counterFrame
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(65, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Current Frame";
+            this.counterFrame.AutoSize = true;
+            this.counterFrame.Location = new System.Drawing.Point(128, 40);
+            this.counterFrame.Name = "counterFrame";
+            this.counterFrame.Size = new System.Drawing.Size(0, 12);
+            this.counterFrame.TabIndex = 3;
             // 
             // bntPause
             // 
@@ -190,6 +191,15 @@ namespace VideoLabelTool
             this.bntDrinking.UseVisualStyleBackColor = true;
             this.bntDrinking.Click += new System.EventHandler(this.bntDrinking_Click);
             // 
+            // labelFrame
+            // 
+            this.labelFrame.AutoSize = true;
+            this.labelFrame.Location = new System.Drawing.Point(41, 40);
+            this.labelFrame.Name = "labelFrame";
+            this.labelFrame.Size = new System.Drawing.Size(35, 12);
+            this.labelFrame.TabIndex = 7;
+            this.labelFrame.Text = "Frame";
+            // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -223,12 +233,13 @@ namespace VideoLabelTool
         private System.Windows.Forms.Button bntPause;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label counterFrame;
         private System.Windows.Forms.Button bntNextFrame;
         private System.Windows.Forms.Button bntPrevFrame;
         private System.Windows.Forms.Button bntLoadLabels;
         private Button bntWalking;
         private Button bntDrinking;
+        private Label labelFrame;
     }
 }
 
