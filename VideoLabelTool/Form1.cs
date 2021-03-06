@@ -26,16 +26,16 @@ namespace VideoLabelTool
         Timer My_Timer = new Timer();  
         int status = 0;
         OpenFileDialog ofd;
-        string[] lines;
-        List<List<string>> lineByFrame;
+        string[] lines;        
         int widthPictureBox;
         int heightPictureBox;
 
         Pen pen = new Pen(Color.Red);
         List<List<Rectangle>> listRec;
+        List<List<string>> lineByFrame;
         Graphics g;
+        Font myFont = new Font("Arial", 14);
 
-        
         public FormFrameCapture()
         {
             InitializeComponent();
@@ -58,12 +58,16 @@ namespace VideoLabelTool
         }
 
         private void plotROI(object sender, PaintEventArgs e)
-        {   
+        {
+            string word;
             if (listRec != null)
             {
                 foreach (Rectangle ret in listRec[currentFrameNum])
                 {
                     e.Graphics.DrawRectangle(pen, ret);
+                    word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
+                    e.Graphics.DrawString(word, myFont, Brushes.Green, new Point(ret.X, ret.Y));
+                    
                 }        
             }    
         }
