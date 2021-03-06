@@ -29,6 +29,7 @@ namespace VideoLabelTool
         string[] lines;        
         int widthPictureBox;
         int heightPictureBox;
+        int selectedPersonID;
 
         Pen pen = new Pen(Color.Red);
         List<List<Rectangle>> listRec;
@@ -40,8 +41,7 @@ namespace VideoLabelTool
         {
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
-            this.bntPrevFrame.Enabled = false;
-            
+            this.bntPrevFrame.Enabled = false;            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -66,9 +66,8 @@ namespace VideoLabelTool
                 {
                     e.Graphics.DrawRectangle(pen, ret);
                     word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
-                    e.Graphics.DrawString(word, myFont, Brushes.Green, new Point(ret.X, ret.Y));
-                    
-                }        
+                    e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));                    
+                } 
             }    
         }
 
@@ -266,16 +265,14 @@ namespace VideoLabelTool
                 }                           
             }
         }
-
-        int selectedBBIndex;
+        
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
             foreach (Rectangle r in listRec[currentFrameNum])
                 if (r.Contains(e.Location))
-                {
-                    // do things here
-                    Console.WriteLine("You have hit Rectangle Person ID.: " + listRec[currentFrameNum].IndexOf(r) + 1);
-                    selectedBBIndex = listRec[currentFrameNum].IndexOf(r) + 1;
+                {                    
+                    selectedPersonID = Int32.Parse(lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(r)].Split(',')[1]);
+                    Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID);                    
                 }
         }
 
@@ -293,7 +290,7 @@ namespace VideoLabelTool
                 {
                     for (int j = 0; j < lineByFrame[i].Count; j++)
                     {
-                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedBBIndex)
+                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
                         {
                             lineToWrite = lineByFrame[i][j];
                             writer.WriteLine(lineToWrite + "," + actionLabel);
