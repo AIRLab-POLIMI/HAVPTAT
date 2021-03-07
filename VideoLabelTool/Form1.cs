@@ -36,8 +36,11 @@ namespace VideoLabelTool
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
         List<List<string>> listAction;
+        List<int> listPersonIDAssociated = new List<int>();
 
         Font myFont = new Font("Arial", 14);
+        const string message = "You have already labeled this person";
+        const string caption = "Warning";
 
         public FormFrameCapture()
         {
@@ -305,24 +308,29 @@ namespace VideoLabelTool
             
             string lineToWrite = null;
 
-            using (StreamWriter writer = new StreamWriter(destinationFile, true))
+            if (!listPersonIDAssociated.Contains(selectedPersonID))
             {
-                for (int i = 0; i < lineByFrame.Count; i++)
+                using (StreamWriter writer = new StreamWriter(destinationFile, true))
                 {
-                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    for (int i = 0; i < lineByFrame.Count; i++)
                     {
-                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
+                        for (int j = 0; j < lineByFrame[i].Count; j++)
                         {
-                            lineToWrite = lineByFrame[i][j];
-                            writer.WriteLine(lineToWrite + "," + actionLabel);
-                            listAction[i][j] = actionLabel;
+                            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
+                            {
+                                lineToWrite = lineByFrame[i][j];
+                                writer.WriteLine(lineToWrite + "," + actionLabel);
+                                listAction[i][j] = actionLabel;
+                            }
                         }
                     }
+                    listPersonIDAssociated.Add(selectedPersonID);
                 }
             }
-
-            if (lineToWrite == null)
-                throw new InvalidDataException("Line does not exist in " + sourceFile);
+            else
+            {
+                MessageBox.Show(message, caption);
+            }
 
         }
 
