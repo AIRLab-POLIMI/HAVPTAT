@@ -35,16 +35,17 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.labelFrame = new System.Windows.Forms.Label();
+            this.bntDrinking = new System.Windows.Forms.Button();
+            this.bntWalking = new System.Windows.Forms.Button();
             this.bntLoadLabels = new System.Windows.Forms.Button();
             this.bntPrevFrame = new System.Windows.Forms.Button();
             this.bntNextFrame = new System.Windows.Forms.Button();
             this.counterFrame = new System.Windows.Forms.Label();
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.bntWalking = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bntDrinking = new System.Windows.Forms.Button();
-            this.labelFrame = new System.Windows.Forms.Label();
+            this.bntStanding = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -87,6 +88,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.bntStanding);
             this.splitContainer1.Panel1.Controls.Add(this.labelFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntDrinking);
             this.splitContainer1.Panel1.Controls.Add(this.bntWalking);
@@ -103,6 +105,35 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(944, 493);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // labelFrame
+            // 
+            this.labelFrame.AutoSize = true;
+            this.labelFrame.Location = new System.Drawing.Point(41, 40);
+            this.labelFrame.Name = "labelFrame";
+            this.labelFrame.Size = new System.Drawing.Size(35, 12);
+            this.labelFrame.TabIndex = 7;
+            this.labelFrame.Text = "Frame";
+            // 
+            // bntDrinking
+            // 
+            this.bntDrinking.Location = new System.Drawing.Point(746, 0);
+            this.bntDrinking.Name = "bntDrinking";
+            this.bntDrinking.Size = new System.Drawing.Size(75, 23);
+            this.bntDrinking.TabIndex = 6;
+            this.bntDrinking.Text = "Drinking";
+            this.bntDrinking.UseVisualStyleBackColor = true;
+            this.bntDrinking.Click += new System.EventHandler(this.bntDrinking_Click);
+            // 
+            // bntWalking
+            // 
+            this.bntWalking.Location = new System.Drawing.Point(577, 0);
+            this.bntWalking.Name = "bntWalking";
+            this.bntWalking.Size = new System.Drawing.Size(75, 23);
+            this.bntWalking.TabIndex = 1;
+            this.bntWalking.Text = "Walking";
+            this.bntWalking.UseVisualStyleBackColor = true;
+            this.bntWalking.Click += new System.EventHandler(this.bntWalking_Click);
             // 
             // bntLoadLabels
             // 
@@ -162,16 +193,6 @@ namespace VideoLabelTool
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.bntPlay_Click);
             // 
-            // bntWalking
-            // 
-            this.bntWalking.Location = new System.Drawing.Point(577, 0);
-            this.bntWalking.Name = "bntWalking";
-            this.bntWalking.Size = new System.Drawing.Size(75, 23);
-            this.bntWalking.TabIndex = 1;
-            this.bntWalking.Text = "Walking";
-            this.bntWalking.UseVisualStyleBackColor = true;
-            this.bntWalking.Click += new System.EventHandler(this.bntWalking_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
@@ -181,24 +202,15 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // bntDrinking
+            // bntStanding
             // 
-            this.bntDrinking.Location = new System.Drawing.Point(658, 0);
-            this.bntDrinking.Name = "bntDrinking";
-            this.bntDrinking.Size = new System.Drawing.Size(75, 23);
-            this.bntDrinking.TabIndex = 6;
-            this.bntDrinking.Text = "Drinking";
-            this.bntDrinking.UseVisualStyleBackColor = true;
-            this.bntDrinking.Click += new System.EventHandler(this.bntDrinking_Click);
-            // 
-            // labelFrame
-            // 
-            this.labelFrame.AutoSize = true;
-            this.labelFrame.Location = new System.Drawing.Point(41, 40);
-            this.labelFrame.Name = "labelFrame";
-            this.labelFrame.Size = new System.Drawing.Size(35, 12);
-            this.labelFrame.TabIndex = 7;
-            this.labelFrame.Text = "Frame";
+            this.bntStanding.Location = new System.Drawing.Point(664, 0);
+            this.bntStanding.Name = "bntStanding";
+            this.bntStanding.Size = new System.Drawing.Size(75, 23);
+            this.bntStanding.TabIndex = 8;
+            this.bntStanding.Text = "Standing";
+            this.bntStanding.UseVisualStyleBackColor = true;
+            this.bntStanding.Click += new System.EventHandler(this.bntStanding_Click);
             // 
             // FormFrameCapture
             // 
@@ -240,6 +252,7 @@ namespace VideoLabelTool
         private Button bntWalking;
         private Button bntDrinking;
         private Label labelFrame;
+        private Button bntStanding;
     }
 }
 

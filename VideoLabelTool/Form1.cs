@@ -300,12 +300,9 @@ namespace VideoLabelTool
                 }
         }
 
-        private void bntWalking_Click(object sender, EventArgs e)
+        private void actionAssociate(string actionLabel)
         {
-            string actionLabel = "Walking";            
-            string[] sourceFile = lines;
-            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";            
-            
+            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";
             string lineToWrite = null;
 
             if (!listPersonIDAssociated.Contains(selectedPersonID))
@@ -331,35 +328,21 @@ namespace VideoLabelTool
             {
                 MessageBox.Show(message, caption);
             }
-
         }
+
+        private void bntWalking_Click(object sender, EventArgs e)
+        {
+            actionAssociate("Walking");
+        }        
 
         private void bntDrinking_Click(object sender, EventArgs e)
         {
-            string actionLabel = "Drinking";
-            string[] sourceFile = lines;
-            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";
+            actionAssociate("Drinking");
+        }        
 
-            string lineToWrite = null;
-
-            using (StreamWriter writer = new StreamWriter(destinationFile, true))
-            {
-                for (int i = 0; i < lineByFrame.Count; i++)
-                {
-                    for (int j = 0; j < lineByFrame[i].Count; j++)
-                    {
-                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
-                        {
-                            lineToWrite = lineByFrame[i][j];
-                            writer.WriteLine(lineToWrite + "," + actionLabel);
-                            listAction[i][j] = actionLabel;
-                        }
-                    }
-                }
-            }
-
-            if (lineToWrite == null)
-                throw new InvalidDataException("Line does not exist in " + sourceFile);
+        private void bntStanding_Click(object sender, EventArgs e)
+        {
+            actionAssociate("Standing");
         }
     }
 }
