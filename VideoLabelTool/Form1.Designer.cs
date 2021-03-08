@@ -35,6 +35,7 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.bntStanding = new System.Windows.Forms.Button();
             this.labelFrame = new System.Windows.Forms.Label();
             this.bntDrinking = new System.Windows.Forms.Button();
             this.bntWalking = new System.Windows.Forms.Button();
@@ -45,7 +46,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bntStanding = new System.Windows.Forms.Button();
+            this.bntExport = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -88,6 +89,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.bntExport);
             this.splitContainer1.Panel1.Controls.Add(this.bntStanding);
             this.splitContainer1.Panel1.Controls.Add(this.labelFrame);
             this.splitContainer1.Panel1.Controls.Add(this.bntDrinking);
@@ -105,6 +107,16 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(944, 493);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // bntStanding
+            // 
+            this.bntStanding.Location = new System.Drawing.Point(664, 0);
+            this.bntStanding.Name = "bntStanding";
+            this.bntStanding.Size = new System.Drawing.Size(75, 23);
+            this.bntStanding.TabIndex = 8;
+            this.bntStanding.Text = "Standing";
+            this.bntStanding.UseVisualStyleBackColor = true;
+            this.bntStanding.Click += new System.EventHandler(this.bntStanding_Click);
             // 
             // labelFrame
             // 
@@ -137,7 +149,7 @@ namespace VideoLabelTool
             // 
             // bntLoadLabels
             // 
-            this.bntLoadLabels.Location = new System.Drawing.Point(462, 29);
+            this.bntLoadLabels.Location = new System.Drawing.Point(459, 8);
             this.bntLoadLabels.Name = "bntLoadLabels";
             this.bntLoadLabels.Size = new System.Drawing.Size(75, 23);
             this.bntLoadLabels.TabIndex = 2;
@@ -202,15 +214,15 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // bntStanding
+            // bntExport
             // 
-            this.bntStanding.Location = new System.Drawing.Point(664, 0);
-            this.bntStanding.Name = "bntStanding";
-            this.bntStanding.Size = new System.Drawing.Size(75, 23);
-            this.bntStanding.TabIndex = 8;
-            this.bntStanding.Text = "Standing";
-            this.bntStanding.UseVisualStyleBackColor = true;
-            this.bntStanding.Click += new System.EventHandler(this.bntStanding_Click);
+            this.bntExport.Location = new System.Drawing.Point(459, 52);
+            this.bntExport.Name = "bntExport";
+            this.bntExport.Size = new System.Drawing.Size(75, 23);
+            this.bntExport.TabIndex = 9;
+            this.bntExport.Text = "Export";
+            this.bntExport.UseVisualStyleBackColor = true;
+            this.bntExport.Click += new System.EventHandler(this.bntExport_Click);
             // 
             // FormFrameCapture
             // 
@@ -253,6 +265,7 @@ namespace VideoLabelTool
         private Button bntDrinking;
         private Label labelFrame;
         private Button bntStanding;
+        private Button bntExport;
     }
 }
 

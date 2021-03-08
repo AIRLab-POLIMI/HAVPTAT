@@ -30,6 +30,7 @@ namespace VideoLabelTool
         int widthPictureBox;
         int heightPictureBox;
         int selectedPersonID;
+        int selectedPersonIndex;
         Mat m;
 
         Pen pen = new Pen(Color.Red);
@@ -294,39 +295,79 @@ namespace VideoLabelTool
         {
             foreach (Rectangle r in listRec[currentFrameNum])
                 if (r.Contains(e.Location))
-                {                    
-                    selectedPersonID = Int32.Parse(lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(r)].Split(',')[1]);
+                {
+                    selectedPersonIndex = listRec[currentFrameNum].IndexOf(r);
+                    selectedPersonID = Int32.Parse(lineByFrame[currentFrameNum][selectedPersonIndex].Split(',')[1]);                    
                     Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID);                    
                 }
         }
 
         private void actionAssociate(string actionLabel)
-        {
-            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labled.txt";
-            string lineToWrite = null;
+        {                        
 
             if (!listPersonIDAssociated.Contains(selectedPersonID))
             {
-                using (StreamWriter writer = new StreamWriter(destinationFile, true))
+                //using (StreamWriter writer = new StreamWriter(destinationFile, true))
+                //{
+                //    for (int i = 0; i < lineByFrame.Count; i++)
+                //    {
+                //        for (int j = 0; j < lineByFrame[i].Count; j++)
+                //        {
+                //            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
+                //            {
+                //                lineToWrite = lineByFrame[i][j];
+                //                writer.WriteLine(lineToWrite + "," + actionLabel);
+                //                listAction[i][j] = actionLabel;
+                //            }
+                //        }
+                //    }
+                //    listPersonIDAssociated.Add(selectedPersonID);
+                //}
+                
+                for (int i = 0; i < lineByFrame.Count; i++)
                 {
-                    for (int i = 0; i < lineByFrame.Count; i++)
+                    for (int j = 0; j < lineByFrame[i].Count; j++)
                     {
-                        for (int j = 0; j < lineByFrame[i].Count; j++)
+                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
                         {
-                            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
-                            {
-                                lineToWrite = lineByFrame[i][j];
-                                writer.WriteLine(lineToWrite + "," + actionLabel);
-                                listAction[i][j] = actionLabel;
-                            }
+                            //lineToWrite = lineByFrame[i][j];
+                            //writer.WriteLine(lineToWrite + "," + actionLabel);
+                            listAction[i][j] = actionLabel;
                         }
                     }
-                    listPersonIDAssociated.Add(selectedPersonID);
                 }
+                listPersonIDAssociated.Add(selectedPersonID);
             }
             else
             {
-                MessageBox.Show(message, caption);
+                //MessageBox.Show(message, caption);
+                listAction[currentFrameNum][selectedPersonIndex] = actionLabel;
+            }
+        }
+
+        private void bntExport_Click(object sender, EventArgs e)
+        {
+            string lineToWrite = null;
+            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labeled.txt";
+
+            using (StreamWriter writer = new StreamWriter(destinationFile, true))
+            {
+                for (int i = 0; i < lineByFrame.Count; i++)
+                {
+                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {
+                        if (listAction[i][j] != null)
+                        {
+                            lineToWrite = lineByFrame[i][j] + "," + listAction[i][j];                            
+                        }
+                        else
+                        {
+                            lineToWrite = lineByFrame[i][j];
+                        }
+
+                        writer.WriteLine(lineToWrite);
+                    }
+                }
             }
         }
 
@@ -344,6 +385,7 @@ namespace VideoLabelTool
         {
             actionAssociate("Standing");
         }
+        
     }
 }
 
