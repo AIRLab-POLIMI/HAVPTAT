@@ -304,6 +304,7 @@ namespace VideoLabelTool
             this.labelTo.Size = new System.Drawing.Size(19, 15);
             this.labelTo.TabIndex = 13;
             this.labelTo.Text = "To";
+            this.labelTo.Visible = false;
             // 
             // FormFrameCapture
             // 

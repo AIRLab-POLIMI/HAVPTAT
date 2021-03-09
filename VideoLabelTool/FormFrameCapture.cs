@@ -213,8 +213,7 @@ namespace VideoLabelTool
             else
             {
                 this.nudStart.Value = currentFrameNum;
-                this.nudEnd.Value = currentFrameNum + 1;
-                //MessageBox.Show("Warning", "#End frame should be greater than #Start frame");
+                this.nudEnd.Value = currentFrameNum + 1;         
             }
         }
 
@@ -255,7 +254,6 @@ namespace VideoLabelTool
             {
                 this.nudStart.Value = currentFrameNum;
                 this.nudEnd.Value = currentFrameNum + 1;
-                //MessageBox.Show("Warning", "#End frame should be greater than #Start frame");
             }
         }        
 
@@ -353,22 +351,54 @@ namespace VideoLabelTool
 
             if (!listPersonIDAssociated.Contains(selectedPersonIDUnique))
             {
-
-                for (int i = 0; i < lineByFrame.Count; i++)
+                if (this.cbInter.Checked == false)
                 {
-                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    for (int i = 0; i < lineByFrame.Count; i++)
                     {
-                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                        for (int j = 0; j < lineByFrame[i].Count; j++)
                         {
-                            listAction[i][j] = actionLabel;
+                            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                            {
+                                listAction[i][j] = actionLabel;
+                            }
+                        }
+                    }
+                    listPersonIDAssociated.Add(selectedPersonIDUnique);
+                }
+
+                else
+                {
+                    for (int i = (int) nudStart.Value; i <= (int)nudEnd.Value; i++)
+                    {
+                        for (int j = 0; j < lineByFrame[i].Count; j++)
+                        {
+                            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                            {
+                                listAction[i][j] = actionLabel;
+                            }
+                        }
+                    }                    
+                }                
+            }
+            else
+            {
+                if (this.cbInter.Checked == false)
+                {
+                    listAction[currentFrameNum][selectedPersonIndexUnique] = actionLabel;
+                }
+                else
+                {
+                    for (int i = (int)nudStart.Value; i <= (int)nudEnd.Value; i++)
+                    {
+                        for (int j = 0; j < lineByFrame[i].Count; j++)
+                        {
+                            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                            {
+                                listAction[i][j] = actionLabel;
+                            }
                         }
                     }
                 }
-                listPersonIDAssociated.Add(selectedPersonIDUnique);
-            }
-            else
-            {                                
-                listAction[currentFrameNum][selectedPersonIndexUnique] = actionLabel;            
             }
 
             selectedPersonID.Clear();
@@ -424,6 +454,7 @@ namespace VideoLabelTool
                 this.nudEnd.Enabled = true;
                 this.nudStart.Show();
                 this.nudEnd.Show();
+                this.labelTo.Show();
                 this.nudStart.Value = currentFrameNum;
                 this.nudEnd.Value = currentFrameNum + 1;
             }
@@ -431,6 +462,7 @@ namespace VideoLabelTool
             {
                 this.nudStart.Enabled = false;
                 this.nudEnd.Enabled = false;
+                this.labelTo.Hide();
                 this.nudStart.Hide();
                 this.nudEnd.Hide();                
             }
