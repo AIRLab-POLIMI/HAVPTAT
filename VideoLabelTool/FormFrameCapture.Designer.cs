@@ -35,6 +35,7 @@ namespace VideoLabelTool
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.bntExport = new System.Windows.Forms.Button();
             this.bntStanding = new System.Windows.Forms.Button();
             this.labelFrame = new System.Windows.Forms.Label();
             this.bntDrinking = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bntExport = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -107,6 +107,16 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(944, 493);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // bntExport
+            // 
+            this.bntExport.Location = new System.Drawing.Point(459, 52);
+            this.bntExport.Name = "bntExport";
+            this.bntExport.Size = new System.Drawing.Size(75, 23);
+            this.bntExport.TabIndex = 9;
+            this.bntExport.Text = "Export";
+            this.bntExport.UseVisualStyleBackColor = true;
+            this.bntExport.Click += new System.EventHandler(this.bntExport_Click);
             // 
             // bntStanding
             // 
@@ -214,16 +224,6 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // bntExport
-            // 
-            this.bntExport.Location = new System.Drawing.Point(459, 52);
-            this.bntExport.Name = "bntExport";
-            this.bntExport.Size = new System.Drawing.Size(75, 23);
-            this.bntExport.TabIndex = 9;
-            this.bntExport.Text = "Export";
-            this.bntExport.UseVisualStyleBackColor = true;
-            this.bntExport.Click += new System.EventHandler(this.bntExport_Click);
-            // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -233,7 +233,7 @@ namespace VideoLabelTool
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormFrameCapture";
-            this.Text = "Form1";
+            this.Text = "Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

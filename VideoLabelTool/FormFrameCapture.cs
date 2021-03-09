@@ -29,8 +29,8 @@ namespace VideoLabelTool
         string[] lines;        
         int widthPictureBox;
         int heightPictureBox;
-        int selectedPersonID;
-        int selectedPersonIndex;
+        List<int> selectedPersonID = new List<int>();
+        List<int> selectedPersonIndex = new List<int>();
         Mat m;
 
         Pen pen = new Pen(Color.Red);
@@ -294,55 +294,53 @@ namespace VideoLabelTool
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
             foreach (Rectangle r in listRec[currentFrameNum])
-                if (r.Contains(e.Location))
+                if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum].IndexOf(r)))
                 {
-                    selectedPersonIndex = listRec[currentFrameNum].IndexOf(r);
-                    selectedPersonID = Int32.Parse(lineByFrame[currentFrameNum][selectedPersonIndex].Split(',')[1]);                    
-                    Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID);                    
+                    // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
+                    selectedPersonIndex.Add(listRec[currentFrameNum].IndexOf(r));
+                    
                 }
+            foreach (int spi in selectedPersonIndex)
+            {
+                if (!selectedPersonID.Any(idx => idx == Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1])))
+                {
+                    selectedPersonID.Add(Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1]));
+                    Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                }
+            }
+            
         }
 
         private void actionAssociate(string actionLabel)
-        {                        
-
-            if (!listPersonIDAssociated.Contains(selectedPersonID))
+        {
+            if (selectedPersonID.Count > 1)
             {
-                //using (StreamWriter writer = new StreamWriter(destinationFile, true))
-                //{
+                FormSelection formPopup = new FormSelection(selectedPersonID);                
+                formPopup.ShowDialog(this);
+
+            }
+
+            //if (!listPersonIDAssociated.Contains(selectedPersonID))
+            ////if (!selectedPersonID.Any(listPersonIDAssociated.Contains))
+            //{
+
                 //    for (int i = 0; i < lineByFrame.Count; i++)
                 //    {
                 //        for (int j = 0; j < lineByFrame[i].Count; j++)
                 //        {
                 //            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
                 //            {
-                //                lineToWrite = lineByFrame[i][j];
-                //                writer.WriteLine(lineToWrite + "," + actionLabel);
                 //                listAction[i][j] = actionLabel;
                 //            }
                 //        }
                 //    }
                 //    listPersonIDAssociated.Add(selectedPersonID);
                 //}
-                
-                for (int i = 0; i < lineByFrame.Count; i++)
-                {
-                    for (int j = 0; j < lineByFrame[i].Count; j++)
-                    {
-                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
-                        {
-                            //lineToWrite = lineByFrame[i][j];
-                            //writer.WriteLine(lineToWrite + "," + actionLabel);
-                            listAction[i][j] = actionLabel;
-                        }
-                    }
-                }
-                listPersonIDAssociated.Add(selectedPersonID);
-            }
-            else
-            {
-                //MessageBox.Show(message, caption);
-                listAction[currentFrameNum][selectedPersonIndex] = actionLabel;
-            }
+                //else
+                //{
+                //    //MessageBox.Show(message, caption);
+                //    listAction[currentFrameNum][selectedPersonIndex] = actionLabel;
+                //}
         }
 
         private void bntExport_Click(object sender, EventArgs e)
