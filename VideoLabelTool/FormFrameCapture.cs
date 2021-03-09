@@ -320,6 +320,7 @@ namespace VideoLabelTool
             {
                 FormSelection formPopup = new FormSelection(this);
                 formPopup.ShowDialog(this);
+                selectedPersonIndexUnique = lineByFrame[currentFrameNum].FindIndex(a => Int32.Parse(a.Split(',')[1]) == selectedPersonIDUnique);
             }
             else
             {
@@ -343,8 +344,7 @@ namespace VideoLabelTool
                 listPersonIDAssociated.Add(selectedPersonIDUnique);
             }
             else
-            {                
-                selectedPersonIndexUnique = lineByFrame[currentFrameNum].FindIndex(a => Int32.Parse(a.Split(',')[1]) == selectedPersonIDUnique);
+            {                                
                 listAction[currentFrameNum][selectedPersonIndexUnique] = actionLabel;            
             }
 
