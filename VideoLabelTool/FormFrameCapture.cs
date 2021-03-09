@@ -29,8 +29,10 @@ namespace VideoLabelTool
         string[] lines;        
         int widthPictureBox;
         int heightPictureBox;
-        List<int> selectedPersonID = new List<int>();
-        List<int> selectedPersonIndex = new List<int>();
+        public List<int> selectedPersonID = new List<int>();
+        public int selectedPersonIDUnique;
+        public List<int> selectedPersonIndex = new List<int>();
+        int selectedPersonIndexUnique;
         Mat m;
 
         Pen pen = new Pen(Color.Red);
@@ -41,7 +43,7 @@ namespace VideoLabelTool
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
-        const string caption = "Warning";
+        const string caption = "Warning";        
 
         public FormFrameCapture()
         {
@@ -289,7 +291,7 @@ namespace VideoLabelTool
                     listAction[currentFrameNum - 1].Add(null);
                 }               
             }
-        }
+        }        
         
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
@@ -302,6 +304,7 @@ namespace VideoLabelTool
                 }
             foreach (int spi in selectedPersonIndex)
             {
+                // Through "selectedPersonIndex" list to get "selectedPersonID" list
                 if (!selectedPersonID.Any(idx => idx == Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1])))
                 {
                     selectedPersonID.Add(Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1]));
@@ -315,33 +318,39 @@ namespace VideoLabelTool
         {
             if (selectedPersonID.Count > 1)
             {
-                FormSelection formPopup = new FormSelection(selectedPersonID);                
+                FormSelection formPopup = new FormSelection(this);
                 formPopup.ShowDialog(this);
-
+            }
+            else
+            {
+                selectedPersonIDUnique = selectedPersonID[0];
+                selectedPersonIndexUnique = selectedPersonIndex[0];
             }
 
-            //if (!listPersonIDAssociated.Contains(selectedPersonID))
-            ////if (!selectedPersonID.Any(listPersonIDAssociated.Contains))
-            //{
+            if (!listPersonIDAssociated.Contains(selectedPersonIDUnique))
+            {
 
-                //    for (int i = 0; i < lineByFrame.Count; i++)
-                //    {
-                //        for (int j = 0; j < lineByFrame[i].Count; j++)
-                //        {
-                //            if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonID)
-                //            {
-                //                listAction[i][j] = actionLabel;
-                //            }
-                //        }
-                //    }
-                //    listPersonIDAssociated.Add(selectedPersonID);
-                //}
-                //else
-                //{
-                //    //MessageBox.Show(message, caption);
-                //    listAction[currentFrameNum][selectedPersonIndex] = actionLabel;
-                //}
-        }
+                for (int i = 0; i < lineByFrame.Count; i++)
+                {
+                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {
+                        if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                        {
+                            listAction[i][j] = actionLabel;
+                        }
+                    }
+                }
+                listPersonIDAssociated.Add(selectedPersonIDUnique);
+            }
+            else
+            {                
+                selectedPersonIndexUnique = lineByFrame[currentFrameNum].FindIndex(a => Int32.Parse(a.Split(',')[1]) == selectedPersonIDUnique);
+                listAction[currentFrameNum][selectedPersonIndexUnique] = actionLabel;            
+            }
+
+            selectedPersonID.Clear();
+            selectedPersonIndex.Clear();
+        }        
 
         private void bntExport_Click(object sender, EventArgs e)
         {
