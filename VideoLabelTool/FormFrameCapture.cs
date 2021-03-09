@@ -43,7 +43,12 @@ namespace VideoLabelTool
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
-        const string caption = "Warning";        
+        const string caption = "Warning";
+
+        // Mode:
+        //      0: Mark all frames (Default)
+        //      1: Interval mode
+        int mode = 0;
 
         public FormFrameCapture()
         {
@@ -202,6 +207,15 @@ namespace VideoLabelTool
 
             this.bntPrevFrame.Enabled = true;
             status = 0;
+
+            if (currentFrameNum > this.nudStart.Value)
+                this.nudEnd.Value = currentFrameNum;
+            else
+            {
+                this.nudStart.Value = currentFrameNum;
+                this.nudEnd.Value = currentFrameNum + 1;
+                //MessageBox.Show("Warning", "#End frame should be greater than #Start frame");
+            }
         }
 
         private void bntPrevFrame_Click(object sender, EventArgs e)
@@ -234,6 +248,15 @@ namespace VideoLabelTool
                 counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
             }            
             status = 0;
+
+            if (currentFrameNum > this.nudStart.Value)
+                this.nudEnd.Value = currentFrameNum;
+            else
+            {
+                this.nudStart.Value = currentFrameNum;
+                this.nudEnd.Value = currentFrameNum + 1;
+                //MessageBox.Show("Warning", "#End frame should be greater than #Start frame");
+            }
         }        
 
         private void bntPause_Click(object sender, EventArgs e)
@@ -391,8 +414,27 @@ namespace VideoLabelTool
         private void bntStanding_Click(object sender, EventArgs e)
         {
             actionAssociate("Standing");
+        }        
+
+        private void cbInter_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbInter.Checked == true)
+            {
+                this.nudStart.Enabled = true;
+                this.nudEnd.Enabled = true;
+                this.nudStart.Show();
+                this.nudEnd.Show();
+                this.nudStart.Value = currentFrameNum;
+                this.nudEnd.Value = currentFrameNum + 1;
+            }
+            else
+            {
+                this.nudStart.Enabled = false;
+                this.nudEnd.Enabled = false;
+                this.nudStart.Hide();
+                this.nudEnd.Hide();                
+            }
         }
-        
     }
 }
 
