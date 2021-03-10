@@ -285,7 +285,7 @@ namespace VideoLabelTool
             int x;
             int y;
             int weight;
-            int height;
+            int height;            
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {                
@@ -298,7 +298,7 @@ namespace VideoLabelTool
                     x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
                     y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
                     weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
-                    height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
+                    height = (int)(Convert.ToDouble(words[5]) * 2 / 3);                                        
 
                     if (Int32.Parse(words[0]) != currentFrameNum)
                     {
@@ -308,8 +308,17 @@ namespace VideoLabelTool
                         listAction.Add(new List<string>());
                     }                    
                     lineByFrame[currentFrameNum - 1].Add(line);
-                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
-                    listAction[currentFrameNum - 1].Add(null);
+                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));                    
+
+                    if (words.Length == 11)
+                    {
+                        // Already have some person in some frames labeled 
+                        listAction[currentFrameNum - 1].Add(words[10]);                        
+                    }
+                    else
+                    {
+                        listAction[currentFrameNum - 1].Add(null);
+                    }
                 }               
             }
         }        
