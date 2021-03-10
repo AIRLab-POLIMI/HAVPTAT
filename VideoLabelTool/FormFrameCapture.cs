@@ -407,25 +407,29 @@ namespace VideoLabelTool
 
         private void bntExport_Click(object sender, EventArgs e)
         {
-            string lineToWrite = null;
-            string destinationFile = @"D:\project\VideoLabelToolSol\VideoLabelTool\output\labeled.txt";
-
-            using (StreamWriter writer = new StreamWriter(destinationFile, true))
+            string lineToWrite = null;            
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = "ActionLabeled";
+            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                for (int i = 0; i < lineByFrame.Count; i++)
+                using (StreamWriter writer = new StreamWriter(sfd.FileName, false))
                 {
-                    for (int j = 0; j < lineByFrame[i].Count; j++)
+                    for (int i = 0; i < lineByFrame.Count; i++)
                     {
-                        if (listAction[i][j] != null)
+                        for (int j = 0; j < lineByFrame[i].Count; j++)
                         {
-                            lineToWrite = lineByFrame[i][j] + "," + listAction[i][j];                            
-                        }
-                        else
-                        {
-                            lineToWrite = lineByFrame[i][j];
-                        }
+                            if (listAction[i][j] != null)
+                            {
+                                lineToWrite = lineByFrame[i][j] + "," + listAction[i][j];
+                            }
+                            else
+                            {
+                                lineToWrite = lineByFrame[i][j];
+                            }
 
-                        writer.WriteLine(lineToWrite);
+                            writer.WriteLine(lineToWrite);
+                        }
                     }
                 }
             }
