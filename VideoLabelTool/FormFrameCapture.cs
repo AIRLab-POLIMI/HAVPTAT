@@ -184,19 +184,7 @@ namespace VideoLabelTool
             {
                 // SetCaptureProperty could slow down, but avoid crash
                 currentFrameNum += 1;
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-                try
-                {
-                    m = new Mat();
-                    capture.Read(m);
-                    pictureBox1.Image = m.ToBitmap();
-                }
-                catch(NullReferenceException e)
-                {
-                    throw new NullReferenceException(e.Message);
-                }
-                
-                counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
+                setFrame(currentFrameNum);
 
                 this.Invalidate();      
             }
@@ -228,24 +216,7 @@ namespace VideoLabelTool
             if (currentFrameNum > 0 && currentFrameNum <= TotalFrame && capture != null)
             {                
                 currentFrameNum -= 1;
-                // SetCaptureProperty could slow down, but avoid crash
-                capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
-                try
-                {
-                    //To avoid CRASH: Remove capture.QueryFrame()
-                    //pictureBox1.Image = capture.QueryFrame().ToBitmap();
-
-                    // Replaced by capture.Read(m)
-                    m = new Mat();
-                    capture.Read(m);
-                    pictureBox1.Image = m.ToBitmap();
-                }
-                catch (NullReferenceException e)
-                {
-                    throw new NullReferenceException(e.Message);
-                }
-
-                counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
+                setFrame(currentFrameNum);
             }            
             status = 0;
 
@@ -256,7 +227,41 @@ namespace VideoLabelTool
                 this.nudStart.Value = currentFrameNum;
                 this.nudEnd.Value = currentFrameNum + 1;
             }
-        }        
+        }
+
+        private void buttonFirstFrame_Click(object sender, EventArgs e)
+        {
+            setFrame(0);
+            currentFrameNum = 0;
+        }
+
+        private void buttonLastFrame_Click(object sender, EventArgs e)
+        {
+            setFrame((int)TotalFrame - 1);
+            currentFrameNum = (int)TotalFrame - 1;
+        }
+
+        private void setFrame(int currentFrameNum)
+        {
+            // SetCaptureProperty could slow down, but avoid crash
+            capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
+            try
+            {
+                //To avoid CRASH: Remove capture.QueryFrame()
+                //pictureBox1.Image = capture.QueryFrame().ToBitmap();
+
+                // Replaced by capture.Read(m)
+                m = new Mat();
+                capture.Read(m);
+                pictureBox1.Image = m.ToBitmap();
+            }
+            catch (NullReferenceException e)
+            {
+                throw new NullReferenceException(e.Message);
+            }
+
+            counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
+        }
 
         private void bntPause_Click(object sender, EventArgs e)
         {
@@ -494,7 +499,7 @@ namespace VideoLabelTool
                 this.nudStart.Hide();
                 this.nudEnd.Hide();                
             }
-        }
+        }        
     }
 }
 

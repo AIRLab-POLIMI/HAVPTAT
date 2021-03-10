@@ -36,6 +36,7 @@ namespace VideoLabelTool
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.labelTo = new System.Windows.Forms.Label();
             this.nudEnd = new System.Windows.Forms.NumericUpDown();
             this.nudStart = new System.Windows.Forms.NumericUpDown();
             this.cbInter = new System.Windows.Forms.CheckBox();
@@ -51,7 +52,8 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.labelTo = new System.Windows.Forms.Label();
+            this.buttonFirstFrame = new System.Windows.Forms.Button();
+            this.buttonLastFrame = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -97,6 +99,8 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonLastFrame);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonFirstFrame);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox);
             this.splitContainer1.Panel1.Controls.Add(this.bntExport);
             this.splitContainer1.Panel1.Controls.Add(this.bntStanding);
@@ -129,6 +133,16 @@ namespace VideoLabelTool
             this.groupBox.Size = new System.Drawing.Size(196, 78);
             this.groupBox.TabIndex = 12;
             this.groupBox.TabStop = false;
+            // 
+            // labelTo
+            // 
+            this.labelTo.AutoSize = true;
+            this.labelTo.Location = new System.Drawing.Point(75, 54);
+            this.labelTo.Name = "labelTo";
+            this.labelTo.Size = new System.Drawing.Size(19, 15);
+            this.labelTo.TabIndex = 13;
+            this.labelTo.Text = "To";
+            this.labelTo.Visible = false;
             // 
             // nudEnd
             // 
@@ -173,7 +187,7 @@ namespace VideoLabelTool
             // bntExport
             // 
             this.bntExport.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntExport.Location = new System.Drawing.Point(459, 52);
+            this.bntExport.Location = new System.Drawing.Point(459, 39);
             this.bntExport.Name = "bntExport";
             this.bntExport.Size = new System.Drawing.Size(75, 23);
             this.bntExport.TabIndex = 9;
@@ -231,14 +245,14 @@ namespace VideoLabelTool
             this.bntLoadLabels.Name = "bntLoadLabels";
             this.bntLoadLabels.Size = new System.Drawing.Size(75, 23);
             this.bntLoadLabels.TabIndex = 2;
-            this.bntLoadLabels.Text = "Load";
+            this.bntLoadLabels.Text = "Import";
             this.bntLoadLabels.UseVisualStyleBackColor = true;
             this.bntLoadLabels.Click += new System.EventHandler(this.bntLoadLabels_Click);
             // 
             // bntPrevFrame
             // 
             this.bntPrevFrame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntPrevFrame.Location = new System.Drawing.Point(241, 53);
+            this.bntPrevFrame.Location = new System.Drawing.Point(242, 40);
             this.bntPrevFrame.Name = "bntPrevFrame";
             this.bntPrevFrame.Size = new System.Drawing.Size(84, 23);
             this.bntPrevFrame.TabIndex = 5;
@@ -249,7 +263,7 @@ namespace VideoLabelTool
             // bntNextFrame
             // 
             this.bntNextFrame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntNextFrame.Location = new System.Drawing.Point(355, 53);
+            this.bntNextFrame.Location = new System.Drawing.Point(355, 39);
             this.bntNextFrame.Name = "bntNextFrame";
             this.bntNextFrame.Size = new System.Drawing.Size(75, 23);
             this.bntNextFrame.TabIndex = 4;
@@ -296,15 +310,27 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // labelTo
+            // buttonFirstFrame
             // 
-            this.labelTo.AutoSize = true;
-            this.labelTo.Location = new System.Drawing.Point(75, 54);
-            this.labelTo.Name = "labelTo";
-            this.labelTo.Size = new System.Drawing.Size(19, 15);
-            this.labelTo.TabIndex = 13;
-            this.labelTo.Text = "To";
-            this.labelTo.Visible = false;
+            this.buttonFirstFrame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonFirstFrame.Location = new System.Drawing.Point(242, 70);
+            this.buttonFirstFrame.Name = "buttonFirstFrame";
+            this.buttonFirstFrame.Size = new System.Drawing.Size(83, 23);
+            this.buttonFirstFrame.TabIndex = 13;
+            this.buttonFirstFrame.Text = "First F.";
+            this.buttonFirstFrame.UseVisualStyleBackColor = true;
+            this.buttonFirstFrame.Click += new System.EventHandler(this.buttonFirstFrame_Click);
+            // 
+            // buttonLastFrame
+            // 
+            this.buttonLastFrame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLastFrame.Location = new System.Drawing.Point(356, 71);
+            this.buttonLastFrame.Name = "buttonLastFrame";
+            this.buttonLastFrame.Size = new System.Drawing.Size(74, 23);
+            this.buttonLastFrame.TabIndex = 14;
+            this.buttonLastFrame.Text = "Last F.";
+            this.buttonLastFrame.UseVisualStyleBackColor = true;
+            this.buttonLastFrame.Click += new System.EventHandler(this.buttonLastFrame_Click);
             // 
             // FormFrameCapture
             // 
@@ -357,6 +383,8 @@ namespace VideoLabelTool
         private NumericUpDown nudEnd;
         private NumericUpDown nudStart;
         private Label labelTo;
+        private Button buttonFirstFrame;
+        private Button buttonLastFrame;
     }
 }
 
