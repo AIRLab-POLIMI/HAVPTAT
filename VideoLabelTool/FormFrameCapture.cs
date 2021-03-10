@@ -26,6 +26,7 @@ namespace VideoLabelTool
         Timer My_Timer = new Timer();  
         int status = 0;
         OpenFileDialog ofd;
+        string openedFilePath;
         string[] lines;        
         int widthPictureBox;
         int heightPictureBox;
@@ -34,6 +35,7 @@ namespace VideoLabelTool
         public List<int> selectedPersonIndex = new List<int>();
         int selectedPersonIndexUnique;
         Mat m;
+        Pen penTemp;
 
         private static Random rnd = new Random();
         //Pen pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
@@ -133,8 +135,9 @@ namespace VideoLabelTool
         {
             ofd = new OpenFileDialog();            
             if (ofd.ShowDialog() == DialogResult.OK)
-            {                
-                capture = new VideoCapture(ofd.FileName);                
+            {
+                openedFilePath = ofd.FileName;
+                capture = new VideoCapture(openedFilePath);
                 m = new Mat();
                 capture.Read(m);
                 pictureBox1.Image = m.ToBitmap();
@@ -337,7 +340,11 @@ namespace VideoLabelTool
 
                     // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
                     if (!listPersonColor.Any(a => a.personID == Int32.Parse(words[1])))
-                        listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)))});                        
+                    {
+                        penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+                        penTemp.Width = 3.0F;
+                        listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = penTemp });
+                    }
 
                     if (words.Length == 11)
                     {
@@ -451,11 +458,14 @@ namespace VideoLabelTool
 
         private void bntExport_Click(object sender, EventArgs e)
         {
-            string lineToWrite = null;            
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = "ActionLabeled";
-            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            string[] splittedLine;            
+            string lineToWrite = null;
+            string[] splittedLine;
+            string[] splittedopenedFilePath = openedFilePath.Split('\\');
+            string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
+
+            SaveFileDialog sfd = new SaveFileDialog();            
+            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";            
+            sfd.FileName = "AL_" + openedFileName;
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -500,7 +510,12 @@ namespace VideoLabelTool
         private void bntStanding_Click(object sender, EventArgs e)
         {
             actionAssociate("Standing");
-        }        
+        }
+
+        private void buttonSitting_Click(object sender, EventArgs e)
+        {
+            actionAssociate("Sitting");
+        }
 
         private void cbInter_CheckedChanged(object sender, EventArgs e)
         {
@@ -522,7 +537,9 @@ namespace VideoLabelTool
                 this.nudStart.Hide();
                 this.nudEnd.Hide();                
             }
-        }        
+        }
+
+        
     }
 }
 
