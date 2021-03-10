@@ -43,12 +43,7 @@ namespace VideoLabelTool
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
-        const string caption = "Warning";
-
-        // Mode:
-        //      0: Mark all frames (Default)
-        //      1: Interval mode
-        int mode = 0;
+        const string caption = "Warning";        
 
         public FormFrameCapture()
         {
@@ -72,17 +67,23 @@ namespace VideoLabelTool
 
         private void plotROI(object sender, PaintEventArgs e)
         {
-            string word;
-            if (listRec != null && currentFrameNum < TotalFrame)
+            if (listRec != null)
             {
-                foreach (Rectangle ret in listRec[currentFrameNum])
+                if (listRec.Count == lineByFrame.Count)
                 {
-                    e.Graphics.DrawRectangle(pen, ret);
-                    word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
-                    word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
-                    e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));                    
-                } 
-            }    
+                    string word;
+                    if (listRec != null && currentFrameNum < TotalFrame)
+                    {
+                        foreach (Rectangle ret in listRec[currentFrameNum])
+                        {
+                            e.Graphics.DrawRectangle(pen, ret);
+                            word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
+                            word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        }
+                    }
+                }
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -352,6 +353,12 @@ namespace VideoLabelTool
                 formPopup.ShowDialog(this);
                 selectedPersonIndexUnique = lineByFrame[currentFrameNum].FindIndex(a => Int32.Parse(a.Split(',')[1]) == selectedPersonIDUnique);
             }
+            else if (selectedPersonID.Count == 0)
+            {
+                MessageBox.Show("You should select a person to be labeled.", "Warning");
+                return;
+            }
+            
             else
             {
                 selectedPersonIDUnique = selectedPersonID[0];
@@ -420,6 +427,8 @@ namespace VideoLabelTool
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "ActionLabeled";
             sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string[] splittedLine;            
+
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter writer = new StreamWriter(sfd.FileName, false))
@@ -428,9 +437,15 @@ namespace VideoLabelTool
                     {
                         for (int j = 0; j < lineByFrame[i].Count; j++)
                         {
-                            if (listAction[i][j] != null)
+                            splittedLine = lineByFrame[i][j].Split(',');
+                            if (listAction[i][j] != null && splittedLine.Length != 11)
                             {
                                 lineToWrite = lineByFrame[i][j] + "," + listAction[i][j];
+                            }
+                            else if (listAction[i][j] != null && splittedLine.Length == 11 && splittedLine[10] != listAction[i][j])
+                            {                                
+                                splittedLine[10] = listAction[i][j];
+                                lineToWrite = String.Join(",", splittedLine);
                             }
                             else
                             {
