@@ -37,25 +37,28 @@ namespace VideoLabelTool
             // 
             // listBoxSelection
             // 
+            this.listBoxSelection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxSelection.FormattingEnabled = true;
-            this.listBoxSelection.ItemHeight = 12;
+            this.listBoxSelection.ItemHeight = 15;
             this.listBoxSelection.Location = new System.Drawing.Point(28, 50);
             this.listBoxSelection.Name = "listBoxSelection";
-            this.listBoxSelection.Size = new System.Drawing.Size(99, 148);
+            this.listBoxSelection.Size = new System.Drawing.Size(99, 139);
             this.listBoxSelection.TabIndex = 0;
             this.listBoxSelection.SelectedIndexChanged += new System.EventHandler(this.listBoxSelection_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(15, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(401, 12);
+            this.label1.Size = new System.Drawing.Size(356, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Select only a person ID which should be associated with the action";
             // 
             // bntSelConfirm
             // 
+            this.bntSelConfirm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bntSelConfirm.Location = new System.Drawing.Point(227, 175);
             this.bntSelConfirm.Name = "bntSelConfirm";
             this.bntSelConfirm.Size = new System.Drawing.Size(75, 23);
@@ -66,6 +69,7 @@ namespace VideoLabelTool
             // 
             // bntSelClose
             // 
+            this.bntSelClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bntSelClose.Location = new System.Drawing.Point(323, 175);
             this.bntSelClose.Name = "bntSelClose";
             this.bntSelClose.Size = new System.Drawing.Size(75, 23);
