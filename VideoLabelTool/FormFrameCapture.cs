@@ -35,11 +35,19 @@ namespace VideoLabelTool
         int selectedPersonIndexUnique;
         Mat m;
 
-        Pen pen = new Pen(Color.Red);
+        private static Random rnd = new Random();
+        //Pen pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
-        List<List<string>> listAction;
+        List<List<string>> listAction;        
         List<int> listPersonIDAssociated = new List<int>();
+
+        public class PersonColor
+        {
+            public int personID { get; set; }
+            public Pen pen { get; set; }
+        }
+        List<PersonColor> listPersonColor;
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
@@ -75,11 +83,20 @@ namespace VideoLabelTool
                     if (listRec != null && currentFrameNum < TotalFrame)
                     {
                         foreach (Rectangle ret in listRec[currentFrameNum])
-                        {
-                            e.Graphics.DrawRectangle(pen, ret);
+                        {                           
+                            var a = (from n in listPersonColor
+                                     where n.personID == Int32.Parse(lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1])
+                                    select n).FirstOrDefault();
+
+                            e.Graphics.DrawRectangle(a.pen, ret);
                             word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
                             word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                            
+                            // Version: string color is Red
                             e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                            
+                            // Version: string color is the same with bounding box
+                            //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
                         }
                     }
                 }
@@ -285,7 +302,9 @@ namespace VideoLabelTool
             listRec.Add(new List<Rectangle>());   
 
             listAction = new List<List<String>>();
-            listAction.Add(new List<string>());
+            listAction.Add(new List<string>());            
+
+            listPersonColor = new List<PersonColor>();
 
             String[] words;
             int x;
@@ -311,10 +330,14 @@ namespace VideoLabelTool
                         currentFrameNum++;
                         lineByFrame.Add(new List<string>());
                         listRec.Add(new List<Rectangle>());
-                        listAction.Add(new List<string>());
+                        listAction.Add(new List<string>());                        
                     }                    
                     lineByFrame[currentFrameNum - 1].Add(line);
-                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));                    
+                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
+
+                    // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
+                    if (!listPersonColor.Any(a => a.personID == Int32.Parse(words[1])))
+                        listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)))});                        
 
                     if (words.Length == 11)
                     {
