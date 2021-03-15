@@ -14,6 +14,7 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.CvEnum;
 using System.IO;
+using System.Globalization;
 
 namespace VideoLabelTool
 {
@@ -302,10 +303,10 @@ namespace VideoLabelTool
             lineByFrame.Add(new List<string>());
 
             listRec = new List<List<Rectangle>>();
-            listRec.Add(new List<Rectangle>());   
+            listRec.Add(new List<Rectangle>());
 
             listAction = new List<List<String>>();
-            listAction.Add(new List<string>());            
+            listAction.Add(new List<string>());
 
             listPersonColor = new List<PersonColor>();
 
@@ -313,28 +314,36 @@ namespace VideoLabelTool
             int x;
             int y;
             int weight;
-            int height;            
+            int height;
 
             if (ofd.ShowDialog() == DialogResult.OK)
-            {                
+            {
                 lines = System.IO.File.ReadAllLines(@ofd.FileName);
-                
+
                 foreach (string line in lines)
                 {
                     words = line.Split(',');
 
-                    x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
-                    y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
-                    weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
-                    height = (int)(Convert.ToDouble(words[5]) * 2 / 3);                                        
+                    // Original version
+                    //x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
+                    //y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
+                    //weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
+                    //height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
+
+                    //New version
+                    // Different OS has different personalized Setting for number format, this parameter to use uniform number format
+                    x = (int) double.Parse(words[2], CultureInfo.InvariantCulture) * 2 / 3;
+                    y = (int) double.Parse(words[3], CultureInfo.InvariantCulture) * 2 / 3;
+                    weight = (int) double.Parse(words[4], CultureInfo.InvariantCulture) * 2 / 3;
+                    height = (int) double.Parse(words[5], CultureInfo.InvariantCulture) * 2 / 3;
 
                     if (Int32.Parse(words[0]) != currentFrameNum)
                     {
                         currentFrameNum++;
                         lineByFrame.Add(new List<string>());
                         listRec.Add(new List<Rectangle>());
-                        listAction.Add(new List<string>());                        
-                    }                    
+                        listAction.Add(new List<string>());
+                    }
                     lineByFrame[currentFrameNum - 1].Add(line);
                     listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
 
@@ -349,14 +358,14 @@ namespace VideoLabelTool
                     if (words.Length == 11)
                     {
                         // Already have some person in some frames labeled 
-                        listAction[currentFrameNum - 1].Add(words[10]);                        
+                        listAction[currentFrameNum - 1].Add(words[10]);
                     }
                     else
                     {
                         listAction[currentFrameNum - 1].Add(null);
                     }
-                }               
-            }
+                }
+            }                    
         }        
         
         private void pictureBox1_Click(object sender, MouseEventArgs e)
