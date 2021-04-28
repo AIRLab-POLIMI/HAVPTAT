@@ -336,15 +336,14 @@ namespace VideoLabelTool
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {
-            bntLoadJsonLabels_Click();
+            //bntLoadJsonLabels_Click();
 
             ofd = new OpenFileDialog();
             int currentFrameNum = 1;
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
 
-            listRec = new List<List<Rectangle>>();
-            listRec.Add(new List<Rectangle>());
+            listRec = new List<List<Rectangle>>();            
 
             listAction = new List<List<String>>();
             listAction.Add(new List<string>());
@@ -357,56 +356,91 @@ namespace VideoLabelTool
             int weight;
             int height;
 
-            if (ofd.ShowDialog() == DialogResult.OK)
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            if (true)
             {
-                lines = System.IO.File.ReadAllLines(@ofd.FileName);
-
-                foreach (string line in lines)
+                string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
+                List<FrameObj> listFrames = new List<FrameObj>();
+                
+                var jsonReader = new JsonTextReader(new StringReader(json))
                 {
-                    words = line.Split(',');
+                    SupportMultipleContent = true // This is important!
+                };
 
-                    // Original version
-                    //x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
-                    //y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
-                    //weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
-                    //height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
-
-                    //New version
-                    // Different OS has different personalized Setting for number format, this parameter to use uniform number format
-                    x = (int) double.Parse(words[2], CultureInfo.InvariantCulture) * 2 / 3;
-                    y = (int) double.Parse(words[3], CultureInfo.InvariantCulture) * 2 / 3;
-                    weight = (int) double.Parse(words[4], CultureInfo.InvariantCulture) * 2 / 3;
-                    height = (int) double.Parse(words[5], CultureInfo.InvariantCulture) * 2 / 3;
-
-                    if (Int32.Parse(words[0]) != currentFrameNum)
-                    {
-                        currentFrameNum++;
-                        lineByFrame.Add(new List<string>());
-                        listRec.Add(new List<Rectangle>());
-                        listAction.Add(new List<string>());
-                    }
-                    lineByFrame[currentFrameNum - 1].Add(line);
-                    listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
-
-                    // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
-                    if (!listPersonColor.Any(a => a.personID == Int32.Parse(words[1])))
-                    {
-                        penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
-                        penTemp.Width = 3.0F;
-                        listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = penTemp });
-                    }
-
-                    if (words.Length == 11)
-                    {
-                        // Already have some person in some frames labeled 
-                        listAction[currentFrameNum - 1].Add(words[10]);
-                    }
-                    else
-                    {
-                        listAction[currentFrameNum - 1].Add(null);
-                    }
+                var jsonSerializer = new JsonSerializer();
+                while (jsonReader.Read())
+                {
+                    listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
                 }
-            }                    
+                
+                foreach (FrameObj fobj in listFrames)
+                {
+
+                    listRec.Add(new List<Rectangle>());
+
+                    foreach (Prediction person in fobj.predictions)
+                    {                        
+                        x = (int) person.bbox[0];
+                        y = (int) person.bbox[1];                        
+                        weight = (int) person.bbox[2];
+                        height = (int) person.bbox[3];
+
+                        listRec[fobj.frame - 1].Add(new Rectangle(x, y, weight, height));
+                    }                                      
+             
+                }
+            }
+
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            //{
+            //    lines = System.IO.File.ReadAllLines(@ofd.FileName);
+
+            //    foreach (string line in lines)
+            //    {
+            //        words = line.Split(',');
+
+            //        // Original version
+            //        //x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
+            //        //y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
+            //        //weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
+            //        //height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
+
+            //        //New version
+            //        // Different OS has different personalized Setting for number format, this parameter to use uniform number format
+            //        x = (int)double.Parse(words[2], CultureInfo.InvariantCulture) * 2 / 3;
+            //        y = (int)double.Parse(words[3], CultureInfo.InvariantCulture) * 2 / 3;
+            //        weight = (int)double.Parse(words[4], CultureInfo.InvariantCulture) * 2 / 3;
+            //        height = (int)double.Parse(words[5], CultureInfo.InvariantCulture) * 2 / 3;
+
+            //        if (Int32.Parse(words[0]) != currentFrameNum)
+            //        {
+            //            currentFrameNum++;
+            //            lineByFrame.Add(new List<string>());
+            //            listRec.Add(new List<Rectangle>());
+            //            listAction.Add(new List<string>());
+            //        }
+            //        lineByFrame[currentFrameNum - 1].Add(line);
+            //        listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
+
+            //        // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
+            //        if (!listPersonColor.Any(a => a.personID == Int32.Parse(words[1])))
+            //        {
+            //            penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+            //            penTemp.Width = 3.0F;
+            //            listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = penTemp });
+            //        }
+
+            //        if (words.Length == 11)
+            //        {
+            //            // Already have some person in some frames labeled 
+            //            listAction[currentFrameNum - 1].Add(words[10]);
+            //        }
+            //        else
+            //        {
+            //            listAction[currentFrameNum - 1].Add(null);
+            //        }
+            //    }
+            //}
         }                
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
