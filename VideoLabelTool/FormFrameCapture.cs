@@ -15,6 +15,7 @@ using Emgu.Util;
 using Emgu.CV.CvEnum;
 using System.IO;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace VideoLabelTool
 {
@@ -294,9 +295,49 @@ namespace VideoLabelTool
             My_Timer.Stop();
             status = 0;
         }
+        
+        public class Prediction
+        {
+            public List<double> keypoints { get; set; }
+            public List<double> bbox { get; set; }
+            public double score { get; set; }
+            public int category_id { get; set; }
+            public int id_ { get; set; }
+        }
+
+        public class FrameObj
+        {
+            public int frame { get; set; }
+            //public List<int> predictions { get; set; }
+            public List<Prediction> predictions { get; set; }
+        }
+
+        private void bntLoadJsonLabels_Click()
+        {
+            /*Single-Content JSON file*/
+            //string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\prova1.json");
+            //FrameObj frames = JsonConvert.DeserializeObject<FrameObj>(json);
+            //Debug.WriteLine(frames.predictions[0].score);
+
+            /*Multiple-Content JSON file*/
+            List<FrameObj> listFrames = new List<FrameObj>();
+            string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
+            var jsonReader = new JsonTextReader(new StringReader(json))
+            {
+                SupportMultipleContent = true // This is important!
+            };
+
+            var jsonSerializer = new JsonSerializer();
+            while (jsonReader.Read())
+            {
+                listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
+            }            
+        }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {
+            bntLoadJsonLabels_Click();
+
             ofd = new OpenFileDialog();
             int currentFrameNum = 1;
             lineByFrame = new List<List<string>>();
@@ -366,8 +407,8 @@ namespace VideoLabelTool
                     }
                 }
             }                    
-        }        
-        
+        }                
+
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
             foreach (Rectangle r in listRec[currentFrameNum])
