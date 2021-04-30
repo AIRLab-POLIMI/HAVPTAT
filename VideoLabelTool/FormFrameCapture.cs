@@ -16,6 +16,7 @@ using Emgu.CV.CvEnum;
 using System.IO;
 using System.Globalization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace VideoLabelTool
 {
@@ -41,6 +42,7 @@ namespace VideoLabelTool
 
         private static Random rnd = new Random();
         List<FrameObj> listFrames;
+        List<dynamic> listFrames_export;
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
         List<List<string>> listAction;        
@@ -355,23 +357,35 @@ namespace VideoLabelTool
             int weight;
             int height;
 
-            //if (ofd.ShowDialog() == DialogResult.OK)
-            if (true)
+            if (ofd.ShowDialog() == DialogResult.OK)
+            //if (true)
             {
-                string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
-                listFrames = new List<FrameObj>();
-                
+                //string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
+                string json = File.ReadAllText(ofd.FileName);
+
+                listFrames = new List<FrameObj>();                
                 var jsonReader = new JsonTextReader(new StringReader(json))
                 {
                     SupportMultipleContent = true // This is important!
                 };
-
                 var jsonSerializer = new JsonSerializer();
+
                 while (jsonReader.Read())
                 {
                     listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
                 }
-                
+
+                listFrames_export = new List<dynamic>();
+                var jsonReader_export = new JsonTextReader(new StringReader(json))
+                {
+                    SupportMultipleContent = true // This is important for multiple content JSON file reading!
+                };
+                var jsonSerializer_export = new JsonSerializer();
+                while (jsonReader_export.Read())
+                {                      
+                    listFrames_export.Add(jsonSerializer.Deserialize<JObject>(jsonReader_export));
+                }                                                                             
+
                 foreach (FrameObj fobj in listFrames)
                 {
                     listRec.Add(new List<Rectangle>());
@@ -558,9 +572,7 @@ namespace VideoLabelTool
         }        
 
         private void bntExport_Click(object sender, EventArgs e)
-        {
-            string lineToWrite = null;
-            string[] splittedLine;
+        {     
             string[] splittedopenedFilePath = openedFilePath.Split('\\');
             string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
 
@@ -571,51 +583,48 @@ namespace VideoLabelTool
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter writer = new StreamWriter(sfd.FileName, false))
-                {
-                    for (int i = 0; i < lineByFrame.Count; i++)
+                {                  
+                    for (int i = 0; i < listFrames_export.Count; i++)
                     {
-                        for (int j = 0; j < lineByFrame[i].Count; j++)
-                        {
-                            splittedLine = lineByFrame[i][j].Split(',');
-                            if (listAction[i][j] != null && splittedLine.Length != 11)
-                            {
-                                lineToWrite = lineByFrame[i][j] + "," + listAction[i][j];
-                            }
-                            else if (listAction[i][j] != null && splittedLine.Length == 11 && splittedLine[10] != listAction[i][j])
-                            {                                
-                                splittedLine[10] = listAction[i][j];
-                                lineToWrite = String.Join(",", splittedLine);
-                            }
+                        for (int j = 0; j < listFrames_export[i].predictions.Count; j++)
+                        {                      
+                            if (listAction[i][j] != null)
+                            {                               
+                                listFrames_export[i].predictions[j].action = listAction[i][j];
+                            }           
                             else
                             {
-                                lineToWrite = lineByFrame[i][j];
-                            }
-
-                            writer.WriteLine(lineToWrite);
+                                listFrames_export[i].predictions[j].action = "";
+                            }                         
                         }
                     }
                 }
+            }
+
+            using (StreamWriter sw = File.CreateText(@"C:\\Users\\quan\\Downloads\\prova_export.json"))
+            {
+                sw.Write(JsonConvert.SerializeObject(listFrames_export));
             }
         }
 
         private void bntWalking_Click(object sender, EventArgs e)
         {
-            actionAssociate("Walking");
+            actionAssociate("walking");
         }        
 
         private void bntDrinking_Click(object sender, EventArgs e)
         {
-            actionAssociate("Drinking");
+            actionAssociate("drinking");
         }        
 
         private void bntStanding_Click(object sender, EventArgs e)
         {
-            actionAssociate("Standing");
+            actionAssociate("standing");
         }
 
         private void buttonSitting_Click(object sender, EventArgs e)
         {
-            actionAssociate("Sitting");
+            actionAssociate("sitting");
         }
 
         private void cbInter_CheckedChanged(object sender, EventArgs e)
