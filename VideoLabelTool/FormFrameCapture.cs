@@ -153,7 +153,7 @@ namespace VideoLabelTool
                 this.bntNextFrame.Enabled = true;
             }
         }                
-
+        
         private void bntPlay_Click(object sender, EventArgs e)
         {
             Play();
@@ -349,8 +349,7 @@ namespace VideoLabelTool
             //listAction.Add(new List<string>());
 
             listPersonColor = new List<PersonColor>();
-
-            String[] words;
+            
             int x;
             int y;
             int weight;
@@ -474,11 +473,9 @@ namespace VideoLabelTool
                 }
             foreach (int spi in selectedPersonIndex)
             {
-                // Through "selectedPersonIndex" list to get "selectedPersonID" list
-                //if (!selectedPersonID.Any(idx => idx == Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1])))
+                // Through "selectedPersonIndex" list to get "selectedPersonID" list                
                 if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
-                {
-                    //selectedPersonID.Add(Int32.Parse(lineByFrame[currentFrameNum][spi].Split(',')[1]));
+                {                    
                     selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
                     Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
                 }
@@ -490,8 +487,7 @@ namespace VideoLabelTool
             if (selectedPersonID.Count > 1)
             {
                 FormSelection formPopup = new FormSelection(this);
-                formPopup.ShowDialog(this);
-                //selectedPersonIndexUnique = lineByFrame[currentFrameNum].FindIndex(a => Int32.Parse(a.Split(',')[1]) == selectedPersonIDUnique);
+                formPopup.ShowDialog(this);                
                 selectedPersonIndexUnique = listFrames[currentFrameNum].predictions.FindIndex(a => a.id_ == selectedPersonIDUnique);
             }
             else if (selectedPersonID.Count == 0)
@@ -508,17 +504,16 @@ namespace VideoLabelTool
             if (!listPersonIDAssociated.Contains(selectedPersonIDUnique))
             {
                 if (this.cbInter.Checked == false)
-                {
-                    for (int i = 0; i < lineByFrame.Count; i++)
+                {                    
+                    for (int i = 0; i < listFrames.Count; i++)
                     {
-                        for (int j = 0; j < lineByFrame[i].Count; j++)
-                        {
-                            //if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                        for (int j = 0; j < listFrames[i].predictions.Count; j++)
+                        {                            
                             if (listFrames[i].predictions[j].id_ == selectedPersonIDUnique)
                             {
                                 listAction[i][j] = actionLabel;
                             }
-                        }
+                        }                
                     }
                     listPersonIDAssociated.Add(selectedPersonIDUnique);
                 }
@@ -526,11 +521,9 @@ namespace VideoLabelTool
                 else
                 {
                     for (int i = (int) nudStart.Value; i <= (int)nudEnd.Value; i++)
-                    {
-                        //for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {                        
                         for (int j = 0; j < listFrames[i].predictions.Count; j++)
-                        {
-                            //if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                        {                     
                             if (listFrames[i].predictions[j].id_ == selectedPersonIDUnique)
                             {
                                 listAction[i][j] = actionLabel;
@@ -548,11 +541,9 @@ namespace VideoLabelTool
                 else
                 {
                     for (int i = (int)nudStart.Value; i <= (int)nudEnd.Value; i++)
-                    {
-                        //for (int j = 0; j < lineByFrame[i].Count; j++)
+                    {                        
                         for (int j = 0; j < listFrames[i].predictions.Count; j++)
-                        {
-                            //if (Int32.Parse(lineByFrame[i][j].Split(',')[1]) == selectedPersonIDUnique)
+                        {                            
                             if (listFrames[i].predictions[j].id_ == selectedPersonIDUnique)
                             {
                                 listAction[i][j] = actionLabel;
