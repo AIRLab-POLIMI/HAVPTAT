@@ -40,7 +40,7 @@ namespace VideoLabelTool
         Pen penTemp;
 
         private static Random rnd = new Random();
-        //Pen pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+        List<FrameObj> listFrames;
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
         List<List<string>> listAction;        
@@ -81,20 +81,21 @@ namespace VideoLabelTool
         {
             if (listRec != null)
             {
-                if (listRec.Count == lineByFrame.Count)
-                {
+                //if (listRec.Count == lineByFrame.Count)
+                //{
                     string word;
                     if (listRec != null && currentFrameNum < TotalFrame)
                     {
                         foreach (Rectangle ret in listRec[currentFrameNum])
-                        {                           
-                            var a = (from n in listPersonColor
-                                     where n.personID == Int32.Parse(lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1])
-                                    select n).FirstOrDefault();
+                        {
+                        var a = (from n in listPersonColor                                     
+                                 where n.personID == listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_
+                                 select n).FirstOrDefault();
 
-                            e.Graphics.DrawRectangle(a.pen, ret);
-                            word = lineByFrame[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)].Split(',')[1];
-                            word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                            e.Graphics.DrawRectangle(a.pen, ret);                            
+                            word = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_.ToString();
+                            //TODO
+                            //word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
                             
                             // Version: string color is Red
                             e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
@@ -103,7 +104,7 @@ namespace VideoLabelTool
                             //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
                         }
                     }
-                }
+                //}
             }
         }
 
@@ -320,7 +321,7 @@ namespace VideoLabelTool
             //Debug.WriteLine(frames.predictions[0].score);
 
             /*Multiple-Content JSON file*/
-            List<FrameObj> listFrames = new List<FrameObj>();
+            listFrames = new List<FrameObj>();
             string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
             var jsonReader = new JsonTextReader(new StringReader(json))
             {
@@ -360,7 +361,7 @@ namespace VideoLabelTool
             if (true)
             {
                 string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
-                List<FrameObj> listFrames = new List<FrameObj>();
+                listFrames = new List<FrameObj>();
                 
                 var jsonReader = new JsonTextReader(new StringReader(json))
                 {
@@ -375,8 +376,8 @@ namespace VideoLabelTool
                 
                 foreach (FrameObj fobj in listFrames)
                 {
-
                     listRec.Add(new List<Rectangle>());
+                    listAction.Add(new List<string>());
 
                     foreach (Prediction person in fobj.predictions)
                     {                        
@@ -386,8 +387,27 @@ namespace VideoLabelTool
                         height = (int) person.bbox[3];
 
                         listRec[fobj.frame - 1].Add(new Rectangle(x, y, weight, height));
-                    }                                      
-             
+                        
+                        // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
+                        if (!listPersonColor.Any(a => a.personID == person.id_))
+                        {
+                            penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+                            penTemp.Width = 3.0F;
+                            listPersonColor.Add(new PersonColor { personID = person.id_, pen = penTemp });
+                        }
+
+                        listAction[currentFrameNum - 1].Add(null);
+
+                        //if (words.Length == 11)
+                        //{
+                        //    // Already have some person in some frames labeled 
+                        //    listAction[currentFrameNum - 1].Add(words[10]);
+                        //}
+                        //else
+                        //{
+                        //    listAction[currentFrameNum - 1].Add(null);
+                        //}
+                    }
                 }
             }
 
