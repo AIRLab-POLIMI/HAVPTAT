@@ -41,8 +41,7 @@ namespace VideoLabelTool
         Pen penTemp;
 
         private static Random rnd = new Random();
-        List<FrameObj> listFrames;
-        List<dynamic> listFrames_export;
+        List<FrameObj> listFrames;                
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
         List<List<string>> listAction;        
@@ -57,8 +56,23 @@ namespace VideoLabelTool
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
-        const string caption = "Warning";        
+        const string caption = "Warning";
 
+        public class Prediction
+        {
+            public List<double> keypoints { get; set; }
+            public List<double> bbox { get; set; }
+            public double score { get; set; }
+            public int category_id { get; set; }
+            public int id_ { get; set; }
+            public string action { get; set; }
+        }
+
+        public class FrameObj
+        {
+            public int frame { get; set; }
+            public List<Prediction> predictions { get; set; }
+        }
         public FormFrameCapture()
         {
             InitializeComponent();
@@ -76,36 +90,33 @@ namespace VideoLabelTool
 
             pictureBox1.Width = 1280;
             pictureBox1.Height = 720;
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;            
         }
 
         private void plotROI(object sender, PaintEventArgs e)
         {
             if (listRec != null)
             {
-                //if (listRec.Count == lineByFrame.Count)
-                //{
-                    string word;
-                    if (listRec != null && currentFrameNum < TotalFrame)
+                string word;
+                if (listRec != null && currentFrameNum < TotalFrame)
+                {
+                    foreach (Rectangle ret in listRec[currentFrameNum])
                     {
-                        foreach (Rectangle ret in listRec[currentFrameNum])
-                        {
-                        var a = (from n in listPersonColor                                     
-                                 where n.personID == listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_
-                                 select n).FirstOrDefault();
+                    var a = (from n in listPersonColor                                     
+                                where n.personID == listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_
+                                select n).FirstOrDefault();
 
-                            e.Graphics.DrawRectangle(a.pen, ret);                            
-                            word = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_.ToString();                            
-                            word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                        e.Graphics.DrawRectangle(a.pen, ret);                            
+                        word = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_.ToString();                            
+                        word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
                             
-                            // Version: string color is Red
-                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        // Version: string color is Red
+                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
                             
-                            // Version: string color is the same with bounding box
-                            //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
-                        }
+                        // Version: string color is the same with bounding box
+                        //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
                     }
-                //}
+                }                
             }
         }
 
@@ -296,23 +307,7 @@ namespace VideoLabelTool
         {            
             My_Timer.Stop();
             status = 0;
-        }
-        
-        public class Prediction
-        {
-            public List<double> keypoints { get; set; }
-            public List<double> bbox { get; set; }
-            public double score { get; set; }
-            public int category_id { get; set; }
-            public int id_ { get; set; }
-        }
-
-        public class FrameObj
-        {
-            public int frame { get; set; }
-            //public List<int> predictions { get; set; }
-            public List<Prediction> predictions { get; set; }
-        }
+        }                
 
         private void bntLoadJsonLabels_Click()
         {
@@ -334,6 +329,26 @@ namespace VideoLabelTool
             {
                 listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
             }            
+        }
+
+        private List<FrameObj> addActionFieldToJson(string jsonFile)
+        {
+            List<dynamic> listFramesFormatted = new List<dynamic>();
+
+            var jsonSerializer = new JsonSerializer();
+            var jsonReaderExport = new JsonTextReader(new StringReader(jsonFile))
+            {
+                SupportMultipleContent = true // This is important for multiple content JSON file reading!
+            };
+            while (jsonReaderExport.Read())
+            {
+                listFramesFormatted.Add(jsonSerializer.Deserialize<JObject>(jsonReaderExport));
+            }            
+
+            string jsonData = JsonConvert.SerializeObject(listFramesFormatted);
+            List<FrameObj> framesAct = JsonConvert.DeserializeObject<List<FrameObj>>(jsonData);
+
+            return framesAct;
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
@@ -363,28 +378,7 @@ namespace VideoLabelTool
                 //string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
                 string json = File.ReadAllText(ofd.FileName);
 
-                listFrames = new List<FrameObj>();                
-                var jsonReader = new JsonTextReader(new StringReader(json))
-                {
-                    SupportMultipleContent = true // This is important!
-                };
-                var jsonSerializer = new JsonSerializer();
-
-                while (jsonReader.Read())
-                {
-                    listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
-                }
-
-                listFrames_export = new List<dynamic>();
-                var jsonReader_export = new JsonTextReader(new StringReader(json))
-                {
-                    SupportMultipleContent = true // This is important for multiple content JSON file reading!
-                };
-                var jsonSerializer_export = new JsonSerializer();
-                while (jsonReader_export.Read())
-                {                      
-                    listFrames_export.Add(jsonSerializer.Deserialize<JObject>(jsonReader_export));
-                }                                                                             
+                listFrames = addActionFieldToJson(json);                                                                          
 
                 foreach (FrameObj fobj in listFrames)
                 {
@@ -410,70 +404,10 @@ namespace VideoLabelTool
 
                         listAction[currentFrameNum - 1].Add(null);
 
-                        //if (words.Length == 11)
-                        //{
-                        //    // Already have some person in some frames labeled 
-                        //    listAction[currentFrameNum - 1].Add(words[10]);
-                        //}
-                        //else
-                        //{
-                        //    listAction[currentFrameNum - 1].Add(null);
-                        //}
                     }
                     currentFrameNum++;
                 }
             }
-
-            //if (ofd.ShowDialog() == DialogResult.OK)
-            //{
-            //    lines = System.IO.File.ReadAllLines(@ofd.FileName);
-
-            //    foreach (string line in lines)
-            //    {
-            //        words = line.Split(',');
-
-            //        // Original version
-            //        //x = (int)(Convert.ToDouble(words[2]) * 2 / 3);
-            //        //y = (int)(Convert.ToDouble(words[3]) * 2 / 3);
-            //        //weight = (int)(Convert.ToDouble(words[4]) * 2 / 3);
-            //        //height = (int)(Convert.ToDouble(words[5]) * 2 / 3);
-
-            //        //New version
-            //        // Different OS has different personalized Setting for number format, this parameter to use uniform number format
-            //        x = (int)double.Parse(words[2], CultureInfo.InvariantCulture) * 2 / 3;
-            //        y = (int)double.Parse(words[3], CultureInfo.InvariantCulture) * 2 / 3;
-            //        weight = (int)double.Parse(words[4], CultureInfo.InvariantCulture) * 2 / 3;
-            //        height = (int)double.Parse(words[5], CultureInfo.InvariantCulture) * 2 / 3;
-
-            //        if (Int32.Parse(words[0]) != currentFrameNum)
-            //        {
-            //            currentFrameNum++;
-            //            lineByFrame.Add(new List<string>());
-            //            listRec.Add(new List<Rectangle>());
-            //            listAction.Add(new List<string>());
-            //        }
-            //        lineByFrame[currentFrameNum - 1].Add(line);
-            //        listRec[currentFrameNum - 1].Add(new Rectangle(x, y, weight, height));
-
-            //        // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
-            //        if (!listPersonColor.Any(a => a.personID == Int32.Parse(words[1])))
-            //        {
-            //            penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
-            //            penTemp.Width = 3.0F;
-            //            listPersonColor.Add(new PersonColor { personID = Int32.Parse(words[1]), pen = penTemp });
-            //        }
-
-            //        if (words.Length == 11)
-            //        {
-            //            // Already have some person in some frames labeled 
-            //            listAction[currentFrameNum - 1].Add(words[10]);
-            //        }
-            //        else
-            //        {
-            //            listAction[currentFrameNum - 1].Add(null);
-            //        }
-            //    }
-            //}
         }                
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
@@ -576,34 +510,31 @@ namespace VideoLabelTool
             string[] splittedopenedFilePath = openedFilePath.Split('\\');
             string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
 
-            SaveFileDialog sfd = new SaveFileDialog();            
-            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";            
-            sfd.FileName = "AL_" + openedFileName;
+            SaveFileDialog sfd = new SaveFileDialog();
+            //sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";            
+            sfd.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
+            sfd.FileName = "action_" + openedFileName;
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter writer = new StreamWriter(sfd.FileName, false))
                 {                  
-                    for (int i = 0; i < listFrames_export.Count; i++)
+                    for (int i = 0; i < listFrames.Count; i++)
                     {
-                        for (int j = 0; j < listFrames_export[i].predictions.Count; j++)
+                        for (int j = 0; j < listFrames[i].predictions.Count; j++)
                         {                      
                             if (listAction[i][j] != null)
                             {                               
-                                listFrames_export[i].predictions[j].action = listAction[i][j];
-                            }           
-                            else
-                            {
-                                listFrames_export[i].predictions[j].action = "";
-                            }                         
+                                listFrames[i].predictions[j].action = listAction[i][j];
+                            }                                                                
                         }
                     }
                 }
             }
 
-            using (StreamWriter sw = File.CreateText(@"C:\\Users\\quan\\Downloads\\prova_export.json"))
+            using (StreamWriter sw = File.CreateText(sfd.FileName))
             {
-                sw.Write(JsonConvert.SerializeObject(listFrames_export));
+                sw.Write(JsonConvert.SerializeObject(listFrames));
             }
         }
 
