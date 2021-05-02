@@ -18,6 +18,8 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+using System.Diagnostics;
+
 namespace VideoLabelTool
 {
     public partial class FormFrameCapture : Form
@@ -44,7 +46,8 @@ namespace VideoLabelTool
         List<FrameObj> listFrames;                
         List<List<Rectangle>> listRec;
         List<List<string>> lineByFrame;
-        List<List<string>> listAction;        
+        List<List<string>> listAction;
+        List<List<Keypoints>> listKeypoints;
         List<int> listPersonIDAssociated = new List<int>();
 
         public class PersonColor
@@ -57,7 +60,7 @@ namespace VideoLabelTool
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
         const string caption = "Warning";
-
+        
         public class Prediction
         {
             public List<double> keypoints { get; set; }
@@ -329,6 +332,11 @@ namespace VideoLabelTool
             return framesAct;
         }
 
+        private double getKeyPoint(List<FrameObj> listFrames, int i, int j, int index)
+        {
+            return listFrames[i].predictions[j].keypoints[index];
+        }
+
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {            
             ofd = new OpenFileDialog();
@@ -337,12 +345,13 @@ namespace VideoLabelTool
             lineByFrame.Add(new List<string>());
             listRec = new List<List<Rectangle>>();            
             listAction = new List<List<String>>();            
-            listPersonColor = new List<PersonColor>();            
+            listPersonColor = new List<PersonColor>();
+            listKeypoints = new List<List<Keypoints>>();
             int x;
             int y;
             int weight;
             int height;
-            bool semilabled = false;
+            bool semilabeled = false;
 
             if (ofd.ShowDialog() == DialogResult.OK)            
             {                
@@ -351,7 +360,7 @@ namespace VideoLabelTool
                 if (json[0] == '[' && json[json.Length - 1] == ']')
                 {
                     json = json.Substring(1, json.Length - 2);
-                    semilabled = true;
+                    semilabeled = true;
                 }                
                 listFrames = addActionFieldToJson(json);
                 
@@ -359,6 +368,7 @@ namespace VideoLabelTool
                 {
                     listRec.Add(new List<Rectangle>());
                     listAction.Add(new List<string>());
+                    listKeypoints.Add(new List<Keypoints>());
 
                     for (int j = 0; j < listFrames[i].predictions.Count; j++)
                     {                        
@@ -368,7 +378,31 @@ namespace VideoLabelTool
                         height = (int)listFrames[i].predictions[j].bbox[3];
 
                         listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
-                        
+
+                        listKeypoints[listFrames[i].frame - 1].Add(new Keypoints(getKeyPoint(listFrames, i, j, 0), getKeyPoint(listFrames, i, j, 1), getKeyPoint(listFrames, i, j, 2),
+                                                              getKeyPoint(listFrames, i, j, 3), getKeyPoint(listFrames, i, j, 4), getKeyPoint(listFrames, i, j, 5),
+                                                              getKeyPoint(listFrames, i, j, 6), getKeyPoint(listFrames, i, j, 7), getKeyPoint(listFrames, i, j, 8),
+                                                              getKeyPoint(listFrames, i, j, 9), getKeyPoint(listFrames, i, j, 10), getKeyPoint(listFrames, i, j, 11),
+                                                              getKeyPoint(listFrames, i, j, 12), getKeyPoint(listFrames, i, j, 13), getKeyPoint(listFrames, i, j, 14),
+                                                              getKeyPoint(listFrames, i, j, 15), getKeyPoint(listFrames, i, j, 16), getKeyPoint(listFrames, i, j, 17),
+                                                              getKeyPoint(listFrames, i, j, 18), getKeyPoint(listFrames, i, j, 19), getKeyPoint(listFrames, i, j, 20),
+                                                              getKeyPoint(listFrames, i, j, 21), getKeyPoint(listFrames, i, j, 22), getKeyPoint(listFrames, i, j, 23),
+                                                              getKeyPoint(listFrames, i, j, 24), getKeyPoint(listFrames, i, j, 25), getKeyPoint(listFrames, i, j, 26),
+                                                              getKeyPoint(listFrames, i, j, 27), getKeyPoint(listFrames, i, j, 28), getKeyPoint(listFrames, i, j, 29),
+                                                              getKeyPoint(listFrames, i, j, 30), getKeyPoint(listFrames, i, j, 31), getKeyPoint(listFrames, i, j, 32),
+                                                              getKeyPoint(listFrames, i, j, 33), getKeyPoint(listFrames, i, j, 34), getKeyPoint(listFrames, i, j, 35),
+                                                              getKeyPoint(listFrames, i, j, 36), getKeyPoint(listFrames, i, j, 37), getKeyPoint(listFrames, i, j, 38),
+                                                              getKeyPoint(listFrames, i, j, 39), getKeyPoint(listFrames, i, j, 40), getKeyPoint(listFrames, i, j, 41),
+                                                              getKeyPoint(listFrames, i, j, 42), getKeyPoint(listFrames, i, j, 43), getKeyPoint(listFrames, i, j, 44),
+                                                              getKeyPoint(listFrames, i, j, 45), getKeyPoint(listFrames, i, j, 46), getKeyPoint(listFrames, i, j, 47),
+                                                              getKeyPoint(listFrames, i, j, 48), getKeyPoint(listFrames, i, j, 49), getKeyPoint(listFrames, i, j, 50)
+                                                              ));
+
+                        foreach (Keypoint ky in listKeypoints[listFrames[i].frame - 1][j].pose)
+                        {
+                            Debug.WriteLine(ky.x);
+                        }
+
                         // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
                         if (!listPersonColor.Any(a => a.personID == listFrames[i].predictions[j].id_))
                         {
@@ -376,7 +410,7 @@ namespace VideoLabelTool
                             penTemp.Width = 3.0F;
                             listPersonColor.Add(new PersonColor { personID = listFrames[i].predictions[j].id_, pen = penTemp });
                         }
-                        if (semilabled == true)                        
+                        if (semilabeled == true)                        
                             listAction[currentFrameNum - 1].Add(listFrames[i].predictions[j].action);                        
                         else
                             listAction[currentFrameNum - 1].Add(null);
@@ -486,8 +520,7 @@ namespace VideoLabelTool
             string[] splittedopenedFilePath = openedFilePath.Split('\\');
             string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            //sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";            
+            SaveFileDialog sfd = new SaveFileDialog();                 
             sfd.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
             sfd.FileName = "action_" + openedFileName;
 

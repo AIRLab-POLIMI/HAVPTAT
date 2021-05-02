@@ -97,6 +97,7 @@
     <Compile Include="FormSelection.Designer.cs">
       <DependentUpon>FormSelection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Keypoints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormFrameCapture.resx">
