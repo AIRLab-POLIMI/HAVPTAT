@@ -308,29 +308,7 @@ namespace VideoLabelTool
             My_Timer.Stop();
             status = 0;
         }                
-
-        private void bntLoadJsonLabels_Click()
-        {
-            /*Single-Content JSON file*/
-            //string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\prova1.json");
-            //FrameObj frames = JsonConvert.DeserializeObject<FrameObj>(json);
-            //Debug.WriteLine(frames.predictions[0].score);
-
-            /*Multiple-Content JSON file*/
-            listFrames = new List<FrameObj>();
-            string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
-            var jsonReader = new JsonTextReader(new StringReader(json))
-            {
-                SupportMultipleContent = true // This is important!
-            };
-
-            var jsonSerializer = new JsonSerializer();
-            while (jsonReader.Read())
-            {
-                listFrames.Add(jsonSerializer.Deserialize<FrameObj>(jsonReader));
-            }            
-        }
-
+        
         private List<FrameObj> addActionFieldToJson(string jsonFile)
         {
             List<dynamic> listFramesFormatted = new List<dynamic>();
@@ -352,58 +330,56 @@ namespace VideoLabelTool
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
-        {
-            //bntLoadJsonLabels_Click();
-
+        {            
             ofd = new OpenFileDialog();
             int currentFrameNum = 1;
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
-
             listRec = new List<List<Rectangle>>();            
-
-            listAction = new List<List<String>>();
-            //listAction.Add(new List<string>());
-
-            listPersonColor = new List<PersonColor>();
-            
+            listAction = new List<List<String>>();            
+            listPersonColor = new List<PersonColor>();            
             int x;
             int y;
             int weight;
             int height;
+            bool semilabled = false;
 
-            if (ofd.ShowDialog() == DialogResult.OK)
-            //if (true)
-            {
-                //string json = File.ReadAllText(@"C:\\Users\\quan\\Downloads\\OpenPifPaf_PoseTrack.json");
-                string json = File.ReadAllText(ofd.FileName);
-
-                listFrames = addActionFieldToJson(json);                                                                          
-
-                foreach (FrameObj fobj in listFrames)
+            if (ofd.ShowDialog() == DialogResult.OK)            
+            {                
+                string json = File.ReadAllText(ofd.FileName);                                                                                       
+                
+                if (json[0] == '[' && json[json.Length - 1] == ']')
+                {
+                    json = json.Substring(1, json.Length - 2);
+                    semilabled = true;
+                }                
+                listFrames = addActionFieldToJson(json);
+                
+                for (int i = 0; i < listFrames.Count; i++)
                 {
                     listRec.Add(new List<Rectangle>());
                     listAction.Add(new List<string>());
 
-                    foreach (Prediction person in fobj.predictions)
+                    for (int j = 0; j < listFrames[i].predictions.Count; j++)
                     {                        
-                        x = (int) person.bbox[0];
-                        y = (int) person.bbox[1];                        
-                        weight = (int) person.bbox[2];
-                        height = (int) person.bbox[3];
+                        x = (int)listFrames[i].predictions[j].bbox[0];
+                        y = (int)listFrames[i].predictions[j].bbox[1];                        
+                        weight = (int)listFrames[i].predictions[j].bbox[2];
+                        height = (int)listFrames[i].predictions[j].bbox[3];
 
-                        listRec[fobj.frame - 1].Add(new Rectangle(x, y, weight, height));
+                        listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
                         
                         // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
-                        if (!listPersonColor.Any(a => a.personID == person.id_))
+                        if (!listPersonColor.Any(a => a.personID == listFrames[i].predictions[j].id_))
                         {
                             penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
                             penTemp.Width = 3.0F;
-                            listPersonColor.Add(new PersonColor { personID = person.id_, pen = penTemp });
+                            listPersonColor.Add(new PersonColor { personID = listFrames[i].predictions[j].id_, pen = penTemp });
                         }
-
-                        listAction[currentFrameNum - 1].Add(null);
-
+                        if (semilabled == true)                        
+                            listAction[currentFrameNum - 1].Add(listFrames[i].predictions[j].action);                        
+                        else
+                            listAction[currentFrameNum - 1].Add(null);
                     }
                     currentFrameNum++;
                 }
@@ -534,7 +510,7 @@ namespace VideoLabelTool
 
             using (StreamWriter sw = File.CreateText(sfd.FileName))
             {
-                sw.Write(JsonConvert.SerializeObject(listFrames));
+                sw.Write(JsonConvert.SerializeObject(listFrames, Formatting.Indented));
             }
         }
 
