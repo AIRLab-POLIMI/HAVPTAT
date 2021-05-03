@@ -8,11 +8,11 @@ namespace VideoLabelTool
 {
     public class Keypoint
     {
-        public double x;
-        public double y;
-        public double visibility;
+        public float x;
+        public float y;
+        public float visibility;
 
-        public Keypoint(double X, double Y, double Visibility)
+        public Keypoint(float X, float Y, float Visibility)
         {
             this.x = X;
             this.y = Y;
@@ -23,31 +23,31 @@ namespace VideoLabelTool
             //this.Visibility = Visibility;
         }
 
-        //public double X { get; set; }
-        //public double Y { get; set; }
-        //public double Visibility { get; set; }
+        //public float X { get; set; }
+        //public float Y { get; set; }
+        //public float Visibility { get; set; }
     }
 
     public class Keypoints : IEnumerable
     {
         public Keypoint[] pose;
-        public Keypoints(double x1, double y1, double v1, 
-                         double x2, double y2, double v2,
-                         double x3, double y3, double v3,
-                         double x4, double y4, double v4,
-                         double x5, double y5, double v5,
-                         double x6, double y6, double v6,
-                         double x7, double y7, double v7,
-                         double x8, double y8, double v8,
-                         double x9, double y9, double v9,
-                         double x10, double y10, double v10,
-                         double x11, double y11, double v11,
-                         double x12, double y12, double v12,
-                         double x13, double y13, double v13,
-                         double x14, double y14, double v14,
-                         double x15, double y15, double v15,
-                         double x16, double y16, double v16,
-                         double x17, double y17, double v17
+        public Keypoints(float x1, float y1, float v1, 
+                         float x2, float y2, float v2,
+                         float x3, float y3, float v3,
+                         float x4, float y4, float v4,
+                         float x5, float y5, float v5,
+                         float x6, float y6, float v6,
+                         float x7, float y7, float v7,
+                         float x8, float y8, float v8,
+                         float x9, float y9, float v9,
+                         float x10, float y10, float v10,
+                         float x11, float y11, float v11,
+                         float x12, float y12, float v12,
+                         float x13, float y13, float v13,
+                         float x14, float y14, float v14,
+                         float x15, float y15, float v15,
+                         float x16, float y16, float v16,
+                         float x17, float y17, float v17
                         )
         {
             pose = new Keypoint[17]

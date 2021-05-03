@@ -24,7 +24,7 @@ namespace VideoLabelTool
 {
     public partial class FormFrameCapture : Form
     {
-        double TotalFrame;
+        float TotalFrame;
         int Fps;
         int currentFrameNum;        
         VideoCapture capture;        
@@ -63,9 +63,9 @@ namespace VideoLabelTool
         
         public class Prediction
         {
-            public List<double> keypoints { get; set; }
-            public List<double> bbox { get; set; }
-            public double score { get; set; }
+            public List<float> keypoints { get; set; }
+            public List<float> bbox { get; set; }
+            public float score { get; set; }
             public int category_id { get; set; }
             public int id_ { get; set; }
             public string action { get; set; }
@@ -93,7 +93,38 @@ namespace VideoLabelTool
 
             pictureBox1.Width = 1280;
             pictureBox1.Height = 720;
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;            
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        /*  COCO Person Keypoints mapping
+         *  "categories": [
+            {
+                "supercategory": "person",
+                "id": 1,
+                "name": "person",
+                "keypoints": [
+                    "nose","left_eye","right_eye","left_ear","right_ear",
+                    "left_shoulder","right_shoulder","left_elbow","right_elbow",
+                    "left_wrist","right_wrist","left_hip","right_hip",
+                    "left_knee","right_knee","left_ankle","right_ankle"
+                ],
+                "skeleton": [
+                    [16,14],[14,12],[17,15],[15,13],[12,13],[6,12],[7,13],[6,7],
+                    [6,8],[7,9],[8,10],[9,11],[2,3],[1,2],[1,3],[2,4],[3,5],[4,6],[5,7]
+                ]
+                 "skeleton_index": [
+                    [15,13],[13,11],[16,14],[14,12],[11,12],[5,11],[6,12],[5,6],
+                    [5,7],[6,8],[7,9],[8,10],[1,2],[0,1],[0,2],[1,3],[2,4],[3,5],[4,76]
+                ]
+        
+            }
+        ]*/
+
+
+        private void drawPose(PaintEventArgs e, Pen pen, List<FrameObj> listFrames, int frameNum, int personNum, int pointA, int pointB)
+        {            
+            if (listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].visibility != 0 && listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].visibility != 0)
+                e.Graphics.DrawLine(pen, new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].y), new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].y));
         }
 
         private void plotROI(object sender, PaintEventArgs e)
@@ -101,23 +132,45 @@ namespace VideoLabelTool
             if (listRec != null)
             {
                 string word;
+                int currentPersonID;
                 if (listRec != null && currentFrameNum < TotalFrame)
                 {
                     foreach (Rectangle ret in listRec[currentFrameNum])
                     {
-                    var a = (from n in listPersonColor                                     
+                        var a = (from n in listPersonColor                                     
                                 where n.personID == listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_
                                 select n).FirstOrDefault();
 
-                        e.Graphics.DrawRectangle(a.pen, ret);                            
-                        word = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_.ToString();                            
+                        e.Graphics.DrawRectangle(a.pen, ret);
+                        currentPersonID = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_;
+                        word = currentPersonID.ToString();                            
                         word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
                             
                         // Version: string color is Red
                         e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
-                            
+
                         // Version: string color is the same with bounding box
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
+
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 15, 13);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 16, 14);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 14, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 13, 11);                        
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 11, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 11);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 6);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 7);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 8);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 7, 9);                        
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 8, 10);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 2);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 1);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 2);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 3);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 2, 4);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 3, 5);
+                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 4, 6);
                     }
                 }                
             }
@@ -209,7 +262,6 @@ namespace VideoLabelTool
                         
         }
         
-
         private void bntNextFrame_Click(object sender, EventArgs e)
         {
             NextFrame();              
@@ -332,7 +384,7 @@ namespace VideoLabelTool
             return framesAct;
         }
 
-        private double getKeyPoint(List<FrameObj> listFrames, int i, int j, int index)
+        private float getKeyPoint(List<FrameObj> listFrames, int i, int j, int index)
         {
             return listFrames[i].predictions[j].keypoints[index];
         }
@@ -397,11 +449,6 @@ namespace VideoLabelTool
                                                               getKeyPoint(listFrames, i, j, 45), getKeyPoint(listFrames, i, j, 46), getKeyPoint(listFrames, i, j, 47),
                                                               getKeyPoint(listFrames, i, j, 48), getKeyPoint(listFrames, i, j, 49), getKeyPoint(listFrames, i, j, 50)
                                                               ));
-
-                        foreach (Keypoint ky in listKeypoints[listFrames[i].frame - 1][j].pose)
-                        {
-                            Debug.WriteLine(ky.x);
-                        }
 
                         // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
                         if (!listPersonColor.Any(a => a.personID == listFrames[i].predictions[j].id_))
