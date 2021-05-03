@@ -31,8 +31,7 @@ namespace VideoLabelTool
         Timer My_Timer = new Timer();  
         int status = 0;
         OpenFileDialog ofd;
-        string openedFilePath;
-        string[] lines;        
+        string openedFilePath;       
         int widthPictureBox;
         int heightPictureBox;
         public List<int> selectedPersonID = new List<int>();
@@ -49,17 +48,17 @@ namespace VideoLabelTool
         List<List<string>> listAction;
         List<List<Keypoints>> listKeypoints;
         List<int> listPersonIDAssociated = new List<int>();
-
-        public class PersonColor
-        {
-            public int personID { get; set; }
-            public Pen pen { get; set; }
-        }
         List<PersonColor> listPersonColor;
 
         Font myFont = new Font("Arial", 14);
         const string message = "You have already labeled this person";
         const string caption = "Warning";
+
+        public class PersonColor
+        {
+            public int personID { get; set; }
+            public Pen pen { get; set; }
+        }        
         
         public class Prediction
         {
@@ -636,7 +635,11 @@ namespace VideoLabelTool
             }
         }
 
-        
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            Application.Restart();
+            Environment.Exit(0);
+        }
     }
 }
 
