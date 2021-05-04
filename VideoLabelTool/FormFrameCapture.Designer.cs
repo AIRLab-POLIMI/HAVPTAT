@@ -369,7 +369,7 @@ namespace VideoLabelTool
             this.sittingWhileEatingToolStripMenuItem.Name = "sittingWhileEatingToolStripMenuItem";
             this.sittingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
             this.sittingWhileEatingToolStripMenuItem.Text = "SittingWhileEating";
-            this.sittingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileDrinkingToolStripMenuItem_Click);
+            this.sittingWhileEatingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileEatingToolStripMenuItem_Click);
             // 
             // sittingWhileHoldingBabyInArmsToolStripMenuItem
             // 

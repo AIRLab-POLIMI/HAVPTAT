@@ -765,6 +765,11 @@ namespace VideoLabelTool
             actionAssociate("sittingWhileDrinking");
         }
 
+        private void sittingWhileEatingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileEating");
+        }
+
         private void sittingWhileHoldingBabyInArmsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             actionAssociate("sittingWhileHoldingBabyInArms");
