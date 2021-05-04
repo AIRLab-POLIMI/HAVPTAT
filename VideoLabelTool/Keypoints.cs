@@ -17,15 +17,7 @@ namespace VideoLabelTool
             this.x = X;
             this.y = Y;
             this.visibility = Visibility;
-
-            //this.X = X;
-            //this.Y = Y;
-            //this.Visibility = Visibility;
         }
-
-        //public float X { get; set; }
-        //public float Y { get; set; }
-        //public float Visibility { get; set; }
     }
 
     public class Keypoints : IEnumerable

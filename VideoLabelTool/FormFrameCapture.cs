@@ -50,7 +50,7 @@ namespace VideoLabelTool
         List<int> listPersonIDAssociated = new List<int>();
         List<PersonColor> listPersonColor;
 
-        Font myFont = new Font("Arial", 14);
+        Font myFont = new Font("Arial", 12, FontStyle.Bold);
         const string message = "You have already labeled this person";
         const string caption = "Warning";
 
@@ -144,9 +144,9 @@ namespace VideoLabelTool
                         currentPersonID = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_;
                         word = currentPersonID.ToString();                            
                         word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
-                            
+
                         // Version: string color is Red
-                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));           
 
                         // Version: string color is the same with bounding box
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
@@ -203,7 +203,9 @@ namespace VideoLabelTool
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ofd = new OpenFileDialog();            
+            ofd = new OpenFileDialog();
+            ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";
+
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 openedFilePath = ofd.FileName;
@@ -391,6 +393,8 @@ namespace VideoLabelTool
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {            
             ofd = new OpenFileDialog();
+            ofd.Filter = "JSON files|*.json|TXT files|*.txt|All files|*";
+
             int currentFrameNum = 1;
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
@@ -636,10 +640,239 @@ namespace VideoLabelTool
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
-            Application.Restart();
-            Environment.Exit(0);
+        {
+            var confirmResult = MessageBox.Show("Are you sure to RESET?",
+                                     "Warning",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                Application.Restart();
+                Environment.Exit(0);
+            }                        
         }
+
+        private void walkingWhileCallingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileCalling");
+        }
+
+        private void walkingWhileDrinkingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileDrinking");
+        }
+
+        private void walkingWhileEatingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileEating");
+        }
+
+        private void walkingWhileHoldingBabyInArmsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileHoldingBabyInArms");
+        }
+
+        private void walkingWhileHoldingCartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileHoldingCart");
+        }
+
+        private void walkingWhileHoldingStrollerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileHoldingStroller");
+        }
+
+        private void walkingWhileSmokingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileSmoking");
+        }
+
+        private void walkingWhileTalkingWithPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileTalkingWithPhone");
+        }
+
+        private void standingTogetherWhileLookingAtShopsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingTogetherWhileLookingAtShops");
+        }
+
+        private void standingTogetherWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("StandingTogetherWhileWatchingPhone");
+        }
+
+        private void standingWhileCallingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileCalling");
+        }
+
+        private void standingWhileDrinkingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileDrinking");
+        }
+
+        private void standingWhileEatingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("StandingWhileEating");
+        }
+
+        private void standingWhileHoldingBabyInArmsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileHoldingBabyInArms");
+        }
+
+        private void standingWhileLookingAtShopsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileLookingAtShops");
+        }
+
+        private void standingWhileHoldingStrollerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileHoldingStroller");
+        }
+        private void standingWhileSmokingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileSmoking");
+        }
+
+        private void standingWhileTalkingTogetherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileTalkingTogether");
+        }
+
+        private void standingWhileTalkingWithPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileTalkingWithPhone");
+        }
+
+        private void standingWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileWatchingPhone");
+        }
+
+        private void standingWhileWatchingPhoneTogetherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileWatchingPhoneTogether");
+        }
+
+        private void sittingWhileCallingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileCalling");
+        }
+
+        private void sittingWhileDrinkingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileDrinking");
+        }
+
+        private void sittingWhileHoldingBabyInArmsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileHoldingBabyInArms");
+        }
+
+        private void sittingWhileTalkingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileTalking");
+        }
+
+        private void sittingWhileTalkingWithPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileTalkingWithPhone");
+        }
+
+        private void sittingWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileWatchingPhone");
+        }
+
+        private void sittingWhileWatchingPhoneTogetherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileWatchingPhoneTogether");
+        }
+
+        private void cleaningFloorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("cleaningFloor");
+        }
+
+        private void crouchingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("crouching");
+        }
+
+        private void fallingDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("fallingDown");
+        }
+
+        private void fightingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("fighting");
+        }
+
+        private void jumpingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("jumping");
+        }
+
+        private void kickingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("kicking");
+        }
+
+        private void ridingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("riding");
+        }
+
+        private void runningToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("running");
+        }
+
+        private void scooterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("scooter");
+        }
+
+        private void throwingTrashToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("throwingTrash");
+        }
+
+        private void throwingSomethingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("throwingSomething");
+        }
+        private void buttonSittingWhileWatchingPhone_Click(object sender, EventArgs e)
+        {
+            actionAssociate("sittingWhileWatchingPhone");
+        }
+
+        private void buttonStandingWhileWatchingPhone_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileWatchingPhone");
+        }
+
+        private void buttonWalkingWhileWatchingPhone_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileWatchingPhone");
+        }
+
+        private void buttonSittingTogether_Click(object sender, EventArgs e)
+        {
+            actionAssociate("SittingTogether");
+        }
+
+        private void buttonStandingTogether_Click(object sender, EventArgs e)
+        {
+            actionAssociate("StandingTogether");
+        }
+
+        private void buttonWalkingTogether_Click(object sender, EventArgs e)
+        {
+            actionAssociate("WalkingTogether");
+        }       
     }
 }
 

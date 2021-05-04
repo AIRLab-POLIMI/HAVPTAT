@@ -34,7 +34,58 @@ namespace VideoLabelTool
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileCallingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileDrinkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileHoldingCartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileHoldingStrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileSmokingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingTogetherWhileWatchingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileCallingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileDrinkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileHoldingStrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileSmokingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileTalkingTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileTalkingWithPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileWatchingPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileCallingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileDrinkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileTalkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileWatchingPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cleaningFloorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crouchingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fallingDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jumpingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kickingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ridingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scooterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.throwingTrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.buttonSitting = new System.Windows.Forms.Button();
             this.buttonLastFrame = new System.Windows.Forms.Button();
             this.buttonFirstFrame = new System.Windows.Forms.Button();
@@ -46,7 +97,6 @@ namespace VideoLabelTool
             this.bntExport = new System.Windows.Forms.Button();
             this.bntStanding = new System.Windows.Forms.Button();
             this.labelFrame = new System.Windows.Forms.Label();
-            this.bntDrinking = new System.Windows.Forms.Button();
             this.bntWalking = new System.Windows.Forms.Button();
             this.bntLoadLabels = new System.Windows.Forms.Button();
             this.bntPrevFrame = new System.Windows.Forms.Button();
@@ -55,7 +105,6 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,10 +119,14 @@ namespace VideoLabelTool
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.walkingToolStripMenuItem,
+            this.standingToolStripMenuItem,
+            this.sittingToolStripMenuItem,
+            this.otherActionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(944, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(925, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -89,9 +142,364 @@ namespace VideoLabelTool
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            // 
+            // walkingToolStripMenuItem
+            // 
+            this.walkingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.walkingWhileCallingToolStripMenuItem,
+            this.walkingWhileDrinkingToolStripMenuItem,
+            this.walkingWhileEatingToolStripMenuItem,
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem,
+            this.walkingWhileHoldingCartToolStripMenuItem,
+            this.walkingWhileHoldingStrollerToolStripMenuItem,
+            this.walkingWhileSmokingToolStripMenuItem,
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem});
+            this.walkingToolStripMenuItem.Name = "walkingToolStripMenuItem";
+            this.walkingToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.walkingToolStripMenuItem.Text = "Walking";
+            // 
+            // walkingWhileToolStripMenuItem
+            // 
+            this.walkingWhileCallingToolStripMenuItem.Name = "walkingWhileCallingToolStripMenuItem";
+            this.walkingWhileCallingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileCallingToolStripMenuItem.Text = "WalkingWhileCalling";
+            this.walkingWhileCallingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileCallingToolStripMenuItem_Click);
+            // 
+            // walkingWhileToolStripMenuItem1
+            // 
+            this.walkingWhileDrinkingToolStripMenuItem.Name = "walkingWhileToolStripMenuItem";
+            this.walkingWhileDrinkingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileDrinkingToolStripMenuItem.Text = "WalkingWhileDrinking";
+            this.walkingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileDrinkingToolStripMenuItem_Click);
+            // 
+            // walkingWhileEatingToolStripMenuItem
+            // 
+            this.walkingWhileEatingToolStripMenuItem.Name = "walkingWhileEatingToolStripMenuItem";
+            this.walkingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileEatingToolStripMenuItem.Text = "WalkingWhileEating";
+            this.walkingWhileEatingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileEatingToolStripMenuItem_Click);
+            // 
+            // walkingWhileHoldingBabyInArmsToolStripMenuItem
+            // 
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem.Name = "walkingWhileHoldingBabyInArmsToolStripMenuItem";
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem.Text = "WalkingWhileHoldingBabyInArms";
+            this.walkingWhileHoldingBabyInArmsToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileHoldingBabyInArmsToolStripMenuItem_Click);
+            // 
+            // walkingWhileHoldingCartToolStripMenuItem
+            // 
+            this.walkingWhileHoldingCartToolStripMenuItem.Name = "walkingWhileHoldingCartToolStripMenuItem";
+            this.walkingWhileHoldingCartToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileHoldingCartToolStripMenuItem.Text = "WalkingWhileHoldingCart";
+            this.walkingWhileHoldingCartToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileHoldingCartToolStripMenuItem_Click);
+            // 
+            // walkingWhileHoldingStrollerToolStripMenuItem
+            // 
+            this.walkingWhileHoldingStrollerToolStripMenuItem.Name = "walkingWhileHoldingStrollerToolStripMenuItem";
+            this.walkingWhileHoldingStrollerToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileHoldingStrollerToolStripMenuItem.Text = "WalkingWhileHoldingStroller";
+            this.walkingWhileHoldingStrollerToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileHoldingStrollerToolStripMenuItem_Click);
+            // 
+            // walkingWhileSmokingToolStripMenuItem
+            // 
+            this.walkingWhileSmokingToolStripMenuItem.Name = "walkingWhileSmokingToolStripMenuItem";
+            this.walkingWhileSmokingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileSmokingToolStripMenuItem.Text = "WalkingWhileSmoking";
+            this.walkingWhileSmokingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileSmokingToolStripMenuItem_Click);
+            // 
+            // walkingWhileTalkingWithPhoneToolStripMenuItem
+            // 
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem.Name = "walkingWhileTalkingWithPhoneToolStripMenuItem";
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem.Text = "WalkingWhileTalkingWithPhone";
+            this.walkingWhileTalkingWithPhoneToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileTalkingWithPhoneToolStripMenuItem_Click);
+            // 
+            // standingToolStripMenuItem
+            // 
+            this.standingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem,
+            this.standingTogetherWhileWatchingToolStripMenuItem,
+            this.standingWhileCallingToolStripMenuItem,
+            this.standingWhileDrinkingToolStripMenuItem,
+            this.standingWhileEatingToolStripMenuItem,
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem,
+            this.standingWhileLookingAtShopsToolStripMenuItem,
+            this.standingWhileHoldingStrollerToolStripMenuItem,
+            this.standingWhileSmokingToolStripMenuItem,
+            this.standingWhileTalkingTogetherToolStripMenuItem,
+            this.standingWhileTalkingWithPhoneToolStripMenuItem,
+            this.standingWhileWatchingPhoneToolStripMenuItem,
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem});
+            this.standingToolStripMenuItem.Name = "standingToolStripMenuItem";
+            this.standingToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.standingToolStripMenuItem.Text = "Standing";
+            // 
+            // standingTogetherWhileLookingAtShopsToolStripMenuItem
+            // 
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem.Name = "standingTogetherWhileLookingAtShopsToolStripMenuItem";
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem.Text = "StandingTogetherWhileLookingAtShops";
+            this.standingTogetherWhileLookingAtShopsToolStripMenuItem.Click += new System.EventHandler(this.standingTogetherWhileLookingAtShopsToolStripMenuItem_Click);
+            // 
+            // standingTogetherWhileWatchingToolStripMenuItem
+            // 
+            this.standingTogetherWhileWatchingToolStripMenuItem.Name = "standingTogetherWhileWatchingToolStripMenuItem";
+            this.standingTogetherWhileWatchingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingTogetherWhileWatchingToolStripMenuItem.Text = "StandingTogetherWhileWatchingPhone";
+            this.standingTogetherWhileWatchingToolStripMenuItem.Click += new System.EventHandler(this.standingTogetherWhileWatchingPhoneToolStripMenuItem_Click);
+            // 
+            // standingWhileCallingToolStripMenuItem
+            // 
+            this.standingWhileCallingToolStripMenuItem.Name = "standingWhileCallingToolStripMenuItem";
+            this.standingWhileCallingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileCallingToolStripMenuItem.Text = "StandingWhileCalling";
+            this.standingWhileCallingToolStripMenuItem.Click += new System.EventHandler(this.standingWhileCallingToolStripMenuItem_Click);
+            // 
+            // standingWhileDrinkingToolStripMenuItem
+            // 
+            this.standingWhileDrinkingToolStripMenuItem.Name = "standingWhileDrinkingToolStripMenuItem";
+            this.standingWhileDrinkingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileDrinkingToolStripMenuItem.Text = "StandingWhileDrinking";
+            this.standingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.standingWhileDrinkingToolStripMenuItem_Click);
+            // 
+            // standingWhileEatingToolStripMenuItem
+            // 
+            this.standingWhileEatingToolStripMenuItem.Name = "standingWhileEatingToolStripMenuItem";
+            this.standingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileEatingToolStripMenuItem.Text = "StandingWhileEating";
+            this.standingWhileEatingToolStripMenuItem.Click += new System.EventHandler(this.standingWhileEatingToolStripMenuItem_Click);
+            // 
+            // standingWhileHoldingBabyInArmsToolStripMenuItem
+            // 
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem.Name = "standingWhileHoldingBabyInArmsToolStripMenuItem";
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem.Text = "StandingWhileHoldingBabyInArms";
+            this.standingWhileHoldingBabyInArmsToolStripMenuItem.Click += new System.EventHandler(this.standingWhileHoldingBabyInArmsToolStripMenuItem_Click);
+            // 
+            // standingWhileLookingAtShopsToolStripMenuItem
+            // 
+            this.standingWhileLookingAtShopsToolStripMenuItem.Name = "standingWhileLookingAtShopsToolStripMenuItem";
+            this.standingWhileLookingAtShopsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileLookingAtShopsToolStripMenuItem.Text = "StandingWhileLookingAtShops";
+            this.standingWhileLookingAtShopsToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShopsToolStripMenuItem_Click);
+            // 
+            // standingWhileHoldingStrollerToolStripMenuItem
+            // 
+            this.standingWhileHoldingStrollerToolStripMenuItem.Name = "standingWhileHoldingStrollerToolStripMenuItem";
+            this.standingWhileHoldingStrollerToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileHoldingStrollerToolStripMenuItem.Text = "StandingWhileHoldingStroller";
+            this.standingWhileHoldingStrollerToolStripMenuItem.Click += new System.EventHandler(this.standingWhileHoldingStrollerToolStripMenuItem_Click);
+            // 
+            // standingWhileSmokingToolStripMenuItem
+            // 
+            this.standingWhileSmokingToolStripMenuItem.Name = "standingWhileSmokingToolStripMenuItem";
+            this.standingWhileSmokingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileSmokingToolStripMenuItem.Text = "StandingWhileSmoking";
+            this.standingWhileSmokingToolStripMenuItem.Click += new System.EventHandler(this.standingWhileSmokingToolStripMenuItem_Click);
+            // 
+            // standingWhileTalkingTogetherToolStripMenuItem
+            // 
+            this.standingWhileTalkingTogetherToolStripMenuItem.Name = "standingWhileTalkingTogetherToolStripMenuItem";
+            this.standingWhileTalkingTogetherToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileTalkingTogetherToolStripMenuItem.Text = "StandingWhileTalkingTogether";
+            this.standingWhileTalkingTogetherToolStripMenuItem.Click += new System.EventHandler(this.standingWhileTalkingTogetherToolStripMenuItem_Click);
+            // 
+            // standingWhileTalkingWithPhoneToolStripMenuItem
+            // 
+            this.standingWhileTalkingWithPhoneToolStripMenuItem.Name = "standingWhileTalkingWithPhoneToolStripMenuItem";
+            this.standingWhileTalkingWithPhoneToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileTalkingWithPhoneToolStripMenuItem.Text = "StandingWhileTalkingWithPhone";
+            this.standingWhileTalkingWithPhoneToolStripMenuItem.Click += new System.EventHandler(this.standingWhileTalkingWithPhoneToolStripMenuItem_Click);
+            // 
+            // standingWhileWatchingPhoneToolStripMenuItem
+            // 
+            this.standingWhileWatchingPhoneToolStripMenuItem.Name = "standingWhileWatchingPhoneToolStripMenuItem";
+            this.standingWhileWatchingPhoneToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileWatchingPhoneToolStripMenuItem.Text = "StandingWhileWatchingPhone";
+            this.standingWhileWatchingPhoneToolStripMenuItem.Click += new System.EventHandler(this.standingWhileWatchingPhoneToolStripMenuItem_Click);
+            // 
+            // standingWhileWatchingPhoneTogetherToolStripMenuItem
+            // 
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem.Name = "standingWhileWatchingPhoneTogetherToolStripMenuItem";
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem.Text = "StandingWhileWatchingPhoneTogether";
+            this.standingWhileWatchingPhoneTogetherToolStripMenuItem.Click += new System.EventHandler(this.standingWhileWatchingPhoneTogetherToolStripMenuItem_Click);
+            // 
+            // sittingToolStripMenuItem
+            // 
+            this.sittingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sittingWhileCallingToolStripMenuItem,
+            this.sittingWhileDrinkingToolStripMenuItem,
+            this.sittingWhileEatingToolStripMenuItem,
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem,
+            this.sittingWhileTalkingToolStripMenuItem,
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem,
+            this.sittingWhileWatchingPhoneToolStripMenuItem,
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem});
+            this.sittingToolStripMenuItem.Name = "sittingToolStripMenuItem";
+            this.sittingToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.sittingToolStripMenuItem.Text = "Sitting";
+            // 
+            // sittingWhileCallingToolStripMenuItem
+            // 
+            this.sittingWhileCallingToolStripMenuItem.Name = "sittingWhileCallingToolStripMenuItem";
+            this.sittingWhileCallingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileCallingToolStripMenuItem.Text = "SittingWhileCalling";
+            this.sittingWhileCallingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileCallingToolStripMenuItem_Click);
+            // 
+            // sittingWhileDrinkingToolStripMenuItem
+            // 
+            this.sittingWhileDrinkingToolStripMenuItem.Name = "sittingWhileDrinkingToolStripMenuItem";
+            this.sittingWhileDrinkingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileDrinkingToolStripMenuItem.Text = "SittingWhileDrinking";
+            this.sittingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileDrinkingToolStripMenuItem_Click);
+            // 
+            // sittingWhileEatingToolStripMenuItem
+            // 
+            this.sittingWhileEatingToolStripMenuItem.Name = "sittingWhileEatingToolStripMenuItem";
+            this.sittingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileEatingToolStripMenuItem.Text = "SittingWhileEating";
+            this.sittingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileDrinkingToolStripMenuItem_Click);
+            // 
+            // sittingWhileHoldingBabyInArmsToolStripMenuItem
+            // 
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Name = "sittingWhileHoldingBabyInArmsToolStripMenuItem";
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Text = "SittingWhileHoldingBabyInArms";
+            this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileHoldingBabyInArmsToolStripMenuItem_Click);
+            // 
+            // sittingWhileTalkingToolStripMenuItem
+            // 
+            this.sittingWhileTalkingToolStripMenuItem.Name = "sittingWhileTalkingToolStripMenuItem";
+            this.sittingWhileTalkingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileTalkingToolStripMenuItem.Text = "SittingWhileTalking";
+            this.sittingWhileTalkingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileTalkingToolStripMenuItem_Click);
+            // 
+            // sittingWhileTalkingWithPhoneToolStripMenuItem
+            // 
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem.Name = "sittingWhileTalkingWithPhoneToolStripMenuItem";
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem.Text = "SittingWhileTalkingWithPhone";
+            this.sittingWhileTalkingWithPhoneToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileTalkingWithPhoneToolStripMenuItem_Click);
+            // 
+            // sittingWhileWatchingPhoneToolStripMenuItem
+            // 
+            this.sittingWhileWatchingPhoneToolStripMenuItem.Name = "sittingWhileWatchingPhoneToolStripMenuItem";
+            this.sittingWhileWatchingPhoneToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileWatchingPhoneToolStripMenuItem.Text = "SittingWhileWatchingPhone";
+            this.sittingWhileWatchingPhoneToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileWatchingPhoneToolStripMenuItem_Click);
+            // 
+            // sittingWhileWatchingPhoneTogetherToolStripMenuItem
+            // 
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem.Name = "sittingWhileWatchingPhoneTogetherToolStripMenuItem";
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem.Text = "SittingWhileWatchingPhoneTogether";
+            this.sittingWhileWatchingPhoneTogetherToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileWatchingPhoneTogetherToolStripMenuItem_Click);
+            // 
+            // otherActionsToolStripMenuItem
+            // 
+            this.otherActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cleaningFloorToolStripMenuItem,
+            this.crouchingToolStripMenuItem,
+            this.fallingDownToolStripMenuItem,
+            this.fightingToolStripMenuItem,
+            this.jumpingToolStripMenuItem,
+            this.kickingToolStripMenuItem,
+            this.ridingToolStripMenuItem,
+            this.runningToolStripMenuItem,
+            this.scooterToolStripMenuItem,
+            this.throwingTrashToolStripMenuItem,
+            this.throwingSomethingToolStripMenuItem});
+            this.otherActionsToolStripMenuItem.Name = "otherActionsToolStripMenuItem";
+            this.otherActionsToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.otherActionsToolStripMenuItem.Text = "Other Actions";
+            // 
+            // cleaningFloorToolStripMenuItem
+            // 
+            this.cleaningFloorToolStripMenuItem.Name = "cleaningFloorToolStripMenuItem";
+            this.cleaningFloorToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.cleaningFloorToolStripMenuItem.Text = "CleaningFloor";
+            this.cleaningFloorToolStripMenuItem.Click += new System.EventHandler(this.cleaningFloorToolStripMenuItem_Click);
+            // 
+            // crouchingToolStripMenuItem
+            // 
+            this.crouchingToolStripMenuItem.Name = "crouchingToolStripMenuItem";
+            this.crouchingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.crouchingToolStripMenuItem.Text = "Crouching";
+            this.crouchingToolStripMenuItem.Click += new System.EventHandler(this.crouchingToolStripMenuItem_Click);
+            // 
+            // fallingDownToolStripMenuItem
+            // 
+            this.fallingDownToolStripMenuItem.Name = "fallingDownToolStripMenuItem";
+            this.fallingDownToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.fallingDownToolStripMenuItem.Text = "FallingDown";
+            this.fallingDownToolStripMenuItem.Click += new System.EventHandler(this.fallingDownToolStripMenuItem_Click);
+            // 
+            // fightingToolStripMenuItem
+            // 
+            this.fightingToolStripMenuItem.Name = "fightingToolStripMenuItem";
+            this.fightingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.fightingToolStripMenuItem.Text = "Fighting";
+            this.fightingToolStripMenuItem.Click += new System.EventHandler(this.fightingToolStripMenuItem_Click);
+            // 
+            // jumpingToolStripMenuItem
+            // 
+            this.jumpingToolStripMenuItem.Name = "jumpingToolStripMenuItem";
+            this.jumpingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.jumpingToolStripMenuItem.Text = "Jumping";
+            this.jumpingToolStripMenuItem.Click += new System.EventHandler(this.jumpingToolStripMenuItem_Click);
+            // 
+            // kickingToolStripMenuItem
+            // 
+            this.kickingToolStripMenuItem.Name = "kickingToolStripMenuItem";
+            this.kickingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.kickingToolStripMenuItem.Text = "Kicking";
+            this.kickingToolStripMenuItem.Click += new System.EventHandler(this.kickingToolStripMenuItem_Click);
+            // 
+            // ridingToolStripMenuItem
+            // 
+            this.ridingToolStripMenuItem.Name = "ridingToolStripMenuItem";
+            this.ridingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.ridingToolStripMenuItem.Text = "Riding";
+            this.ridingToolStripMenuItem.Click += new System.EventHandler(this.ridingToolStripMenuItem_Click);
+            // 
+            // runningToolStripMenuItem
+            // 
+            this.runningToolStripMenuItem.Name = "runningToolStripMenuItem";
+            this.runningToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.runningToolStripMenuItem.Text = "Running";
+            this.runningToolStripMenuItem.Click += new System.EventHandler(this.runningToolStripMenuItem_Click);
+            // 
+            // scooterToolStripMenuItem
+            // 
+            this.scooterToolStripMenuItem.Name = "scooterToolStripMenuItem";
+            this.scooterToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.scooterToolStripMenuItem.Text = "Scooter";
+            this.scooterToolStripMenuItem.Click += new System.EventHandler(this.scooterToolStripMenuItem_Click);
+            // 
+            // throwingTrashToolStripMenuItem
+            // 
+            this.throwingTrashToolStripMenuItem.Name = "throwingTrashToolStripMenuItem";
+            this.throwingTrashToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.throwingTrashToolStripMenuItem.Text = "ThrowingSomething";
+            this.throwingTrashToolStripMenuItem.Click += new System.EventHandler(this.throwingTrashToolStripMenuItem_Click);
+            // 
+            // throwingSomethingToolStripMenuItem
+            // 
+            this.throwingSomethingToolStripMenuItem.Name = "throwingSomethingToolStripMenuItem";
+            this.throwingSomethingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.throwingSomethingToolStripMenuItem.Text = "ThrowingTrash";
+            this.throwingSomethingToolStripMenuItem.Click += new System.EventHandler(this.throwingSomethingToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -102,6 +510,12 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button7);
+            this.splitContainer1.Panel1.Controls.Add(this.button6);
+            this.splitContainer1.Panel1.Controls.Add(this.button5);
+            this.splitContainer1.Panel1.Controls.Add(this.button4);
+            this.splitContainer1.Panel1.Controls.Add(this.button3);
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.buttonSitting);
             this.splitContainer1.Panel1.Controls.Add(this.buttonLastFrame);
             this.splitContainer1.Panel1.Controls.Add(this.buttonFirstFrame);
@@ -109,7 +523,6 @@ namespace VideoLabelTool
             this.splitContainer1.Panel1.Controls.Add(this.bntExport);
             this.splitContainer1.Panel1.Controls.Add(this.bntStanding);
             this.splitContainer1.Panel1.Controls.Add(this.labelFrame);
-            this.splitContainer1.Panel1.Controls.Add(this.bntDrinking);
             this.splitContainer1.Panel1.Controls.Add(this.bntWalking);
             this.splitContainer1.Panel1.Controls.Add(this.bntLoadLabels);
             this.splitContainer1.Panel1.Controls.Add(this.bntPrevFrame);
@@ -121,14 +534,80 @@ namespace VideoLabelTool
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(944, 536);
+            this.splitContainer1.Size = new System.Drawing.Size(925, 536);
             this.splitContainer1.SplitterDistance = 108;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // button7
+            // 
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button7.Location = new System.Drawing.Point(755, 53);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(152, 25);
+            this.button7.TabIndex = 21;
+            this.button7.Text = "SittingWhileWatchingPhone";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.buttonSittingWhileWatchingPhone_Click);
+            // 
+            // button6
+            // 
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button6.Location = new System.Drawing.Point(755, 26);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(152, 25);
+            this.button6.TabIndex = 20;
+            this.button6.Text = "StandingWhileWatchingPhone";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.buttonStandingWhileWatchingPhone_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button5.Location = new System.Drawing.Point(755, 0);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(152, 25);
+            this.button5.TabIndex = 19;
+            this.button5.Text = "WalkingWhileWatchingPhone";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.buttonWalkingWhileWatchingPhone_Click);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button4.Location = new System.Drawing.Point(655, 54);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(94, 25);
+            this.button4.TabIndex = 18;
+            this.button4.Text = "SittingTogether";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.buttonSittingTogether_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button3.Location = new System.Drawing.Point(654, 26);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(95, 25);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "StandingTogether";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.buttonStandingTogether_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.button2.Location = new System.Drawing.Point(655, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 25);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "WalkingTogether";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.buttonWalkingTogether_Click);
             // 
             // buttonSitting
             // 
             this.buttonSitting.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSitting.Location = new System.Drawing.Point(748, 0);
+            this.buttonSitting.Location = new System.Drawing.Point(577, 55);
             this.buttonSitting.Name = "buttonSitting";
             this.buttonSitting.Size = new System.Drawing.Size(75, 25);
             this.buttonSitting.TabIndex = 15;
@@ -235,7 +714,7 @@ namespace VideoLabelTool
             // bntStanding
             // 
             this.bntStanding.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntStanding.Location = new System.Drawing.Point(664, 0);
+            this.bntStanding.Location = new System.Drawing.Point(577, 26);
             this.bntStanding.Name = "bntStanding";
             this.bntStanding.Size = new System.Drawing.Size(75, 25);
             this.bntStanding.TabIndex = 8;
@@ -252,17 +731,6 @@ namespace VideoLabelTool
             this.labelFrame.Size = new System.Drawing.Size(40, 15);
             this.labelFrame.TabIndex = 7;
             this.labelFrame.Text = "Frame";
-            // 
-            // bntDrinking
-            // 
-            this.bntDrinking.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntDrinking.Location = new System.Drawing.Point(577, 31);
-            this.bntDrinking.Name = "bntDrinking";
-            this.bntDrinking.Size = new System.Drawing.Size(75, 25);
-            this.bntDrinking.TabIndex = 6;
-            this.bntDrinking.Text = "Drinking";
-            this.bntDrinking.UseVisualStyleBackColor = true;
-            this.bntDrinking.Click += new System.EventHandler(this.bntDrinking_Click);
             // 
             // bntWalking
             // 
@@ -347,18 +815,11 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
-            // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 560);
+            this.ClientSize = new System.Drawing.Size(925, 560);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -396,7 +857,6 @@ namespace VideoLabelTool
         private System.Windows.Forms.Button bntPrevFrame;
         private System.Windows.Forms.Button bntLoadLabels;
         private Button bntWalking;
-        private Button bntDrinking;
         private Label labelFrame;
         private Button bntStanding;
         private Button bntExport;
@@ -409,6 +869,56 @@ namespace VideoLabelTool
         private Button buttonLastFrame;
         private Button buttonSitting;
         private ToolStripMenuItem resetToolStripMenuItem;
+        private ToolStripMenuItem walkingToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileCallingToolStripMenuItem;
+        private Button button2;
+        private ToolStripMenuItem walkingWhileDrinkingToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileEatingToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileHoldingBabyInArmsToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileHoldingCartToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileHoldingStrollerToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileSmokingToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileTalkingWithPhoneToolStripMenuItem;
+        private ToolStripMenuItem standingToolStripMenuItem;
+        private ToolStripMenuItem standingTogetherWhileLookingAtShopsToolStripMenuItem;
+        private ToolStripMenuItem standingTogetherWhileWatchingToolStripMenuItem;
+        private ToolStripMenuItem standingWhileCallingToolStripMenuItem;
+        private ToolStripMenuItem standingWhileDrinkingToolStripMenuItem;
+        private ToolStripMenuItem standingWhileEatingToolStripMenuItem;
+        private ToolStripMenuItem standingWhileHoldingBabyInArmsToolStripMenuItem;
+        private ToolStripMenuItem standingWhileLookingAtShopsToolStripMenuItem;
+        private ToolStripMenuItem standingWhileHoldingStrollerToolStripMenuItem;
+        private ToolStripMenuItem standingWhileSmokingToolStripMenuItem;
+        private ToolStripMenuItem standingWhileTalkingTogetherToolStripMenuItem;
+        private ToolStripMenuItem standingWhileTalkingWithPhoneToolStripMenuItem;
+        private ToolStripMenuItem standingWhileWatchingPhoneToolStripMenuItem;
+        private ToolStripMenuItem standingWhileWatchingPhoneTogetherToolStripMenuItem;
+        private ToolStripMenuItem sittingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileCallingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileDrinkingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileEatingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileHoldingBabyInArmsToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileTalkingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileTalkingWithPhoneToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileWatchingPhoneToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileWatchingPhoneTogetherToolStripMenuItem;
+        private ToolStripMenuItem otherActionsToolStripMenuItem;
+        private ToolStripMenuItem cleaningFloorToolStripMenuItem;
+        private ToolStripMenuItem crouchingToolStripMenuItem;
+        private ToolStripMenuItem fallingDownToolStripMenuItem;
+        private ToolStripMenuItem fightingToolStripMenuItem;
+        private ToolStripMenuItem jumpingToolStripMenuItem;
+        private ToolStripMenuItem kickingToolStripMenuItem;
+        private ToolStripMenuItem ridingToolStripMenuItem;
+        private ToolStripMenuItem runningToolStripMenuItem;
+        private ToolStripMenuItem scooterToolStripMenuItem;
+        private ToolStripMenuItem throwingTrashToolStripMenuItem;
+        private ToolStripMenuItem throwingSomethingToolStripMenuItem;
+        private Button button7;
+        private Button button6;
+        private Button button5;
+        private Button button4;
+        private Button button3;
     }
 }
 
