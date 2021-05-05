@@ -26,7 +26,10 @@ namespace VideoLabelTool
     {
         float TotalFrame;
         int Fps;
-        int currentFrameNum;        
+        int currentFrameNum;
+        int width;
+        int height;
+        bool resizeImage = false;
         VideoCapture capture;        
         Timer My_Timer = new Timer();  
         int status = 0;
@@ -171,7 +174,47 @@ namespace VideoLabelTool
                         drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 3, 5);
                         drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 4, 6);
                     }
-                }                
+                }
+                if (listRec != null && currentFrameNum == TotalFrame)
+                {
+                    foreach (Rectangle ret in listRec[currentFrameNum - 1])
+                    {
+                        var a = (from n in listPersonColor
+                                 where n.personID == listFrames[currentFrameNum - 1].predictions[listRec[currentFrameNum - 1].IndexOf(ret)].id_
+                                 select n).FirstOrDefault();
+
+                        e.Graphics.DrawRectangle(a.pen, ret);
+                        currentPersonID = listFrames[currentFrameNum - 1].predictions[listRec[currentFrameNum - 1].IndexOf(ret)].id_;
+                        word = currentPersonID.ToString();
+                        word += listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)];
+
+                        // Version: string color is Red
+                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+
+                        // Version: string color is the same with bounding box
+                        //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
+
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 15, 13);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 16, 14);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 14, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 13, 11);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 11, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 11);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 6, 12);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 6);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 7);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 6, 8);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 7, 9);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 8, 10);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 1, 2);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 0, 1);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 0, 2);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 1, 3);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 2, 4);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 3, 5);
+                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 4, 6);
+                    }
+                }
             }
         }
 
@@ -209,13 +252,17 @@ namespace VideoLabelTool
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 openedFilePath = ofd.FileName;
-                capture = new VideoCapture(openedFilePath);
+                capture = new VideoCapture(openedFilePath);                
                 m = new Mat();
                 capture.Read(m);
                 pictureBox1.Image = m.ToBitmap();
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
+                width = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth);
+                height = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight);
+                if (width != 1280 && height != 720)
+                    resizeImage = true;
                 My_Timer.Interval = 1000 / Fps;
                 My_Timer.Tick += new EventHandler(My_Timer_Tick);
                 counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
@@ -231,7 +278,7 @@ namespace VideoLabelTool
 
         private void Play()
         {
-            if (capture == null)
+            if (capture == null || currentFrameNum == TotalFrame - 1)
             {
                 return;
             }            
@@ -387,7 +434,10 @@ namespace VideoLabelTool
 
         private float getKeyPoint(List<FrameObj> listFrames, int i, int j, int index)
         {
-            return listFrames[i].predictions[j].keypoints[index];
+            if (resizeImage == true)
+                return float.Parse(listFrames[i].predictions[j].keypoints[index].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+            else
+                return listFrames[i].predictions[j].keypoints[index];
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
@@ -426,11 +476,25 @@ namespace VideoLabelTool
                     listKeypoints.Add(new List<Keypoints>());
 
                     for (int j = 0; j < listFrames[i].predictions.Count; j++)
-                    {                        
-                        x = (int)listFrames[i].predictions[j].bbox[0];
-                        y = (int)listFrames[i].predictions[j].bbox[1];                        
-                        weight = (int)listFrames[i].predictions[j].bbox[2];
-                        height = (int)listFrames[i].predictions[j].bbox[3];
+                    {
+                        if (resizeImage == false)
+                        {
+                            x = (int)listFrames[i].predictions[j].bbox[0];
+                            y = (int)listFrames[i].predictions[j].bbox[1];
+                            weight = (int)listFrames[i].predictions[j].bbox[2];
+                            height = (int)listFrames[i].predictions[j].bbox[3];
+                        }
+                            
+                        else
+                        {
+                            //New version
+                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format
+                            x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        }
+
 
                         listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
 
@@ -472,22 +536,25 @@ namespace VideoLabelTool
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
-            foreach (Rectangle r in listRec[currentFrameNum])
-                if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum].IndexOf(r)))
-                {
-                    // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
-                    selectedPersonIndex.Add(listRec[currentFrameNum].IndexOf(r));
-                    
-                }
-            foreach (int spi in selectedPersonIndex)
+            if (currentFrameNum < TotalFrame)
             {
-                // Through "selectedPersonIndex" list to get "selectedPersonID" list                
-                if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
-                {                    
-                    selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
-                    Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                foreach (Rectangle r in listRec[currentFrameNum])
+                    if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum].IndexOf(r)))
+                    {
+                        // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
+                        selectedPersonIndex.Add(listRec[currentFrameNum].IndexOf(r));
+
+                    }
+                foreach (int spi in selectedPersonIndex)
+                {
+                    // Through "selectedPersonIndex" list to get "selectedPersonID" list                
+                    if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
+                    {
+                        selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
+                        Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                    }
                 }
-            }            
+            }
         }
 
         private void actionAssociate(string actionLabel)
@@ -645,9 +712,9 @@ namespace VideoLabelTool
                                      "Warning",
                                      MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
-            {
+            {                
                 Application.Restart();
-                Environment.Exit(0);
+                //Environment.Exit(0);
             }                        
         }
 
