@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System.Diagnostics;
+using Xabe.FFmpeg;
 
 namespace VideoLabelTool
 {
@@ -37,6 +38,8 @@ namespace VideoLabelTool
         string openedFilePath;       
         int widthPictureBox;
         int heightPictureBox;
+        int? rotated = null;
+        Bitmap bp;
         public List<int> selectedPersonID = new List<int>();
         public int selectedPersonIDUnique;
         public List<int> selectedPersonIndex = new List<int>();
@@ -244,7 +247,7 @@ namespace VideoLabelTool
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
             ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";
@@ -252,10 +255,19 @@ namespace VideoLabelTool
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 openedFilePath = ofd.FileName;
+
+                var FFmpegpath = "C:/ffmpeg/bin";
+                FFmpeg.SetExecutablesPath(FFmpegpath, ffmpegExeutableName: "FFmpeg");
+                IMediaInfo mInfo = await FFmpeg.GetMediaInfo(openedFilePath);
+                rotated = mInfo.VideoStreams.FirstOrDefault().Rotation;                
+
                 capture = new VideoCapture(openedFilePath);                
                 m = new Mat();
                 capture.Read(m);
-                pictureBox1.Image = m.ToBitmap();
+                Bitmap bp = m.ToBitmap();
+                if (rotated != null && rotated == 180)                    
+                    bp.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Image = bp;                
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
@@ -297,9 +309,12 @@ namespace VideoLabelTool
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 m = new Mat();
                 capture.Read(m);
-                pictureBox1.Image = m.ToBitmap();
-                currentFrameNum += 1;
-                
+                bp = m.ToBitmap();
+                if (rotated != null && rotated == 180)
+                    bp.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Image = bp;
+
+                currentFrameNum += 1;                
             }
 
             else
@@ -391,7 +406,10 @@ namespace VideoLabelTool
                 // Replaced by capture.Read(m)
                 m = new Mat();
                 capture.Read(m);
-                pictureBox1.Image = m.ToBitmap();
+                bp = m.ToBitmap();                
+                if (rotated != null && rotated == 180)
+                    bp.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Image = bp;
             }
             catch (NullReferenceException e)
             {
