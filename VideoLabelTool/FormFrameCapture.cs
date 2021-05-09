@@ -554,22 +554,25 @@ namespace VideoLabelTool
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
-            if (currentFrameNum < TotalFrame)
+            if (currentFrameNum < TotalFrame && listRec != null)
             {
-                foreach (Rectangle r in listRec[currentFrameNum])
-                    if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum].IndexOf(r)))
-                    {
-                        // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
-                        selectedPersonIndex.Add(listRec[currentFrameNum].IndexOf(r));
-
-                    }
-                foreach (int spi in selectedPersonIndex)
+                if (listRec.Count != 0)
                 {
-                    // Through "selectedPersonIndex" list to get "selectedPersonID" list                
-                    if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
+                    foreach (Rectangle r in listRec[currentFrameNum])
+                        if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum].IndexOf(r)))
+                        {
+                            // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
+                            selectedPersonIndex.Add(listRec[currentFrameNum].IndexOf(r));
+
+                        }
+                    foreach (int spi in selectedPersonIndex)
                     {
-                        selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
-                        Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                        // Through "selectedPersonIndex" list to get "selectedPersonID" list                
+                        if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
+                        {
+                            selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
+                            Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                        }
                     }
                 }
             }
