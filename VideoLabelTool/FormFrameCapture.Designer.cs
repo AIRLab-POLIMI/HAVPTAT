@@ -105,6 +105,10 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.labelVideoFileName = new System.Windows.Forms.Label();
+            this.labelAnnotationFileName = new System.Windows.Forms.Label();
+            this.videoFileName = new System.Windows.Forms.Label();
+            this.annotationFileName = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -126,7 +130,7 @@ namespace VideoLabelTool
             this.otherActionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(925, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(990, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -168,16 +172,16 @@ namespace VideoLabelTool
             this.walkingToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.walkingToolStripMenuItem.Text = "Walking";
             // 
-            // walkingWhileToolStripMenuItem
+            // walkingWhileCallingToolStripMenuItem
             // 
             this.walkingWhileCallingToolStripMenuItem.Name = "walkingWhileCallingToolStripMenuItem";
             this.walkingWhileCallingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.walkingWhileCallingToolStripMenuItem.Text = "WalkingWhileCalling";
             this.walkingWhileCallingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileCallingToolStripMenuItem_Click);
             // 
-            // walkingWhileToolStripMenuItem1
+            // walkingWhileDrinkingToolStripMenuItem
             // 
-            this.walkingWhileDrinkingToolStripMenuItem.Name = "walkingWhileToolStripMenuItem";
+            this.walkingWhileDrinkingToolStripMenuItem.Name = "walkingWhileDrinkingToolStripMenuItem";
             this.walkingWhileDrinkingToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.walkingWhileDrinkingToolStripMenuItem.Text = "WalkingWhileDrinking";
             this.walkingWhileDrinkingToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileDrinkingToolStripMenuItem_Click);
@@ -510,6 +514,10 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.annotationFileName);
+            this.splitContainer1.Panel1.Controls.Add(this.videoFileName);
+            this.splitContainer1.Panel1.Controls.Add(this.labelAnnotationFileName);
+            this.splitContainer1.Panel1.Controls.Add(this.labelVideoFileName);
             this.splitContainer1.Panel1.Controls.Add(this.button7);
             this.splitContainer1.Panel1.Controls.Add(this.button6);
             this.splitContainer1.Panel1.Controls.Add(this.button5);
@@ -534,8 +542,8 @@ namespace VideoLabelTool
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(925, 536);
-            this.splitContainer1.SplitterDistance = 108;
+            this.splitContainer1.Size = new System.Drawing.Size(990, 617);
+            this.splitContainer1.SplitterDistance = 136;
             this.splitContainer1.TabIndex = 1;
             // 
             // button7
@@ -808,18 +816,56 @@ namespace VideoLabelTool
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(821, 421);
+            this.pictureBox1.Size = new System.Drawing.Size(842, 483);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
+            // 
+            // labelVideoFileName
+            // 
+            this.labelVideoFileName.AutoSize = true;
+            this.labelVideoFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVideoFileName.Location = new System.Drawing.Point(526, 87);
+            this.labelVideoFileName.Name = "labelVideoFileName";
+            this.labelVideoFileName.Size = new System.Drawing.Size(37, 15);
+            this.labelVideoFileName.TabIndex = 22;
+            this.labelVideoFileName.Text = "Video";
+            // 
+            // labelAnnotationFileName
+            // 
+            this.labelAnnotationFileName.AutoSize = true;
+            this.labelAnnotationFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAnnotationFileName.Location = new System.Drawing.Point(501, 112);
+            this.labelAnnotationFileName.Name = "labelAnnotationFileName";
+            this.labelAnnotationFileName.Size = new System.Drawing.Size(67, 15);
+            this.labelAnnotationFileName.TabIndex = 23;
+            this.labelAnnotationFileName.Text = "Annotation";
+            // 
+            // videoFileName
+            // 
+            this.videoFileName.AutoSize = true;
+            this.videoFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.videoFileName.Location = new System.Drawing.Point(577, 87);
+            this.videoFileName.Name = "videoFileName";
+            this.videoFileName.Size = new System.Drawing.Size(0, 15);
+            this.videoFileName.TabIndex = 24;
+            // 
+            // annotationFileName
+            // 
+            this.annotationFileName.AutoSize = true;
+            this.annotationFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.annotationFileName.Location = new System.Drawing.Point(578, 111);
+            this.annotationFileName.Name = "annotationFileName";
+            this.annotationFileName.Size = new System.Drawing.Size(0, 15);
+            this.annotationFileName.TabIndex = 25;
             // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 560);
+            this.ClientSize = new System.Drawing.Size(990, 641);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -919,6 +965,10 @@ namespace VideoLabelTool
         private Button button5;
         private Button button4;
         private Button button3;
+        private Label labelAnnotationFileName;
+        private Label labelVideoFileName;
+        private Label videoFileName;
+        private Label annotationFileName;
     }
 }
 

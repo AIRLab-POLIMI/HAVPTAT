@@ -278,6 +278,7 @@ namespace VideoLabelTool
                 My_Timer.Interval = 1000 / Fps;
                 My_Timer.Tick += new EventHandler(My_Timer_Tick);
                 counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
+                videoFileName.Text = ofd.SafeFileName;
 
                 this.bntNextFrame.Enabled = true;
             }
@@ -478,7 +479,8 @@ namespace VideoLabelTool
 
             if (ofd.ShowDialog() == DialogResult.OK)            
             {                
-                string json = File.ReadAllText(ofd.FileName);                                                                                       
+                string json = File.ReadAllText(ofd.FileName);
+                annotationFileName.Text = ofd.SafeFileName;
                 
                 if (json[0] == '[' && json[json.Length - 1] == ']')
                 {
