@@ -507,6 +507,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
@@ -550,7 +551,7 @@ namespace VideoLabelTool
             // 
             this.annotationFileName.AutoSize = true;
             this.annotationFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.annotationFileName.Location = new System.Drawing.Point(577, 111);
+            this.annotationFileName.Location = new System.Drawing.Point(659, 111);
             this.annotationFileName.Name = "annotationFileName";
             this.annotationFileName.Size = new System.Drawing.Size(0, 15);
             this.annotationFileName.TabIndex = 25;
@@ -559,7 +560,7 @@ namespace VideoLabelTool
             // 
             this.videoFileName.AutoSize = true;
             this.videoFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.videoFileName.Location = new System.Drawing.Point(577, 87);
+            this.videoFileName.Location = new System.Drawing.Point(659, 87);
             this.videoFileName.Name = "videoFileName";
             this.videoFileName.Size = new System.Drawing.Size(0, 15);
             this.videoFileName.TabIndex = 24;
@@ -568,7 +569,7 @@ namespace VideoLabelTool
             // 
             this.labelAnnotationFileName.AutoSize = true;
             this.labelAnnotationFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAnnotationFileName.Location = new System.Drawing.Point(501, 112);
+            this.labelAnnotationFileName.Location = new System.Drawing.Point(583, 112);
             this.labelAnnotationFileName.Name = "labelAnnotationFileName";
             this.labelAnnotationFileName.Size = new System.Drawing.Size(67, 15);
             this.labelAnnotationFileName.TabIndex = 23;
@@ -578,7 +579,7 @@ namespace VideoLabelTool
             // 
             this.labelVideoFileName.AutoSize = true;
             this.labelVideoFileName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVideoFileName.Location = new System.Drawing.Point(526, 87);
+            this.labelVideoFileName.Location = new System.Drawing.Point(608, 87);
             this.labelVideoFileName.Name = "labelVideoFileName";
             this.labelVideoFileName.Size = new System.Drawing.Size(37, 15);
             this.labelVideoFileName.TabIndex = 22;

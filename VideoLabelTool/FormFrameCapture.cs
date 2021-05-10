@@ -8,11 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Emgu;
 using Emgu.CV;
-using Emgu.CV.Structure;
-using Emgu.Util;
-using Emgu.CV.CvEnum;
 using System.IO;
 using System.Globalization;
 using Newtonsoft.Json;
@@ -99,6 +95,15 @@ namespace VideoLabelTool
             pictureBox1.Width = 1280;
             pictureBox1.Height = 720;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            //string[] cars = new string[] { "Volvo", "SAAB" };
+
+            //foreach (var car in cars)
+            //{
+            //    ToolStripItem subItem = new ToolStripMenuItem(car);
+            //    sittingWhileTalkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //    stripe.DropDownItems.Add(subItem);
+            //}
         }
 
         /*  COCO Person Keypoints mapping
