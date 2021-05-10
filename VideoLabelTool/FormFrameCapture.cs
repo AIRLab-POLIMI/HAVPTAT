@@ -56,6 +56,8 @@ namespace VideoLabelTool
         const string message = "You have already labeled this person";
         const string caption = "Warning";
 
+        public string newActionName;
+
         public class PersonColor
         {
             public int personID { get; set; }
@@ -94,16 +96,7 @@ namespace VideoLabelTool
 
             pictureBox1.Width = 1280;
             pictureBox1.Height = 720;
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            //string[] cars = new string[] { "Volvo", "SAAB" };
-
-            //foreach (var car in cars)
-            //{
-            //    ToolStripItem subItem = new ToolStripMenuItem(car);
-            //    sittingWhileTalkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            //    stripe.DropDownItems.Add(subItem);
-            //}
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;            
         }
 
         /*  COCO Person Keypoints mapping
@@ -1000,7 +993,22 @@ namespace VideoLabelTool
         private void buttonWalkingTogether_Click(object sender, EventArgs e)
         {
             actionAssociate("WalkingTogether");
-        }       
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            FormAddAction popupAddAction = new FormAddAction(this);
+            popupAddAction.ShowDialog(this);
+            ToolStripItem subItem = new ToolStripMenuItem(newActionName);            
+            userDefinedActionsToolStripMenuItem.DropDownItems.Add(subItem);
+            subItem.Click += (s, ea) => newActionStripItem_Click(s, ea, newActionName);
+            //subItem.Click += new EventHandler(newActionStripItem_Click);            
+        }
+
+        protected void newActionStripItem_Click(object sender, EventArgs e, string actionText)
+        {            
+            actionAssociate(actionText);
+        }
     }
 }
 

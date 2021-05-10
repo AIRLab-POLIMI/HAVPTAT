@@ -79,6 +79,7 @@ namespace VideoLabelTool
             this.scooterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.throwingTrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userDefinedActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.annotationFileName = new System.Windows.Forms.Label();
             this.videoFileName = new System.Windows.Forms.Label();
@@ -109,6 +110,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -127,7 +129,8 @@ namespace VideoLabelTool
             this.walkingToolStripMenuItem,
             this.standingToolStripMenuItem,
             this.sittingToolStripMenuItem,
-            this.otherActionsToolStripMenuItem});
+            this.otherActionsToolStripMenuItem,
+            this.userDefinedActionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(990, 24);
@@ -505,6 +508,12 @@ namespace VideoLabelTool
             this.throwingSomethingToolStripMenuItem.Text = "ThrowingTrash";
             this.throwingSomethingToolStripMenuItem.Click += new System.EventHandler(this.throwingSomethingToolStripMenuItem_Click);
             // 
+            // userDefinedActionsToolStripMenuItem
+            // 
+            this.userDefinedActionsToolStripMenuItem.Name = "userDefinedActionsToolStripMenuItem";
+            this.userDefinedActionsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.userDefinedActionsToolStripMenuItem.Text = "Add. Actions";
+            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -515,6 +524,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonAdd);
             this.splitContainer1.Panel1.Controls.Add(this.annotationFileName);
             this.splitContainer1.Panel1.Controls.Add(this.videoFileName);
             this.splitContainer1.Panel1.Controls.Add(this.labelAnnotationFileName);
@@ -862,6 +872,17 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAdd.Location = new System.Drawing.Point(459, 77);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(75, 25);
+            this.buttonAdd.TabIndex = 26;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -970,6 +991,8 @@ namespace VideoLabelTool
         private Label labelVideoFileName;
         private Label videoFileName;
         private Label annotationFileName;
+        private ToolStripMenuItem userDefinedActionsToolStripMenuItem;
+        private Button buttonAdd;
     }
 }
 

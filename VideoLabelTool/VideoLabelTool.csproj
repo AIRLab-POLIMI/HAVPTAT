@@ -88,6 +88,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAddAction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddAction.Designer.cs">
+      <DependentUpon>FormAddAction.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFrameCapture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     <Compile Include="MyConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormAddAction.resx">
+      <DependentUpon>FormAddAction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFrameCapture.resx">
       <DependentUpon>FormFrameCapture.cs</DependentUpon>
     </EmbeddedResource>
