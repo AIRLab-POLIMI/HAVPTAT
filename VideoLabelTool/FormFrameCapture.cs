@@ -573,7 +573,28 @@ namespace VideoLabelTool
                         if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum].predictions[spi].id_))
                         {
                             selectedPersonID.Add(listFrames[currentFrameNum].predictions[spi].id_);
-                            Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                            //Console.WriteLine("You have hit Rectangle Person ID.: " + selectedPersonID[selectedPersonID.Count - 1]);
+                        }
+                    }
+                }
+            }
+            if (currentFrameNum == TotalFrame && listRec != null)
+            {
+                if (listRec.Count != 0)
+                {
+                    foreach (Rectangle r in listRec[currentFrameNum - 1])
+                        if (r.Contains(e.Location) && !selectedPersonIndex.Any(idx => idx == listRec[currentFrameNum - 1].IndexOf(r)))
+                        {
+                            // enter only if the index does not exist in selectedPersonIndex to ensure no duplicated value is inserted
+                            selectedPersonIndex.Add(listRec[currentFrameNum - 1].IndexOf(r));
+
+                        }
+                    foreach (int spi in selectedPersonIndex)
+                    {
+                        // Through "selectedPersonIndex" list to get "selectedPersonID" list                
+                        if (!selectedPersonID.Any(idx => idx == listFrames[currentFrameNum - 1].predictions[spi].id_))
+                        {
+                            selectedPersonID.Add(listFrames[currentFrameNum - 1].predictions[spi].id_);                            
                         }
                     }
                 }
