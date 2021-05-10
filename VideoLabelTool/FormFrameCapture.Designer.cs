@@ -432,7 +432,7 @@ namespace VideoLabelTool
             // 
             this.cleaningToolStripMenuItem.Name = "cleaningToolStripMenuItem";
             this.cleaningToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.cleaningToolStripMenuItem.Text = "cleaning";
+            this.cleaningToolStripMenuItem.Text = "Cleaning";
             this.cleaningToolStripMenuItem.Click += new System.EventHandler(this.cleaningToolStripMenuItem_Click);
             // 
             // crouchingToolStripMenuItem
