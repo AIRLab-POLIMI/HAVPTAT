@@ -885,9 +885,9 @@ namespace VideoLabelTool
             actionAssociate("sittingWhileWatchingPhoneTogether");
         }
 
-        private void cleaningFloorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cleaningToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            actionAssociate("cleaningFloor");
+            actionAssociate("cleaning");
         }
 
         private void crouchingToolStripMenuItem_Click(object sender, EventArgs e)
