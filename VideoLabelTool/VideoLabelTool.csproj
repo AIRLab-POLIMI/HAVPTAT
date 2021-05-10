@@ -101,6 +101,7 @@
       <DependentUpon>FormSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Keypoints.cs" />
+    <Compile Include="MyConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormFrameCapture.resx">
