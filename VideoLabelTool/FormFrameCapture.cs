@@ -705,6 +705,7 @@ namespace VideoLabelTool
             using (StreamWriter sw = File.CreateText(sfd.FileName))
             {
                 sw.Write(JsonConvert.SerializeObject(listFrames, Formatting.Indented));
+                MessageBox.Show("The labeled anntotaion is exported successfully", "Export");
             }
         }
 
