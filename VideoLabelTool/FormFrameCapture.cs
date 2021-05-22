@@ -148,7 +148,7 @@ namespace VideoLabelTool
                         currentPersonID = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_;
                         word = currentPersonID.ToString();                            
                         word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
-
+                        
                         // Version: string color is Red
                         e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));           
 
@@ -263,7 +263,7 @@ namespace VideoLabelTool
                 m = new Mat();
                 capture.Read(m);
                 Bitmap bp = m.ToBitmap();
-                if (rotated != null && rotated == 180)                    
+                if (rotated != null && rotated == 180)
                     bp.RotateFlip(RotateFlipType.Rotate180FlipX);
                 pictureBox1.Image = bp;                
 
@@ -452,9 +452,17 @@ namespace VideoLabelTool
         private float getKeyPoint(List<FrameObj> listFrames, int i, int j, int index)
         {
             if (resizeImage == true)
-                return float.Parse(listFrames[i].predictions[j].keypoints[index].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+            {
+                if (resizeImage == true && index % 3 == 0)
+                    /*To get symmetric value of axis X and For some strange motivation, should make - 99*/
+                    return 1280 - float.Parse(listFrames[i].predictions[j].keypoints[index].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                else
+                    return listFrames[i].predictions[j].keypoints[index] * 2 / 3;
+            }
             else
+            {
                 return listFrames[i].predictions[j].keypoints[index];
+            }
         }
 
         private void bntLoadLabels_Click(object sender, EventArgs e)
@@ -506,8 +514,9 @@ namespace VideoLabelTool
                         else
                         {
                             //New version
-                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format
-                            x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
+                            /*To get symmetric value of axis X and For some strange motivation, should make - 99*/
+                            x = 1280 - (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3 - 99;                            
                             y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                             weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                             height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
