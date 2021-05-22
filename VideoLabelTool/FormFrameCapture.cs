@@ -265,7 +265,7 @@ namespace VideoLabelTool
                 Bitmap bp = m.ToBitmap();
                 if (rotated != null && rotated == 180)
                     bp.RotateFlip(RotateFlipType.Rotate180FlipX);
-                pictureBox1.Image = bp;                
+                pictureBox1.Image = bp;  
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
@@ -453,9 +453,9 @@ namespace VideoLabelTool
         {
             if (resizeImage == true)
             {
-                if (resizeImage == true && index % 3 == 0)
-                    /*To get symmetric value of axis X and For some strange motivation, should make - 99*/
-                    return 1280 - float.Parse(listFrames[i].predictions[j].keypoints[index].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                if (resizeImage == true && index % 3 == 0 && rotated != null)
+                    /*To get symmetric value of axis X and For some strange motivation, should make - 99*/                    
+                    return float.Parse((1920 - listFrames[i].predictions[j].keypoints[index]).ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                 else
                     return listFrames[i].predictions[j].keypoints[index] * 2 / 3;
             }
@@ -503,20 +503,29 @@ namespace VideoLabelTool
 
                     for (int j = 0; j < listFrames[i].predictions.Count; j++)
                     {
-                        if (resizeImage == false)
+                        if (resizeImage == false && rotated == null)
                         {
                             x = (int)listFrames[i].predictions[j].bbox[0];
                             y = (int)listFrames[i].predictions[j].bbox[1];
                             weight = (int)listFrames[i].predictions[j].bbox[2];
                             height = (int)listFrames[i].predictions[j].bbox[3];
-                        }
-                            
+                        }                        
+                        else if (resizeImage == true && rotated != null) 
+                        {
+                            //New version
+                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
+                            /*To get symmetric value of axis X and For some strange motivation*/
+                            x = (int)double.Parse((1920 - listFrames[i].predictions[j].bbox[0] - 100).ToString(), CultureInfo.InvariantCulture) * 2 / 3;                            
+                            y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                            height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        }                        
                         else
                         {
                             //New version
                             // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
-                            /*To get symmetric value of axis X and For some strange motivation, should make - 99*/
-                            x = 1280 - (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3 - 99;                            
+                            /*To get symmetric value of axis X and For some strange motivation*/
+                            x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                             y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                             weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                             height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
