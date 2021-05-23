@@ -859,6 +859,10 @@ namespace VideoLabelTool
         {
             actionAssociate("standingWhileLookingAtShops");
         }
+        private void standingWhileLookingAtShowcaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileLookingAtShowcase");
+        }
 
         private void standingWhileHoldingStrollerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1026,7 +1030,7 @@ namespace VideoLabelTool
         protected void newActionStripItem_Click(object sender, EventArgs e, string actionText)
         {            
             actionAssociate(actionText);
-        }
+        }        
     }
 }
 

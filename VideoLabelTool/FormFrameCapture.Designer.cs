@@ -81,6 +81,7 @@ namespace VideoLabelTool
             this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userDefinedActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.annotationFileName = new System.Windows.Forms.Label();
             this.videoFileName = new System.Windows.Forms.Label();
             this.labelAnnotationFileName = new System.Windows.Forms.Label();
@@ -110,7 +111,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonAdd = new System.Windows.Forms.Button();
+            this.standingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -241,6 +242,7 @@ namespace VideoLabelTool
             this.standingWhileEatingToolStripMenuItem,
             this.standingWhileHoldingBabyInArmsToolStripMenuItem,
             this.standingWhileLookingAtShopsToolStripMenuItem,
+            this.standingWhileLookingAtShowcaseToolStripMenuItem,
             this.standingWhileHoldingStrollerToolStripMenuItem,
             this.standingWhileSmokingToolStripMenuItem,
             this.standingWhileTalkingTogetherToolStripMenuItem,
@@ -557,6 +559,17 @@ namespace VideoLabelTool
             this.splitContainer1.SplitterDistance = 136;
             this.splitContainer1.TabIndex = 1;
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAdd.Location = new System.Drawing.Point(459, 77);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(75, 25);
+            this.buttonAdd.TabIndex = 26;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // annotationFileName
             // 
             this.annotationFileName.AutoSize = true;
@@ -872,16 +885,12 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // buttonAdd
+            // standingWhileLookingAtShowcaseToolStripMenuItem
             // 
-            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAdd.Location = new System.Drawing.Point(459, 77);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 25);
-            this.buttonAdd.TabIndex = 26;
-            this.buttonAdd.Text = "Add";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Name = "standingWhileLookingAtShowcaseToolStripMenuItem";
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Text = "StandingWhileLookingAtShowcase";
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShowcaseToolStripMenuItem_Click);
             // 
             // FormFrameCapture
             // 
@@ -993,6 +1002,7 @@ namespace VideoLabelTool
         private Label annotationFileName;
         private ToolStripMenuItem userDefinedActionsToolStripMenuItem;
         private Button buttonAdd;
+        private ToolStripMenuItem standingWhileLookingAtShowcaseToolStripMenuItem;
     }
 }
 
