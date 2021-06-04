@@ -628,6 +628,42 @@ namespace VideoLabelTool
             }
         }
 
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            if (selectedPersonID.Count > 1)
+            {
+                FormSelection formPopup = new FormSelection(this);
+                formPopup.ShowDialog(this);
+                selectedPersonIndexUnique = listFrames[currentFrameNum].predictions.FindIndex(a => a.id_ == selectedPersonIDUnique);
+            }
+            else if (selectedPersonID.Count == 0)
+            {
+                MessageBox.Show("You should select a person to be deleted.", "Warning");
+                return;
+            }
+            else
+            {
+                selectedPersonIDUnique = selectedPersonID[0];
+                selectedPersonIndexUnique = selectedPersonIndex[0];
+            }            
+
+            DialogResult dialogResult = MessageBox.Show("Confirm to delete label of person" + selectedPersonIDUnique.ToString(), "Warning", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                for (int i = 0; i < listFrames.Count; i++)
+                {
+                    for (int j = 0; j < listFrames[i].predictions.Count; j++)
+                    {
+                        if (listFrames[i].predictions[j].id_ == selectedPersonIDUnique)
+                        {
+                            listAction[i][j] = null;
+                        }
+                    }
+                }
+                listPersonIDAssociated.Remove(selectedPersonIDUnique);
+            }                        
+        }
+
         private void actionAssociate(string actionLabel)
         {
             if (selectedPersonID.Count > 1)
@@ -1045,11 +1081,7 @@ namespace VideoLabelTool
 
         private void checkBoxShowPose_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxShowPose.Checked == true)
-            {
-
-            }
-        }
+        }        
     }
 }
 

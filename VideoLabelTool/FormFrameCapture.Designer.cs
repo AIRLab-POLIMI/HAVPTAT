@@ -82,6 +82,7 @@ namespace VideoLabelTool
             this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userDefinedActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBoxShowPose = new System.Windows.Forms.CheckBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.annotationFileName = new System.Windows.Forms.Label();
             this.videoFileName = new System.Windows.Forms.Label();
@@ -112,7 +113,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.checkBoxShowPose = new System.Windows.Forms.CheckBox();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -534,6 +535,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxShowPose);
             this.splitContainer1.Panel1.Controls.Add(this.buttonAdd);
             this.splitContainer1.Panel1.Controls.Add(this.annotationFileName);
@@ -567,6 +569,17 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(990, 617);
             this.splitContainer1.SplitterDistance = 136;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // checkBoxShowPose
+            // 
+            this.checkBoxShowPose.AutoSize = true;
+            this.checkBoxShowPose.Location = new System.Drawing.Point(17, 112);
+            this.checkBoxShowPose.Name = "checkBoxShowPose";
+            this.checkBoxShowPose.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxShowPose.TabIndex = 27;
+            this.checkBoxShowPose.Text = "Show Pose";
+            this.checkBoxShowPose.UseVisualStyleBackColor = true;
+            this.checkBoxShowPose.CheckedChanged += new System.EventHandler(this.checkBoxShowPose_CheckedChanged);
             // 
             // buttonAdd
             // 
@@ -894,16 +907,15 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // checkBoxShowPose
+            // buttonRemove
             // 
-            this.checkBoxShowPose.AutoSize = true;
-            this.checkBoxShowPose.Location = new System.Drawing.Point(17, 112);
-            this.checkBoxShowPose.Name = "checkBoxShowPose";
-            this.checkBoxShowPose.Size = new System.Drawing.Size(80, 17);
-            this.checkBoxShowPose.TabIndex = 27;
-            this.checkBoxShowPose.Text = "Show Pose";
-            this.checkBoxShowPose.UseVisualStyleBackColor = true;
-            this.checkBoxShowPose.CheckedChanged += new System.EventHandler(this.checkBoxShowPose_CheckedChanged);
+            this.buttonRemove.Location = new System.Drawing.Point(243, 107);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(82, 28);
+            this.buttonRemove.TabIndex = 28;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // FormFrameCapture
             // 
@@ -1017,6 +1029,7 @@ namespace VideoLabelTool
         private Button buttonAdd;
         private ToolStripMenuItem standingWhileLookingAtShowcaseToolStripMenuItem;
         private CheckBox checkBoxShowPose;
+        private Button buttonRemove;
     }
 }
 
