@@ -740,42 +740,31 @@ namespace VideoLabelTool
         }        
 
         private void bntExport_Click(object sender, EventArgs e)
-        {     
-            string[] splittedopenedFilePath = openedVideoPath.Split('\\');
-            string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
-
-            SaveFileDialog sfd = new SaveFileDialog();                 
-            sfd.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
-            sfd.FileName = "action_" + openedFileName;
-
-            if (sfd.ShowDialog() == DialogResult.OK)
+        {                 
+            string exportJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_output\\action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+            Directory.CreateDirectory(Path.GetDirectoryName(openedVideoPath) + "\\json_output");
+            using (StreamWriter sw = new StreamWriter(exportJsonPath, false))
             {
-                using (StreamWriter writer = new StreamWriter(sfd.FileName, false))
-                {                  
-                    for (int i = 0; i < listFrames.Count; i++)
+                for (int i = 0; i < listFrames.Count; i++)
+                {
+                    for (int j = 0; j < listFrames[i].predictions.Count; j++)
                     {
-                        for (int j = 0; j < listFrames[i].predictions.Count; j++)
-                        {                      
-                            if (listAction[i][j] != null)
-                            {                               
-                                listFrames[i].predictions[j].action = listAction[i][j];
-                            }                                                                
+                        if (listAction[i][j] != null)
+                        {
+                            listFrames[i].predictions[j].action = listAction[i][j];
                         }
                     }
                 }
-            }
 
-            using (StreamWriter sw = File.CreateText(sfd.FileName))
-            {
                 var settings = new JsonSerializerSettings
                 {
                     Formatting = Formatting.Indented,
                 };
                 settings.Converters.Add(new MyConverter());
-                sw.Write(JsonConvert.SerializeObject(listFrames, settings));                
+                sw.Write(JsonConvert.SerializeObject(listFrames, settings));
 
                 MessageBox.Show("The labeled anntotaion is exported successfully!", "Export");
-            }
+            }         
         }
 
         private void bntWalking_Click(object sender, EventArgs e)
