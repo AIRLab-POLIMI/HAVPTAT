@@ -40,7 +40,7 @@ namespace VideoLabelTool
             this.listBoxSelection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxSelection.FormattingEnabled = true;
             this.listBoxSelection.ItemHeight = 15;
-            this.listBoxSelection.Location = new System.Drawing.Point(28, 50);
+            this.listBoxSelection.Location = new System.Drawing.Point(28, 54);
             this.listBoxSelection.Name = "listBoxSelection";
             this.listBoxSelection.Size = new System.Drawing.Size(99, 139);
             this.listBoxSelection.TabIndex = 0;
@@ -50,18 +50,18 @@ namespace VideoLabelTool
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 20);
+            this.label1.Location = new System.Drawing.Point(15, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(356, 15);
+            this.label1.Size = new System.Drawing.Size(126, 15);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Select only a person ID which should be associated with the action";
+            this.label1.Text = "Select only a person ID";
             // 
             // bntSelConfirm
             // 
             this.bntSelConfirm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntSelConfirm.Location = new System.Drawing.Point(227, 175);
+            this.bntSelConfirm.Location = new System.Drawing.Point(227, 190);
             this.bntSelConfirm.Name = "bntSelConfirm";
-            this.bntSelConfirm.Size = new System.Drawing.Size(75, 23);
+            this.bntSelConfirm.Size = new System.Drawing.Size(75, 25);
             this.bntSelConfirm.TabIndex = 2;
             this.bntSelConfirm.Text = "Confirm";
             this.bntSelConfirm.UseVisualStyleBackColor = true;
@@ -70,9 +70,9 @@ namespace VideoLabelTool
             // bntSelClose
             // 
             this.bntSelClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntSelClose.Location = new System.Drawing.Point(323, 175);
+            this.bntSelClose.Location = new System.Drawing.Point(323, 190);
             this.bntSelClose.Name = "bntSelClose";
-            this.bntSelClose.Size = new System.Drawing.Size(75, 23);
+            this.bntSelClose.Size = new System.Drawing.Size(75, 25);
             this.bntSelClose.TabIndex = 3;
             this.bntSelClose.Text = "Close";
             this.bntSelClose.UseVisualStyleBackColor = true;
@@ -80,9 +80,9 @@ namespace VideoLabelTool
             // 
             // FormSelection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(428, 218);
+            this.ClientSize = new System.Drawing.Size(428, 236);
             this.Controls.Add(this.bntSelClose);
             this.Controls.Add(this.bntSelConfirm);
             this.Controls.Add(this.label1);
