@@ -52,6 +52,7 @@ namespace VideoLabelTool
             this.standingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileHoldingStrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileSmokingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileTalkingTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +112,6 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.standingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -301,6 +301,13 @@ namespace VideoLabelTool
             this.standingWhileLookingAtShopsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
             this.standingWhileLookingAtShopsToolStripMenuItem.Text = "StandingWhileLookingAtShops";
             this.standingWhileLookingAtShopsToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShopsToolStripMenuItem_Click);
+            // 
+            // standingWhileLookingAtShowcaseToolStripMenuItem
+            // 
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Name = "standingWhileLookingAtShowcaseToolStripMenuItem";
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Text = "StandingWhileLookingAtShowcase";
+            this.standingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShowcaseToolStripMenuItem_Click);
             // 
             // standingWhileHoldingStrollerToolStripMenuItem
             // 
@@ -884,13 +891,6 @@ namespace VideoLabelTool
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
-            // 
-            // standingWhileLookingAtShowcaseToolStripMenuItem
-            // 
-            this.standingWhileLookingAtShowcaseToolStripMenuItem.Name = "standingWhileLookingAtShowcaseToolStripMenuItem";
-            this.standingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.standingWhileLookingAtShowcaseToolStripMenuItem.Text = "StandingWhileLookingAtShowcase";
-            this.standingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShowcaseToolStripMenuItem_Click);
             // 
             // FormFrameCapture
             // 

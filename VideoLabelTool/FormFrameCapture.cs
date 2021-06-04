@@ -130,12 +130,36 @@ namespace VideoLabelTool
                 e.Graphics.DrawLine(pen, new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].y), new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].y));
         }
 
+        private void plotPose(PaintEventArgs e, Pen myPen, List<FrameObj> listFrames, int currentFrameNum, Rectangle ret)
+        {
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 15, 13);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 16, 14);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 14, 12);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 13, 11);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 11, 12);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 11);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 12);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 6);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 7);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 8);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 7, 9);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 8, 10);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 2);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 1);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 2);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 3);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 2, 4);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 3, 5);
+            drawPose(e, myPen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 4, 6);
+        }
+
         private void plotROI(object sender, PaintEventArgs e)
         {
             if (listRec != null)
             {
                 string word;
                 int currentPersonID;
+                Pen myPen;
                 if (listRec != null && currentFrameNum < TotalFrame)
                 {
                     foreach (Rectangle ret in listRec[currentFrameNum])
@@ -143,6 +167,7 @@ namespace VideoLabelTool
                         var a = (from n in listPersonColor                                     
                                 where n.personID == listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_
                                 select n).FirstOrDefault();
+                        myPen = a.pen;
 
                         e.Graphics.DrawRectangle(a.pen, ret);
                         currentPersonID = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_;
@@ -150,30 +175,13 @@ namespace VideoLabelTool
                         word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
                         
                         // Version: string color is Red
-                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));           
+                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
 
                         // Version: string color is the same with bounding box
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
 
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 15, 13);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 16, 14);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 14, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 13, 11);                        
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 11, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 11);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 6);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 5, 7);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 6, 8);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 7, 9);                        
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 8, 10);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 2);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 1);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 0, 2);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 1, 3);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 2, 4);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 3, 5);
-                        drawPose(e, a.pen, listFrames, currentFrameNum, listRec[currentFrameNum].IndexOf(ret), 4, 6);
+                        // Hide/Show Complete Human Pose
+                        plotPose(e, myPen, listFrames, currentFrameNum, ret);
                     }
                 }
                 if (listRec != null && currentFrameNum == TotalFrame)
@@ -183,6 +191,7 @@ namespace VideoLabelTool
                         var a = (from n in listPersonColor
                                  where n.personID == listFrames[currentFrameNum - 1].predictions[listRec[currentFrameNum - 1].IndexOf(ret)].id_
                                  select n).FirstOrDefault();
+                        myPen = a.pen;
 
                         e.Graphics.DrawRectangle(a.pen, ret);
                         currentPersonID = listFrames[currentFrameNum - 1].predictions[listRec[currentFrameNum - 1].IndexOf(ret)].id_;
@@ -195,29 +204,12 @@ namespace VideoLabelTool
                         // Version: string color is the same with bounding box
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
 
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 15, 13);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 16, 14);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 14, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 13, 11);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 11, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 11);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 6, 12);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 6);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 5, 7);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 6, 8);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 7, 9);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 8, 10);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 1, 2);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 0, 1);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 0, 2);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 1, 3);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 2, 4);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 3, 5);
-                        drawPose(e, a.pen, listFrames, currentFrameNum - 1, listRec[currentFrameNum - 1].IndexOf(ret), 4, 6);
+                        // Hide/Show Complete Human Pose
+                        plotPose(e, myPen, listFrames, currentFrameNum, ret);                       
                     }
                 }
             }
-        }
+        }        
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
