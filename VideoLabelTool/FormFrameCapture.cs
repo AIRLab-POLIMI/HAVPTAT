@@ -20,7 +20,7 @@ using Xabe.FFmpeg;
 namespace VideoLabelTool
 {
     public partial class FormFrameCapture : Form
-    {
+    {        
         float TotalFrame;
         int Fps;
         int currentFrameNum;
@@ -31,7 +31,7 @@ namespace VideoLabelTool
         Timer My_Timer = new Timer();  
         int status = 0;
         OpenFileDialog ofd;
-        string openedFilePath;       
+        string openedVideoPath;       
         int widthPictureBox;
         int heightPictureBox;
         int? rotated = null;
@@ -181,7 +181,8 @@ namespace VideoLabelTool
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
 
                         // Hide/Show Complete Human Pose
-                        plotPose(e, myPen, listFrames, currentFrameNum, ret);
+                        if (checkBoxShowPose.Checked == true)
+                            plotPose(e, myPen, listFrames, currentFrameNum, ret);
                     }
                 }
                 if (listRec != null && currentFrameNum == TotalFrame)
@@ -205,7 +206,8 @@ namespace VideoLabelTool
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
 
                         // Hide/Show Complete Human Pose
-                        plotPose(e, myPen, listFrames, currentFrameNum, ret);                       
+                        if (checkBoxShowPose.Checked == true)
+                            plotPose(e, myPen, listFrames, currentFrameNum, ret);
                     }
                 }
             }
@@ -240,18 +242,18 @@ namespace VideoLabelTool
         private async void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
-            ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";
+            ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";            
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                openedFilePath = ofd.FileName;
+                openedVideoPath = ofd.FileName;
 
                 var FFmpegpath = "C:/ffmpeg/bin";
                 FFmpeg.SetExecutablesPath(FFmpegpath, ffmpegExeutableName: "FFmpeg");
-                IMediaInfo mInfo = await FFmpeg.GetMediaInfo(openedFilePath);
+                IMediaInfo mInfo = await FFmpeg.GetMediaInfo(openedVideoPath);
                 rotated = mInfo.VideoStreams.FirstOrDefault().Rotation;                
 
-                capture = new VideoCapture(openedFilePath);                
+                capture = new VideoCapture(openedVideoPath);                
                 m = new Mat();
                 capture.Read(m);
                 Bitmap bp = m.ToBitmap();
@@ -457,107 +459,124 @@ namespace VideoLabelTool
             }
         }
 
+        private void processJson(string json, bool semilabeled, int x, int y, int height, int weight, int nrFrame)
+        {            
+            if (json[0] == '[' && json[json.Length - 1] == ']')
+            {
+                json = json.Substring(1, json.Length - 2);
+                semilabeled = true;
+            }
+            listFrames = addActionFieldToJson(json);
+
+            for (int i = 0; i < listFrames.Count; i++)
+            {
+                listRec.Add(new List<Rectangle>());
+                listAction.Add(new List<string>());
+                listKeypoints.Add(new List<Keypoints>());
+
+                for (int j = 0; j < listFrames[i].predictions.Count; j++)
+                {
+                    if (resizeImage == false && rotated == null)
+                    {
+                        x = (int)listFrames[i].predictions[j].bbox[0];
+                        y = (int)listFrames[i].predictions[j].bbox[1];
+                        weight = (int)listFrames[i].predictions[j].bbox[2];
+                        height = (int)listFrames[i].predictions[j].bbox[3];
+                    }
+                    else if (resizeImage == true && rotated != null)
+                    {
+                        //New version
+                        // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
+                        /*To get symmetric value of axis X and For some strange motivation*/
+                        x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                    }
+                    else
+                    {
+                        //New version
+                        // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
+                        /*To get symmetric value of axis X and For some strange motivation*/
+                        x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                        height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
+                    }
+
+
+                    listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
+
+                    listKeypoints[listFrames[i].frame - 1].Add(new Keypoints(getKeyPoint(listFrames, i, j, 0), getKeyPoint(listFrames, i, j, 1), getKeyPoint(listFrames, i, j, 2),
+                                                          getKeyPoint(listFrames, i, j, 3), getKeyPoint(listFrames, i, j, 4), getKeyPoint(listFrames, i, j, 5),
+                                                          getKeyPoint(listFrames, i, j, 6), getKeyPoint(listFrames, i, j, 7), getKeyPoint(listFrames, i, j, 8),
+                                                          getKeyPoint(listFrames, i, j, 9), getKeyPoint(listFrames, i, j, 10), getKeyPoint(listFrames, i, j, 11),
+                                                          getKeyPoint(listFrames, i, j, 12), getKeyPoint(listFrames, i, j, 13), getKeyPoint(listFrames, i, j, 14),
+                                                          getKeyPoint(listFrames, i, j, 15), getKeyPoint(listFrames, i, j, 16), getKeyPoint(listFrames, i, j, 17),
+                                                          getKeyPoint(listFrames, i, j, 18), getKeyPoint(listFrames, i, j, 19), getKeyPoint(listFrames, i, j, 20),
+                                                          getKeyPoint(listFrames, i, j, 21), getKeyPoint(listFrames, i, j, 22), getKeyPoint(listFrames, i, j, 23),
+                                                          getKeyPoint(listFrames, i, j, 24), getKeyPoint(listFrames, i, j, 25), getKeyPoint(listFrames, i, j, 26),
+                                                          getKeyPoint(listFrames, i, j, 27), getKeyPoint(listFrames, i, j, 28), getKeyPoint(listFrames, i, j, 29),
+                                                          getKeyPoint(listFrames, i, j, 30), getKeyPoint(listFrames, i, j, 31), getKeyPoint(listFrames, i, j, 32),
+                                                          getKeyPoint(listFrames, i, j, 33), getKeyPoint(listFrames, i, j, 34), getKeyPoint(listFrames, i, j, 35),
+                                                          getKeyPoint(listFrames, i, j, 36), getKeyPoint(listFrames, i, j, 37), getKeyPoint(listFrames, i, j, 38),
+                                                          getKeyPoint(listFrames, i, j, 39), getKeyPoint(listFrames, i, j, 40), getKeyPoint(listFrames, i, j, 41),
+                                                          getKeyPoint(listFrames, i, j, 42), getKeyPoint(listFrames, i, j, 43), getKeyPoint(listFrames, i, j, 44),
+                                                          getKeyPoint(listFrames, i, j, 45), getKeyPoint(listFrames, i, j, 46), getKeyPoint(listFrames, i, j, 47),
+                                                          getKeyPoint(listFrames, i, j, 48), getKeyPoint(listFrames, i, j, 49), getKeyPoint(listFrames, i, j, 50)
+                                                          ));
+
+                    // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
+                    if (!listPersonColor.Any(a => a.personID == listFrames[i].predictions[j].id_))
+                    {
+                        penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+                        penTemp.Width = 3.0F;
+                        listPersonColor.Add(new PersonColor { personID = listFrames[i].predictions[j].id_, pen = penTemp });
+                    }
+                    if (semilabeled == true)
+                        listAction[nrFrame - 1].Add(listFrames[i].predictions[j].action);
+                    else
+                        listAction[nrFrame - 1].Add(null);
+                }
+                nrFrame++;
+            }
+        }
+
         private void bntLoadLabels_Click(object sender, EventArgs e)
         {            
             ofd = new OpenFileDialog();
             ofd.Filter = "JSON files|*.json|TXT files|*.txt|All files|*";
 
-            int currentFrameNum = 1;
+            int nrFrame = 1;
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
             listRec = new List<List<Rectangle>>();            
             listAction = new List<List<String>>();            
             listPersonColor = new List<PersonColor>();
             listKeypoints = new List<List<Keypoints>>();
-            int x;
-            int y;
-            int weight;
-            int height;
+            int x = -1;
+            int y = -1;
+            int weight = -1;
+            int height = -1;
             bool semilabeled = false;
+            string searchJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_input\\" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+            string json;
+            
+            if (File.Exists(searchJsonPath))
+            {
+                json = File.ReadAllText(searchJsonPath);
+                annotationFileName.Text = Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+                processJson(json, semilabeled, x, y, height, weight, nrFrame);
+            }
 
-            if (ofd.ShowDialog() == DialogResult.OK)            
-            {                
-                string json = File.ReadAllText(ofd.FileName);
-                annotationFileName.Text = ofd.SafeFileName;
-                
-                if (json[0] == '[' && json[json.Length - 1] == ']')
+            else 
+            {
+                MessageBox.Show("Couldn't automatically find the right JSON file:\n " + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json \n \n Please select it manually.", "Warning");
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    json = json.Substring(1, json.Length - 2);
-                    semilabeled = true;
-                }                
-                listFrames = addActionFieldToJson(json);
-                
-                for (int i = 0; i < listFrames.Count; i++)
-                {
-                    listRec.Add(new List<Rectangle>());
-                    listAction.Add(new List<string>());
-                    listKeypoints.Add(new List<Keypoints>());
-
-                    for (int j = 0; j < listFrames[i].predictions.Count; j++)
-                    {
-                        if (resizeImage == false && rotated == null)
-                        {
-                            x = (int)listFrames[i].predictions[j].bbox[0];
-                            y = (int)listFrames[i].predictions[j].bbox[1];
-                            weight = (int)listFrames[i].predictions[j].bbox[2];
-                            height = (int)listFrames[i].predictions[j].bbox[3];
-                        }                        
-                        else if (resizeImage == true && rotated != null) 
-                        {
-                            //New version
-                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
-                            /*To get symmetric value of axis X and For some strange motivation*/
-                            x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                        }                        
-                        else
-                        {
-                            //New version
-                            // Different OS has different personalized Setting for number format, this parameter to use uniform number format                            
-                            /*To get symmetric value of axis X and For some strange motivation*/
-                            x = (int)double.Parse(listFrames[i].predictions[j].bbox[0].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            y = (int)double.Parse(listFrames[i].predictions[j].bbox[1].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            weight = (int)double.Parse(listFrames[i].predictions[j].bbox[2].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                            height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
-                        }
-
-
-                        listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
-
-                        listKeypoints[listFrames[i].frame - 1].Add(new Keypoints(getKeyPoint(listFrames, i, j, 0), getKeyPoint(listFrames, i, j, 1), getKeyPoint(listFrames, i, j, 2),
-                                                              getKeyPoint(listFrames, i, j, 3), getKeyPoint(listFrames, i, j, 4), getKeyPoint(listFrames, i, j, 5),
-                                                              getKeyPoint(listFrames, i, j, 6), getKeyPoint(listFrames, i, j, 7), getKeyPoint(listFrames, i, j, 8),
-                                                              getKeyPoint(listFrames, i, j, 9), getKeyPoint(listFrames, i, j, 10), getKeyPoint(listFrames, i, j, 11),
-                                                              getKeyPoint(listFrames, i, j, 12), getKeyPoint(listFrames, i, j, 13), getKeyPoint(listFrames, i, j, 14),
-                                                              getKeyPoint(listFrames, i, j, 15), getKeyPoint(listFrames, i, j, 16), getKeyPoint(listFrames, i, j, 17),
-                                                              getKeyPoint(listFrames, i, j, 18), getKeyPoint(listFrames, i, j, 19), getKeyPoint(listFrames, i, j, 20),
-                                                              getKeyPoint(listFrames, i, j, 21), getKeyPoint(listFrames, i, j, 22), getKeyPoint(listFrames, i, j, 23),
-                                                              getKeyPoint(listFrames, i, j, 24), getKeyPoint(listFrames, i, j, 25), getKeyPoint(listFrames, i, j, 26),
-                                                              getKeyPoint(listFrames, i, j, 27), getKeyPoint(listFrames, i, j, 28), getKeyPoint(listFrames, i, j, 29),
-                                                              getKeyPoint(listFrames, i, j, 30), getKeyPoint(listFrames, i, j, 31), getKeyPoint(listFrames, i, j, 32),
-                                                              getKeyPoint(listFrames, i, j, 33), getKeyPoint(listFrames, i, j, 34), getKeyPoint(listFrames, i, j, 35),
-                                                              getKeyPoint(listFrames, i, j, 36), getKeyPoint(listFrames, i, j, 37), getKeyPoint(listFrames, i, j, 38),
-                                                              getKeyPoint(listFrames, i, j, 39), getKeyPoint(listFrames, i, j, 40), getKeyPoint(listFrames, i, j, 41),
-                                                              getKeyPoint(listFrames, i, j, 42), getKeyPoint(listFrames, i, j, 43), getKeyPoint(listFrames, i, j, 44),
-                                                              getKeyPoint(listFrames, i, j, 45), getKeyPoint(listFrames, i, j, 46), getKeyPoint(listFrames, i, j, 47),
-                                                              getKeyPoint(listFrames, i, j, 48), getKeyPoint(listFrames, i, j, 49), getKeyPoint(listFrames, i, j, 50)
-                                                              ));
-
-                        // Add new pen/color for plotting bounding box to new appeared person. Each person has only a color for all the frames
-                        if (!listPersonColor.Any(a => a.personID == listFrames[i].predictions[j].id_))
-                        {
-                            penTemp = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
-                            penTemp.Width = 3.0F;
-                            listPersonColor.Add(new PersonColor { personID = listFrames[i].predictions[j].id_, pen = penTemp });
-                        }
-                        if (semilabeled == true)                        
-                            listAction[currentFrameNum - 1].Add(listFrames[i].predictions[j].action);                        
-                        else
-                            listAction[currentFrameNum - 1].Add(null);
-                    }
-                    currentFrameNum++;
+                    json = File.ReadAllText(ofd.FileName);
+                    annotationFileName.Text = ofd.SafeFileName;
+                    processJson(json, semilabeled, x, y, height, weight, nrFrame);
                 }
             }
         }                
@@ -686,7 +705,7 @@ namespace VideoLabelTool
 
         private void bntExport_Click(object sender, EventArgs e)
         {     
-            string[] splittedopenedFilePath = openedFilePath.Split('\\');
+            string[] splittedopenedFilePath = openedVideoPath.Split('\\');
             string openedFileName = splittedopenedFilePath[splittedopenedFilePath.Length - 1].Split('.')[0];
 
             SaveFileDialog sfd = new SaveFileDialog();                 
@@ -1022,7 +1041,15 @@ namespace VideoLabelTool
         protected void newActionStripItem_Click(object sender, EventArgs e, string actionText)
         {            
             actionAssociate(actionText);
-        }        
+        }
+
+        private void checkBoxShowPose_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxShowPose.Checked == true)
+            {
+
+            }
+        }
     }
 }
 

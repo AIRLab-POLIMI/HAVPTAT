@@ -112,6 +112,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.checkBoxShowPose = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -533,6 +534,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.checkBoxShowPose);
             this.splitContainer1.Panel1.Controls.Add(this.buttonAdd);
             this.splitContainer1.Panel1.Controls.Add(this.annotationFileName);
             this.splitContainer1.Panel1.Controls.Add(this.videoFileName);
@@ -892,6 +894,17 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
+            // checkBoxShowPose
+            // 
+            this.checkBoxShowPose.AutoSize = true;
+            this.checkBoxShowPose.Location = new System.Drawing.Point(17, 112);
+            this.checkBoxShowPose.Name = "checkBoxShowPose";
+            this.checkBoxShowPose.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxShowPose.TabIndex = 27;
+            this.checkBoxShowPose.Text = "Show Pose";
+            this.checkBoxShowPose.UseVisualStyleBackColor = true;
+            this.checkBoxShowPose.CheckedChanged += new System.EventHandler(this.checkBoxShowPose_CheckedChanged);
+            // 
             // FormFrameCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1003,6 +1016,7 @@ namespace VideoLabelTool
         private ToolStripMenuItem userDefinedActionsToolStripMenuItem;
         private Button buttonAdd;
         private ToolStripMenuItem standingWhileLookingAtShowcaseToolStripMenuItem;
+        private CheckBox checkBoxShowPose;
     }
 }
 
