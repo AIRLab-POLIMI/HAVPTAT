@@ -96,7 +96,9 @@ namespace VideoLabelTool
 
             pictureBox1.Width = 1280;
             pictureBox1.Height = 720;
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;            
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            openVideo();
         }
 
         /*  COCO Person Keypoints mapping
@@ -182,7 +184,7 @@ namespace VideoLabelTool
 
                         // Hide/Show Complete Human Pose
                         if (checkBoxShowPose.Checked == true)
-                            plotPose(e, myPen, listFrames, currentFrameNum, ret);
+                            plotPose(e, myPen, listFrames, currentFrameNum, ret);                        
                     }
                 }
                 if (listRec != null && currentFrameNum == TotalFrame)
@@ -239,10 +241,10 @@ namespace VideoLabelTool
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void openVideo()
         {
             ofd = new OpenFileDialog();
-            ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";            
+            ofd.Filter = "MP4 files|*.mp4|AVI files|*.avi|All files (*.*)|*.*";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -251,18 +253,18 @@ namespace VideoLabelTool
                 var FFmpegpath = "C:/ffmpeg/bin";
                 FFmpeg.SetExecutablesPath(FFmpegpath, ffmpegExeutableName: "FFmpeg");
                 IMediaInfo mInfo = await FFmpeg.GetMediaInfo(openedVideoPath);
-                rotated = mInfo.VideoStreams.FirstOrDefault().Rotation;                
+                rotated = mInfo.VideoStreams.FirstOrDefault().Rotation;
 
-                capture = new VideoCapture(openedVideoPath);                
+                capture = new VideoCapture(openedVideoPath);
                 m = new Mat();
                 capture.Read(m);
                 Bitmap bp = m.ToBitmap();
                 if (rotated != null && rotated == 180)
                     bp.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                pictureBox1.Image = bp;  
+                pictureBox1.Image = bp;
 
                 TotalFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
-                Fps = (int) capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
+                Fps = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps);
                 width = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth);
                 height = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight);
                 if (width != 1280 && height != 720)
@@ -274,6 +276,11 @@ namespace VideoLabelTool
 
                 this.bntNextFrame.Enabled = true;
             }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openVideo();
         }                
         
         private void bntPlay_Click(object sender, EventArgs e)
@@ -579,7 +586,46 @@ namespace VideoLabelTool
                     processJson(json, semilabeled, x, y, height, weight, nrFrame);
                 }
             }
-        }                
+        }
+
+        private void buttonEva_Click(object sender, EventArgs e)
+        {
+            ofd = new OpenFileDialog();
+            ofd.Filter = "JSON files|*.json|TXT files|*.txt|All files|*";
+
+            int nrFrame = 1;
+            lineByFrame = new List<List<string>>();
+            lineByFrame.Add(new List<string>());
+            listRec = new List<List<Rectangle>>();
+            listAction = new List<List<String>>();
+            listPersonColor = new List<PersonColor>();
+            listKeypoints = new List<List<Keypoints>>();
+            int x = -1;
+            int y = -1;
+            int weight = -1;
+            int height = -1;
+            bool semilabeled = false;
+            string searchJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_output\\action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+            string json;            
+
+            if (File.Exists(searchJsonPath))
+            {
+                json = File.ReadAllText(searchJsonPath);
+                annotationFileName.Text = "action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+                processJson(json, semilabeled, x, y, height, weight, nrFrame);
+            }
+
+            else
+            {
+                MessageBox.Show("Couldn't automatically find the right JSON file:\n action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json \n \n Please select it manually.", "Warning");
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    json = File.ReadAllText(ofd.FileName);
+                    annotationFileName.Text = ofd.SafeFileName;
+                    processJson(json, semilabeled, x, y, height, weight, nrFrame);
+                }
+            }            
+        }
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
@@ -647,7 +693,7 @@ namespace VideoLabelTool
                 selectedPersonIndexUnique = selectedPersonIndex[0];
             }            
 
-            DialogResult dialogResult = MessageBox.Show("Confirm to delete label of person" + selectedPersonIDUnique.ToString(), "Warning", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Confirm to delete label of person " + selectedPersonIDUnique.ToString(), "Warning", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 for (int i = 0; i < listFrames.Count; i++)

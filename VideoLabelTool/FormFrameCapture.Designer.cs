@@ -82,6 +82,7 @@ namespace VideoLabelTool
             this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userDefinedActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.checkBoxShowPose = new System.Windows.Forms.CheckBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.annotationFileName = new System.Windows.Forms.Label();
@@ -113,7 +114,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonEva = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -535,6 +536,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonEva);
             this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxShowPose);
             this.splitContainer1.Panel1.Controls.Add(this.buttonAdd);
@@ -569,6 +571,16 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(990, 617);
             this.splitContainer1.SplitterDistance = 136;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Location = new System.Drawing.Point(243, 107);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(82, 28);
+            this.buttonRemove.TabIndex = 28;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // checkBoxShowPose
             // 
@@ -907,15 +919,16 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // buttonRemove
+            // buttonEva
             // 
-            this.buttonRemove.Location = new System.Drawing.Point(243, 107);
-            this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(82, 28);
-            this.buttonRemove.TabIndex = 28;
-            this.buttonRemove.Text = "Remove";
-            this.buttonRemove.UseVisualStyleBackColor = true;
-            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            this.buttonEva.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonEva.Location = new System.Drawing.Point(355, 108);
+            this.buttonEva.Name = "buttonEva";
+            this.buttonEva.Size = new System.Drawing.Size(75, 25);
+            this.buttonEva.TabIndex = 29;
+            this.buttonEva.Text = "Evaluate";
+            this.buttonEva.UseVisualStyleBackColor = true;
+            this.buttonEva.Click += new System.EventHandler(this.buttonEva_Click);
             // 
             // FormFrameCapture
             // 
@@ -1030,6 +1043,7 @@ namespace VideoLabelTool
         private ToolStripMenuItem standingWhileLookingAtShowcaseToolStripMenuItem;
         private CheckBox checkBoxShowPose;
         private Button buttonRemove;
+        private Button buttonEva;
     }
 }
 
