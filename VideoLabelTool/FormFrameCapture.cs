@@ -787,8 +787,8 @@ namespace VideoLabelTool
 
         private void bntExport_Click(object sender, EventArgs e)
         {                 
-            string exportJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_output\\action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
-            Directory.CreateDirectory(Path.GetDirectoryName(openedVideoPath) + "\\json_output");
+            string exportJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_output\\action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";            
+            Directory.CreateDirectory(Directory.GetParent(Path.GetDirectoryName(openedVideoPath)) + "\\json_output");
             using (StreamWriter sw = new StreamWriter(exportJsonPath, false))
             {
                 for (int i = 0; i < listFrames.Count; i++)
