@@ -308,12 +308,15 @@ namespace VideoLabelTool
                 counterFrame.Text = (currentFrameNum).ToString() + '/' + (TotalFrame - 1).ToString();
                 capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, currentFrameNum);
                 m = new Mat();
+                                
                 capture.Read(m);
-                bp = m.ToBitmap();
-                if (rotated != null && rotated == 180)
-                    bp.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                pictureBox1.Image = bp;
-
+                if (m.GetData() != null) 
+                { 
+                    bp = m.ToBitmap();
+                    if (rotated != null && rotated == 180)
+                        bp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    pictureBox1.Image = bp;
+                }
                 currentFrameNum += 1;                
             }
 
@@ -406,10 +409,13 @@ namespace VideoLabelTool
                 // Replaced by capture.Read(m)
                 m = new Mat();
                 capture.Read(m);
-                bp = m.ToBitmap();                
-                if (rotated != null && rotated == 180)
-                    bp.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                pictureBox1.Image = bp;
+                if (m.GetData() != null)
+                {
+                    bp = m.ToBitmap();
+                    if (rotated != null && rotated == 180)
+                        bp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    pictureBox1.Image = bp;
+                }
             }
             catch (NullReferenceException e)
             {
