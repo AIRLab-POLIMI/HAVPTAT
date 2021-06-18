@@ -53,6 +53,7 @@ namespace VideoLabelTool
             this.standingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonstandingWhileHoldingCart = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileHoldingStrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileSmokingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingWhileTalkingTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,6 +83,7 @@ namespace VideoLabelTool
             this.throwingSomethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userDefinedActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonEva = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.checkBoxShowPose = new System.Windows.Forms.CheckBox();
             this.buttonAdd = new System.Windows.Forms.Button();
@@ -114,7 +116,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonEva = new System.Windows.Forms.Button();
+            this.layingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -246,6 +248,7 @@ namespace VideoLabelTool
             this.standingWhileHoldingBabyInArmsToolStripMenuItem,
             this.standingWhileLookingAtShopsToolStripMenuItem,
             this.standingWhileLookingAtShowcaseToolStripMenuItem,
+            this.buttonstandingWhileHoldingCart,
             this.standingWhileHoldingStrollerToolStripMenuItem,
             this.standingWhileSmokingToolStripMenuItem,
             this.standingWhileTalkingTogetherToolStripMenuItem,
@@ -311,6 +314,13 @@ namespace VideoLabelTool
             this.standingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
             this.standingWhileLookingAtShowcaseToolStripMenuItem.Text = "StandingWhileLookingAtShowcase";
             this.standingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.standingWhileLookingAtShowcaseToolStripMenuItem_Click);
+            // 
+            // buttonstandingWhileHoldingCart
+            // 
+            this.buttonstandingWhileHoldingCart.Name = "buttonstandingWhileHoldingCart";
+            this.buttonstandingWhileHoldingCart.Size = new System.Drawing.Size(284, 22);
+            this.buttonstandingWhileHoldingCart.Text = "StandingWhileHoldingCart";
+            this.buttonstandingWhileHoldingCart.Click += new System.EventHandler(this.standingWhileHoldingCartToolStripMenuItem_Click);
             // 
             // standingWhileHoldingStrollerToolStripMenuItem
             // 
@@ -434,6 +444,7 @@ namespace VideoLabelTool
             this.fightingToolStripMenuItem,
             this.jumpingToolStripMenuItem,
             this.kickingToolStripMenuItem,
+            this.layingToolStripMenuItem,
             this.ridingToolStripMenuItem,
             this.runningToolStripMenuItem,
             this.scooterToolStripMenuItem,
@@ -571,6 +582,17 @@ namespace VideoLabelTool
             this.splitContainer1.Size = new System.Drawing.Size(990, 617);
             this.splitContainer1.SplitterDistance = 136;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // buttonEva
+            // 
+            this.buttonEva.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonEva.Location = new System.Drawing.Point(355, 108);
+            this.buttonEva.Name = "buttonEva";
+            this.buttonEva.Size = new System.Drawing.Size(75, 25);
+            this.buttonEva.TabIndex = 29;
+            this.buttonEva.Text = "Evaluate";
+            this.buttonEva.UseVisualStyleBackColor = true;
+            this.buttonEva.Click += new System.EventHandler(this.buttonEva_Click);
             // 
             // buttonRemove
             // 
@@ -919,16 +941,12 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // buttonEva
+            // layingToolStripMenuItem
             // 
-            this.buttonEva.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonEva.Location = new System.Drawing.Point(355, 108);
-            this.buttonEva.Name = "buttonEva";
-            this.buttonEva.Size = new System.Drawing.Size(75, 25);
-            this.buttonEva.TabIndex = 29;
-            this.buttonEva.Text = "Evaluate";
-            this.buttonEva.UseVisualStyleBackColor = true;
-            this.buttonEva.Click += new System.EventHandler(this.buttonEva_Click);
+            this.layingToolStripMenuItem.Name = "layingToolStripMenuItem";
+            this.layingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.layingToolStripMenuItem.Text = "Laying";
+            this.layingToolStripMenuItem.Click += new System.EventHandler(this.layingToolStripMenuItem_Click);
             // 
             // FormFrameCapture
             // 
@@ -1044,6 +1062,8 @@ namespace VideoLabelTool
         private CheckBox checkBoxShowPose;
         private Button buttonRemove;
         private Button buttonEva;
+        private ToolStripMenuItem buttonstandingWhileHoldingCart;
+        private ToolStripMenuItem layingToolStripMenuItem;
     }
 }
 

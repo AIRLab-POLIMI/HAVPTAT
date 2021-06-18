@@ -460,8 +460,7 @@ namespace VideoLabelTool
         {
             if (resizeImage == true)
             {
-                if (resizeImage == true && index % 3 == 0 && rotated != null)
-                    /*To get symmetric value of axis X and For some strange motivation, should make - 99*/                    
+                if (resizeImage == true && index % 3 == 0 && rotated != null)                                       
                     return float.Parse(listFrames[i].predictions[j].keypoints[index].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                 else
                     return listFrames[i].predictions[j].keypoints[index] * 2 / 3;
@@ -920,7 +919,7 @@ namespace VideoLabelTool
 
         private void standingTogetherWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            actionAssociate("StandingTogetherWhileWatchingPhone");
+            actionAssociate("standingTogetherWhileWatchingPhone");
         }
 
         private void standingWhileCallingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -935,7 +934,7 @@ namespace VideoLabelTool
 
         private void standingWhileEatingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            actionAssociate("StandingWhileEating");
+            actionAssociate("standingWhileEating");
         }
 
         private void standingWhileHoldingBabyInArmsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -950,6 +949,11 @@ namespace VideoLabelTool
         private void standingWhileLookingAtShowcaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             actionAssociate("standingWhileLookingAtShowcase");
+        }
+
+        private void standingWhileHoldingCartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("standingWhileHoldingCart");
         }
 
         private void standingWhileHoldingStrollerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1051,6 +1055,11 @@ namespace VideoLabelTool
             actionAssociate("kicking");
         }
 
+        private void layingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("laying");
+        }
+
         private void ridingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             actionAssociate("riding");
@@ -1092,18 +1101,18 @@ namespace VideoLabelTool
 
         private void buttonSittingTogether_Click(object sender, EventArgs e)
         {
-            actionAssociate("SittingTogether");
+            actionAssociate("sittingTogether");
         }
 
         private void buttonStandingTogether_Click(object sender, EventArgs e)
         {
-            actionAssociate("StandingTogether");
+            actionAssociate("standingTogether");
         }
 
         private void buttonWalkingTogether_Click(object sender, EventArgs e)
         {
-            actionAssociate("WalkingTogether");
-        }
+            actionAssociate("walkingTogether");
+        }        
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
