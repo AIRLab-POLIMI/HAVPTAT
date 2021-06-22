@@ -65,7 +65,7 @@ namespace VideoLabelTool
             this.sittingWhileDrinkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sittingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sittingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sittingWhileTalkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sittingWhileTalkingTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sittingWhileTalkingWithPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sittingWhileWatchingPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sittingWhileWatchingPhoneTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -371,7 +371,7 @@ namespace VideoLabelTool
             this.sittingWhileDrinkingToolStripMenuItem,
             this.sittingWhileEatingToolStripMenuItem,
             this.sittingWhileHoldingBabyInArmsToolStripMenuItem,
-            this.sittingWhileTalkingToolStripMenuItem,
+            this.sittingWhileTalkingTogetherToolStripMenuItem,
             this.sittingWhileTalkingWithPhoneToolStripMenuItem,
             this.sittingWhileWatchingPhoneToolStripMenuItem,
             this.sittingWhileWatchingPhoneTogetherToolStripMenuItem});
@@ -407,12 +407,12 @@ namespace VideoLabelTool
             this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Text = "SittingWhileHoldingBabyInArms";
             this.sittingWhileHoldingBabyInArmsToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileHoldingBabyInArmsToolStripMenuItem_Click);
             // 
-            // sittingWhileTalkingToolStripMenuItem
+            // sittingWhileTalkingTogetherToolStripMenuItem
             // 
-            this.sittingWhileTalkingToolStripMenuItem.Name = "sittingWhileTalkingToolStripMenuItem";
-            this.sittingWhileTalkingToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
-            this.sittingWhileTalkingToolStripMenuItem.Text = "SittingWhileTalking";
-            this.sittingWhileTalkingToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileTalkingToolStripMenuItem_Click);
+            this.sittingWhileTalkingTogetherToolStripMenuItem.Name = "sittingWhileTalkingTogetherToolStripMenuItem";
+            this.sittingWhileTalkingTogetherToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.sittingWhileTalkingTogetherToolStripMenuItem.Text = "sittingWhileTalkingTogether";
+            this.sittingWhileTalkingTogetherToolStripMenuItem.Click += new System.EventHandler(this.sittingWhileTalkingTogetherToolStripMenuItem_Click);
             // 
             // sittingWhileTalkingWithPhoneToolStripMenuItem
             // 
@@ -1031,7 +1031,7 @@ namespace VideoLabelTool
         private ToolStripMenuItem sittingWhileDrinkingToolStripMenuItem;
         private ToolStripMenuItem sittingWhileEatingToolStripMenuItem;
         private ToolStripMenuItem sittingWhileHoldingBabyInArmsToolStripMenuItem;
-        private ToolStripMenuItem sittingWhileTalkingToolStripMenuItem;
+        private ToolStripMenuItem sittingWhileTalkingTogetherToolStripMenuItem;
         private ToolStripMenuItem sittingWhileTalkingWithPhoneToolStripMenuItem;
         private ToolStripMenuItem sittingWhileWatchingPhoneToolStripMenuItem;
         private ToolStripMenuItem sittingWhileWatchingPhoneTogetherToolStripMenuItem;

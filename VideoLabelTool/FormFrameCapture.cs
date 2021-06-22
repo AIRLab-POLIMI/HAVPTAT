@@ -1005,9 +1005,9 @@ namespace VideoLabelTool
             actionAssociate("sittingWhileHoldingBabyInArms");
         }
 
-        private void sittingWhileTalkingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sittingWhileTalkingTogetherToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            actionAssociate("sittingWhileTalking");
+            actionAssociate("sittingWhileTalkingTogether");
         }
 
         private void sittingWhileTalkingWithPhoneToolStripMenuItem_Click(object sender, EventArgs e)
