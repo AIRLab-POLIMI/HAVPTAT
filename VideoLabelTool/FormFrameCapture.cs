@@ -902,6 +902,16 @@ namespace VideoLabelTool
             actionAssociate("walkingWhileHoldingStroller");
         }
 
+        private void walkingWhileLookingAtShopsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileLookingAtShops");
+        }
+
+        private void walkingWhileLookingAtShowcaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileLookingAtShowcase");
+        }
+
         private void walkingWhileSmokingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             actionAssociate("walkingWhileSmoking");
@@ -916,6 +926,7 @@ namespace VideoLabelTool
         {
             actionAssociate("standingTogetherWhileLookingAtShops");
         }
+        
 
         private void standingTogetherWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
