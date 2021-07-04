@@ -916,6 +916,10 @@ namespace VideoLabelTool
         {
             actionAssociate("walkingWhileSmoking");
         }
+        private void walkingWhileTalkingTogetherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("walkingWhileTalkingTogether");
+        }
 
         private void walkingWhileTalkingWithPhoneToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -42,6 +42,8 @@ namespace VideoLabelTool
             this.walkingWhileHoldingBabyInArmsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.walkingWhileHoldingCartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.walkingWhileHoldingStrollerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.walkingWhileSmokingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.walkingWhileTalkingWithPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.standingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,8 +119,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.walkingWhileLookingAtShopsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.walkingWhileLookingAtShowcaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.walkingWhileTalkingTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -180,6 +181,7 @@ namespace VideoLabelTool
             this.walkingWhileLookingAtShopsToolStripMenuItem,
             this.walkingWhileLookingAtShowcaseToolStripMenuItem,
             this.walkingWhileSmokingToolStripMenuItem,
+            this.walkingWhileTalkingTogetherToolStripMenuItem,
             this.walkingWhileTalkingWithPhoneToolStripMenuItem});
             this.walkingToolStripMenuItem.Name = "walkingToolStripMenuItem";
             this.walkingToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
@@ -226,6 +228,20 @@ namespace VideoLabelTool
             this.walkingWhileHoldingStrollerToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.walkingWhileHoldingStrollerToolStripMenuItem.Text = "WalkingWhileHoldingStroller";
             this.walkingWhileHoldingStrollerToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileHoldingStrollerToolStripMenuItem_Click);
+            // 
+            // walkingWhileLookingAtShopsToolStripMenuItem
+            // 
+            this.walkingWhileLookingAtShopsToolStripMenuItem.Name = "walkingWhileLookingAtShopsToolStripMenuItem";
+            this.walkingWhileLookingAtShopsToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileLookingAtShopsToolStripMenuItem.Text = "WalkingWhileLookingAtShops";
+            this.walkingWhileLookingAtShopsToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileLookingAtShopsToolStripMenuItem_Click);
+            // 
+            // walkingWhileLookingAtShowcaseToolStripMenuItem
+            // 
+            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Name = "walkingWhileLookingAtShowcaseToolStripMenuItem";
+            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Text = "WalkingWhileLookingAtShowcase";
+            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileLookingAtShowcaseToolStripMenuItem_Click);
             // 
             // walkingWhileSmokingToolStripMenuItem
             // 
@@ -952,19 +968,12 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // walkingWhileLookingAtShopsToolStripMenuItem
+            // walkingWhileTalkingTogetherToolStripMenuItem
             // 
-            this.walkingWhileLookingAtShopsToolStripMenuItem.Name = "walkingWhileLookingAtShopsToolStripMenuItem";
-            this.walkingWhileLookingAtShopsToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.walkingWhileLookingAtShopsToolStripMenuItem.Text = "WalkingWhileLookingAtShops";
-            this.walkingWhileLookingAtShopsToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileLookingAtShopsToolStripMenuItem_Click);
-            // 
-            // walkingWhileLookingAtShowcaseToolStripMenuItem
-            // 
-            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Name = "walkingWhileLookingAtShowcaseToolStripMenuItem";
-            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Text = "WalkingWhileLookingAtShowcase";
-            this.walkingWhileLookingAtShowcaseToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileLookingAtShowcaseToolStripMenuItem_Click);
+            this.walkingWhileTalkingTogetherToolStripMenuItem.Name = "walkingWhileTalkingTogetherToolStripMenuItem";
+            this.walkingWhileTalkingTogetherToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.walkingWhileTalkingTogetherToolStripMenuItem.Text = "WalkingWhileTalkingTogether";
+            this.walkingWhileTalkingTogetherToolStripMenuItem.Click += new System.EventHandler(this.walkingWhileTalkingTogetherToolStripMenuItem_Click);
             // 
             // FormFrameCapture
             // 
@@ -1084,6 +1093,7 @@ namespace VideoLabelTool
         private ToolStripMenuItem layingToolStripMenuItem;
         private ToolStripMenuItem walkingWhileLookingAtShopsToolStripMenuItem;
         private ToolStripMenuItem walkingWhileLookingAtShowcaseToolStripMenuItem;
+        private ToolStripMenuItem walkingWhileTalkingTogetherToolStripMenuItem;
     }
 }
 
