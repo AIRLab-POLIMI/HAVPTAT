@@ -1050,6 +1050,16 @@ namespace VideoLabelTool
             actionAssociate("crouching");
         }
 
+        private void crouchingWhileEatingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("crouchingWhileEating");
+        }
+
+        private void crouchingWhileWatchingPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionAssociate("crouchingWhileWatchingPhone");
+        }
+
         private void fallingDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
             actionAssociate("fallingDown");
