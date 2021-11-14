@@ -83,7 +83,8 @@ namespace VideoLabelTool
         {
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
-            this.bntPrevFrame.Enabled = false;            
+            this.bntPrevFrame.Enabled = false;
+            this.Text = "HAVTAT";
         }
 
         private void Form1_Load(object sender, EventArgs e)
