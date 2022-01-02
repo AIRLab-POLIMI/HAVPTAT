@@ -732,7 +732,7 @@ namespace VideoLabelTool
 
             else
             {
-                MessageBox.Show("Couldn't automatically find the right JSON file:\n action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json \n \n Please select it manually.", "Warning");
+                MessageBox.Show("Couldn't automatically find the right JSON file:\n pred_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json \n \n Please select it manually.", "Warning");
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     json = File.ReadAllText(ofd.FileName);
