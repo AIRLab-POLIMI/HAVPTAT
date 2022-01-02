@@ -51,6 +51,7 @@ namespace VideoLabelTool
         List<List<Keypoints>> listKeypoints;
         List<int> listPersonIDAssociated = new List<int>();
         List<PersonColor> listPersonColor;
+        List<List<string>> listPredict;
 
         Font myFont = new Font("Arial", 12, FontStyle.Bold);
         const string message = "You have already labeled this person";
@@ -72,6 +73,7 @@ namespace VideoLabelTool
             public int category_id { get; set; }
             public int id_ { get; set; }
             public string action { get; set; }
+            public string predict { get; set; }
         }
 
         public class FrameObj
@@ -176,15 +178,45 @@ namespace VideoLabelTool
                         currentPersonID = listFrames[currentFrameNum].predictions[listRec[currentFrameNum].IndexOf(ret)].id_;
                         word = currentPersonID.ToString();                            
                         word += listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
-                        
-                        // Version: string color is Red
-                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        word += '\n';
+                        word += listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
 
-                        // Version: string color is the same with bounding box
-                        //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
+                        word += '\n';
+                        if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null && listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null)
+                        {
+                            if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] == listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)])
+                            {
+                                word += 'Y';
+                                //e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                            }
+                            else
+                            {
+                                word += 'N';
+                                //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                            }
+                        }
 
-                        // Hide/Show Complete Human Pose
-                        if (checkBoxShowPose.Checked == true)
+                        if (word[word.Length - 1] == 'Y')
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                        }
+                        else if (word[word.Length - 1] == 'N')
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        }
+                        else
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.Yellow, new Point(ret.X, ret.Y));
+                        }
+
+                            // Version: string color is Red
+                            //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+
+                            // Version: string color is the same with bounding box
+                            //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
+
+                            // Hide/Show Complete Human Pose
+                            if (checkBoxShowPose.Checked == true)
                             plotPose(e, myPen, listFrames, currentFrameNum, ret);                        
                     }
                 }
@@ -200,10 +232,41 @@ namespace VideoLabelTool
                         e.Graphics.DrawRectangle(a.pen, ret);
                         currentPersonID = listFrames[currentFrameNum - 1].predictions[listRec[currentFrameNum - 1].IndexOf(ret)].id_;
                         word = currentPersonID.ToString();
+                        word = currentPersonID.ToString();
                         word += listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)];
+                        word += '\n';
+                        word += listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)];
+
+                        word += '\n';
+                        if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null && listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null)
+                        {
+                            if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] == listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)])
+                            {
+                                word += 'Y';
+                                //e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                            }
+                            else
+                            {
+                                word += 'N';
+                                //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                            }
+                        }
+
+                        if (word[word.Length - 1] == 'Y')
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                        }
+                        else if (word[word.Length - 1] == 'N')
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        }
+                        else
+                        {
+                            e.Graphics.DrawString(word, myFont, Brushes.Yellow, new Point(ret.X, ret.Y));
+                        }
 
                         // Version: string color is Red
-                        e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                        //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
 
                         // Version: string color is the same with bounding box
                         //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
@@ -486,6 +549,7 @@ namespace VideoLabelTool
                 listRec.Add(new List<Rectangle>());
                 listAction.Add(new List<string>());
                 listKeypoints.Add(new List<Keypoints>());
+                listPredict.Add(new List<string>());
 
                 for (int j = 0; j < listFrames[i].predictions.Count; j++)
                 {
@@ -517,7 +581,6 @@ namespace VideoLabelTool
                         height = (int)double.Parse(listFrames[i].predictions[j].bbox[3].ToString(), CultureInfo.InvariantCulture) * 2 / 3;
                     }
 
-
                     listRec[listFrames[i].frame - 1].Add(new Rectangle(x, y, weight, height));
 
                     listKeypoints[listFrames[i].frame - 1].Add(new Keypoints(getKeyPoint(listFrames, i, j, 0), getKeyPoint(listFrames, i, j, 1), getKeyPoint(listFrames, i, j, 2),
@@ -547,9 +610,15 @@ namespace VideoLabelTool
                         listPersonColor.Add(new PersonColor { personID = listFrames[i].predictions[j].id_, pen = penTemp });
                     }
                     if (semilabeled == true)
+                    {
                         listAction[nrFrame - 1].Add(listFrames[i].predictions[j].action);
+                        listPredict[nrFrame - 1].Add(listFrames[i].predictions[j].predict);
+                    }
                     else
+                    {
                         listAction[nrFrame - 1].Add(null);
+                        listPredict[nrFrame - 1].Add(null);
+                    }
                 }
                 nrFrame++;
             }
@@ -631,6 +700,46 @@ namespace VideoLabelTool
                     processJson(json, semilabeled, x, y, height, weight, nrFrame);
                 }
             }            
+        }
+
+        private void buttonPredict_Click(object sender, EventArgs e)
+        {
+            ofd = new OpenFileDialog();
+            ofd.Filter = "JSON files|*.json|TXT files|*.txt|All files|*";
+
+            int nrFrame = 1;
+            lineByFrame = new List<List<string>>();
+            lineByFrame.Add(new List<string>());
+            listRec = new List<List<Rectangle>>();
+            listAction = new List<List<String>>();
+            listPersonColor = new List<PersonColor>();
+            listKeypoints = new List<List<Keypoints>>();
+            listPredict = new List<List<String>>();
+            int x = -1;
+            int y = -1;
+            int weight = -1;
+            int height = -1;
+            bool semilabeled = false;
+            string searchJsonPath = Path.GetDirectoryName(Path.GetDirectoryName(openedVideoPath)) + "\\json_output\\pred_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+            string json;
+
+            if (File.Exists(searchJsonPath))
+            {
+                json = File.ReadAllText(searchJsonPath);
+                annotationFileName.Text = "pred_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json";
+                processJson(json, semilabeled, x, y, height, weight, nrFrame);
+            }
+
+            else
+            {
+                MessageBox.Show("Couldn't automatically find the right JSON file:\n action_" + Path.GetFileNameWithoutExtension(openedVideoPath) + ".json \n \n Please select it manually.", "Warning");
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    json = File.ReadAllText(ofd.FileName);
+                    annotationFileName.Text = ofd.SafeFileName;
+                    processJson(json, semilabeled, x, y, height, weight, nrFrame);
+                }
+            }
         }
 
         private void pictureBox1_Click(object sender, MouseEventArgs e)
@@ -1157,7 +1266,8 @@ namespace VideoLabelTool
 
         private void checkBoxShowPose_CheckedChanged(object sender, EventArgs e)
         {
-        }        
+        }
+        
     }
 }
 

@@ -75,6 +75,8 @@ namespace VideoLabelTool
             this.otherActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cleaningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crouchingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crouchingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crouchingWhileWatchingPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fallingDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jumpingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,8 +122,7 @@ namespace VideoLabelTool
             this.bntPause = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.crouchingWhileEatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crouchingWhileWatchingPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonPredict = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -488,84 +489,98 @@ namespace VideoLabelTool
             // cleaningToolStripMenuItem
             // 
             this.cleaningToolStripMenuItem.Name = "cleaningToolStripMenuItem";
-            this.cleaningToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.cleaningToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.cleaningToolStripMenuItem.Text = "Cleaning";
             this.cleaningToolStripMenuItem.Click += new System.EventHandler(this.cleaningToolStripMenuItem_Click);
             // 
             // crouchingToolStripMenuItem
             // 
             this.crouchingToolStripMenuItem.Name = "crouchingToolStripMenuItem";
-            this.crouchingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.crouchingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.crouchingToolStripMenuItem.Text = "Crouching";
             this.crouchingToolStripMenuItem.Click += new System.EventHandler(this.crouchingToolStripMenuItem_Click);
+            // 
+            // crouchingWhileEatingToolStripMenuItem
+            // 
+            this.crouchingWhileEatingToolStripMenuItem.Name = "crouchingWhileEatingToolStripMenuItem";
+            this.crouchingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.crouchingWhileEatingToolStripMenuItem.Text = "CrouchingWhileEating";
+            this.crouchingWhileEatingToolStripMenuItem.Click += new System.EventHandler(this.crouchingWhileEatingToolStripMenuItem_Click);
+            // 
+            // crouchingWhileWatchingPhoneToolStripMenuItem
+            // 
+            this.crouchingWhileWatchingPhoneToolStripMenuItem.Name = "crouchingWhileWatchingPhoneToolStripMenuItem";
+            this.crouchingWhileWatchingPhoneToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.crouchingWhileWatchingPhoneToolStripMenuItem.Text = "CrouchingWhileWatchingPhone";
+            this.crouchingWhileWatchingPhoneToolStripMenuItem.Click += new System.EventHandler(this.crouchingWhileWatchingPhoneToolStripMenuItem_Click);
             // 
             // fallingDownToolStripMenuItem
             // 
             this.fallingDownToolStripMenuItem.Name = "fallingDownToolStripMenuItem";
-            this.fallingDownToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.fallingDownToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.fallingDownToolStripMenuItem.Text = "FallingDown";
             this.fallingDownToolStripMenuItem.Click += new System.EventHandler(this.fallingDownToolStripMenuItem_Click);
             // 
             // fightingToolStripMenuItem
             // 
             this.fightingToolStripMenuItem.Name = "fightingToolStripMenuItem";
-            this.fightingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.fightingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.fightingToolStripMenuItem.Text = "Fighting";
             this.fightingToolStripMenuItem.Click += new System.EventHandler(this.fightingToolStripMenuItem_Click);
             // 
             // jumpingToolStripMenuItem
             // 
             this.jumpingToolStripMenuItem.Name = "jumpingToolStripMenuItem";
-            this.jumpingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.jumpingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.jumpingToolStripMenuItem.Text = "Jumping";
             this.jumpingToolStripMenuItem.Click += new System.EventHandler(this.jumpingToolStripMenuItem_Click);
             // 
             // kickingToolStripMenuItem
             // 
             this.kickingToolStripMenuItem.Name = "kickingToolStripMenuItem";
-            this.kickingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.kickingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.kickingToolStripMenuItem.Text = "Kicking";
             this.kickingToolStripMenuItem.Click += new System.EventHandler(this.kickingToolStripMenuItem_Click);
             // 
             // layingToolStripMenuItem
             // 
             this.layingToolStripMenuItem.Name = "layingToolStripMenuItem";
-            this.layingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.layingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.layingToolStripMenuItem.Text = "Laying";
             this.layingToolStripMenuItem.Click += new System.EventHandler(this.layingToolStripMenuItem_Click);
             // 
             // ridingToolStripMenuItem
             // 
             this.ridingToolStripMenuItem.Name = "ridingToolStripMenuItem";
-            this.ridingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.ridingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.ridingToolStripMenuItem.Text = "Riding";
             this.ridingToolStripMenuItem.Click += new System.EventHandler(this.ridingToolStripMenuItem_Click);
             // 
             // runningToolStripMenuItem
             // 
             this.runningToolStripMenuItem.Name = "runningToolStripMenuItem";
-            this.runningToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.runningToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.runningToolStripMenuItem.Text = "Running";
             this.runningToolStripMenuItem.Click += new System.EventHandler(this.runningToolStripMenuItem_Click);
             // 
             // scooterToolStripMenuItem
             // 
             this.scooterToolStripMenuItem.Name = "scooterToolStripMenuItem";
-            this.scooterToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.scooterToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.scooterToolStripMenuItem.Text = "Scooter";
             this.scooterToolStripMenuItem.Click += new System.EventHandler(this.scooterToolStripMenuItem_Click);
             // 
             // throwingTrashToolStripMenuItem
             // 
             this.throwingTrashToolStripMenuItem.Name = "throwingTrashToolStripMenuItem";
-            this.throwingTrashToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.throwingTrashToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.throwingTrashToolStripMenuItem.Text = "ThrowingSomething";
             this.throwingTrashToolStripMenuItem.Click += new System.EventHandler(this.throwingTrashToolStripMenuItem_Click);
             // 
             // throwingSomethingToolStripMenuItem
             // 
             this.throwingSomethingToolStripMenuItem.Name = "throwingSomethingToolStripMenuItem";
-            this.throwingSomethingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.throwingSomethingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.throwingSomethingToolStripMenuItem.Text = "ThrowingTrash";
             this.throwingSomethingToolStripMenuItem.Click += new System.EventHandler(this.throwingSomethingToolStripMenuItem_Click);
             // 
@@ -585,6 +600,7 @@ namespace VideoLabelTool
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonPredict);
             this.splitContainer1.Panel1.Controls.Add(this.buttonEva);
             this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxShowPose);
@@ -979,19 +995,16 @@ namespace VideoLabelTool
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Click);
             // 
-            // crouchingWhileEatingToolStripMenuItem
+            // buttonPredict
             // 
-            this.crouchingWhileEatingToolStripMenuItem.Name = "crouchingWhileEatingToolStripMenuItem";
-            this.crouchingWhileEatingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.crouchingWhileEatingToolStripMenuItem.Text = "CrouchingWhileEating";
-            this.crouchingWhileEatingToolStripMenuItem.Click += new System.EventHandler(this.crouchingWhileEatingToolStripMenuItem_Click);
-            // 
-            // crouchingWhileWatchingPhoneToolStripMenuItem
-            // 
-            this.crouchingWhileWatchingPhoneToolStripMenuItem.Name = "crouchingWhileWatchingPhoneToolStripMenuItem";
-            this.crouchingWhileWatchingPhoneToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
-            this.crouchingWhileWatchingPhoneToolStripMenuItem.Text = "CrouchingWhileWatchingPhone";
-            this.crouchingWhileWatchingPhoneToolStripMenuItem.Click += new System.EventHandler(this.crouchingWhileWatchingPhoneToolStripMenuItem_Click);
+            this.buttonPredict.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPredict.Location = new System.Drawing.Point(459, 108);
+            this.buttonPredict.Name = "buttonPredict";
+            this.buttonPredict.Size = new System.Drawing.Size(75, 25);
+            this.buttonPredict.TabIndex = 30;
+            this.buttonPredict.Text = "Predict";
+            this.buttonPredict.UseVisualStyleBackColor = true;
+            this.buttonPredict.Click += new System.EventHandler(this.buttonPredict_Click);
             // 
             // FormFrameCapture
             // 
@@ -1114,6 +1127,7 @@ namespace VideoLabelTool
         private ToolStripMenuItem walkingWhileTalkingTogetherToolStripMenuItem;
         private ToolStripMenuItem crouchingWhileEatingToolStripMenuItem;
         private ToolStripMenuItem crouchingWhileWatchingPhoneToolStripMenuItem;
+        private Button buttonPredict;
     }
 }
 
