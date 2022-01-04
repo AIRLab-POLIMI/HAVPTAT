@@ -54,6 +54,9 @@ namespace VideoLabelTool
         List<List<string>> listPredict;
 
         Font myFont = new Font("Arial", 12, FontStyle.Bold);
+        Font serviceDecisionFont = new Font("Arial", 10);        
+        Font needServiceFont = new Font("Arial", 14, FontStyle.Underline);
+        
         const string message = "You have already labeled this person";
         const string caption = "Warning";
 
@@ -165,6 +168,9 @@ namespace VideoLabelTool
                 string word;
                 int currentPersonID;
                 Pen myPen;
+                string predictRes, decision = "";
+                int decisionNum = -1;
+
                 if (listRec != null && currentFrameNum < TotalFrame)
                 {
                     foreach (Rectangle ret in listRec[currentFrameNum])
@@ -182,42 +188,90 @@ namespace VideoLabelTool
                         word += listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
 
                         word += '\n';
-                        if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null && listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null)
+
+                        if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null 
+                            && listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null)
                         {
+                            // Only if GT == Predict, decide whether to give service
                             if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] == listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)])
                             {
-                                word += 'Y';
-                                //e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                                e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                                
+                                predictRes = listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                                switch (predictRes)
+                                {
+                                    case "sitting":
+                                    case "sittingWhileHoldingBabyInArms":
+                                    case "standing":
+                                    case "standingWhileHoldingBabyInArms":
+                                    case "standingWhileHoldingCart":
+                                    case "standingWhileHoldingStroller":
+                                    case "standingWhileLookingAtShops":
+                                    case "walkingWhileHoldingBabyInArms":
+                                    case "walkingWhileHoldingCart":
+                                    case "walkingWhileHoldingStroller":
+                                    case "walkingWhileLookingAtShops":
+                                        decision = "\n\n\nNEED SERVICE";
+                                        decisionNum = 2;
+                                        break;
+
+                                    case "crouching":
+                                    case "laying":
+                                    case "riding":
+                                    case "walking":
+                                    case "walkingTogether":
+                                        decision = "\n\n\nMAYBE NOT NEED SERVICE";
+                                        decisionNum = 1;
+                                        break;
+
+                                    case "cleaning":
+                                    case "jumping":
+                                    case "running":
+                                    case "scooter":
+                                    case "sittingTogether":
+                                    case "sittingWhileCalling":
+                                    case "sittingWhileDrinking":
+                                    case "sittingWhileEating":
+                                    case "sittingWhileTalkingTogether":
+                                    case "sittingWhileWatchingPhone":
+                                    case "standingTogether":
+                                    case "standingWhileCalling":
+                                    case "standingWhileDrinking":
+                                    case "standingWhileEating":
+                                    case "standingWhileTalkingTogether":
+                                    case "standingWhileWatchingPhone":
+                                    case "walkingWhileCalling":
+                                    case "walkingWhileDrinking":
+                                    case "walkingWhileEating":
+                                    case "walkingWhileTalkingTogether":
+                                    case "walkingWhileWatchingPhone":
+                                        decision = "\n\n\nNOT DISTURB";
+                                        decisionNum = 0;
+                                        break;
+                                }
+                                if (decisionNum == 2)
+                                    e.Graphics.DrawString(decision, needServiceFont, Brushes.LightCyan, new Point(ret.X, ret.Y));
+                                else if (decisionNum == 1)
+                                    e.Graphics.DrawString(decision, serviceDecisionFont,Brushes.Cyan, new Point(ret.X, ret.Y));
+                                else if (decisionNum == 0)
+                                    e.Graphics.DrawString(decision, serviceDecisionFont, Brushes.White, new Point(ret.X, ret.Y));
                             }
+
+                            // GT != Predict result
                             else
                             {
-                                word += 'N';
-                                //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                                e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
                             }
-                        }
-
-                        if (word[word.Length - 1] == 'Y')
-                        {
-                            e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
-                        }
-                        else if (word[word.Length - 1] == 'N')
-                        {
-                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
-                        }
+                        }                       
+                        // don't have a prediction result                        
                         else
                         {
                             e.Graphics.DrawString(word, myFont, Brushes.Yellow, new Point(ret.X, ret.Y));
-                        }
+                        }                        
 
-                            // Version: string color is Red
-                            //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
-
-                            // Version: string color is the same with bounding box
-                            //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
-
-                            // Hide/Show Complete Human Pose
-                            if (checkBoxShowPose.Checked == true)
-                            plotPose(e, myPen, listFrames, currentFrameNum, ret);                        
+                        // Hide/Show Complete Human Pose
+                        if (checkBoxShowPose.Checked == true)
+                        plotPose(e, myPen, listFrames, currentFrameNum, ret);                        
                     }
                 }
                 if (listRec != null && currentFrameNum == TotalFrame)
@@ -238,38 +292,86 @@ namespace VideoLabelTool
                         word += listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)];
 
                         word += '\n';
-                        if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null && listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null)
+                       
+                        if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null
+                            && listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null)
                         {
-                            if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] == listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)])
+                            // Only if GT == Predict, decide whether to give service
+                            if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] == listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)])
                             {
-                                word += 'Y';
-                                //e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+                                e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
+
+                                predictRes = listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                                switch (predictRes)
+                                {
+                                    case "sitting":
+                                    case "sittingWhileHoldingBabyInArms":
+                                    case "standing":
+                                    case "standingWhileHoldingBabyInArms":
+                                    case "standingWhileHoldingCart":
+                                    case "standingWhileHoldingStroller":
+                                    case "standingWhileLookingAtShops":
+                                    case "walkingWhileHoldingBabyInArms":
+                                    case "walkingWhileHoldingCart":
+                                    case "walkingWhileHoldingStroller":
+                                    case "walkingWhileLookingAtShops":
+                                        decision = "\n\n\nNEED SERVICE";
+                                        decisionNum = 2;
+                                        break;
+
+                                    case "crouching":
+                                    case "laying":
+                                    case "riding":
+                                    case "walking":
+                                    case "walkingTogether":
+                                        decision = "\n\n\nMAYBE NOT NEED SERVICE";
+                                        decisionNum = 1;
+                                        break;
+
+                                    case "cleaning":
+                                    case "jumping":
+                                    case "running":
+                                    case "scooter":
+                                    case "sittingTogether":
+                                    case "sittingWhileCalling":
+                                    case "sittingWhileDrinking":
+                                    case "sittingWhileEating":
+                                    case "sittingWhileTalkingTogether":
+                                    case "sittingWhileWatchingPhone":
+                                    case "standingTogether":
+                                    case "standingWhileCalling":
+                                    case "standingWhileDrinking":
+                                    case "standingWhileEating":
+                                    case "standingWhileTalkingTogether":
+                                    case "standingWhileWatchingPhone":
+                                    case "walkingWhileCalling":
+                                    case "walkingWhileDrinking":
+                                    case "walkingWhileEating":
+                                    case "walkingWhileTalkingTogether":
+                                    case "walkingWhileWatchingPhone":
+                                        decision = "\n\n\nNOT DISTURB";
+                                        decisionNum = 0;
+                                        break;
+                                }
+                                if (decisionNum == 2)
+                                    e.Graphics.DrawString(decision, needServiceFont, Brushes.LightCyan, new Point(ret.X, ret.Y));
+                                else if (decisionNum == 1)
+                                    e.Graphics.DrawString(decision, serviceDecisionFont, Brushes.Cyan, new Point(ret.X, ret.Y));
+                                else if (decisionNum == 0)
+                                    e.Graphics.DrawString(decision, serviceDecisionFont, Brushes.White, new Point(ret.X, ret.Y));
                             }
+
+                            // GT != Predict result
                             else
                             {
-                                word += 'N';
-                                //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
+                                e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
                             }
                         }
-
-                        if (word[word.Length - 1] == 'Y')
-                        {
-                            e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
-                        }
-                        else if (word[word.Length - 1] == 'N')
-                        {
-                            e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
-                        }
+                        // don't have a prediction result                        
                         else
                         {
                             e.Graphics.DrawString(word, myFont, Brushes.Yellow, new Point(ret.X, ret.Y));
                         }
-
-                        // Version: string color is Red
-                        //e.Graphics.DrawString(word, myFont, Brushes.Red, new Point(ret.X, ret.Y));
-
-                        // Version: string color is the same with bounding box
-                        //e.Graphics.DrawString(word, myFont, new SolidBrush(a.pen.Color), new Point(ret.X, ret.Y));
 
                         // Hide/Show Complete Human Pose
                         if (checkBoxShowPose.Checked == true)
