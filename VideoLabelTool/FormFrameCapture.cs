@@ -297,7 +297,7 @@ namespace VideoLabelTool
                             && listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null)
                         {
                             // Only if GT == Predict, decide whether to give service
-                            if (listAction[currentFrameNum][listRec[currentFrameNum - 1].IndexOf(ret)] == listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)])
+                            if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] == listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)])
                             {
                                 e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
 
