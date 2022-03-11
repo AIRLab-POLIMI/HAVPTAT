@@ -89,7 +89,7 @@ namespace VideoLabelTool
             InitializeComponent();
             this.bntNextFrame.Enabled = false;
             this.bntPrevFrame.Enabled = false;
-            this.Text = "HAVTAT";
+            this.Text = "HAVPTAT";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -171,7 +171,7 @@ namespace VideoLabelTool
                 string predictRes, decision = "";
                 int decisionNum = -1;
 
-                if (listRec != null && currentFrameNum < TotalFrame)
+                if (listRec != null && currentFrameNum < TotalFrame - 1)
                 {
                     foreach (Rectangle ret in listRec[currentFrameNum])
                     {
@@ -293,15 +293,15 @@ namespace VideoLabelTool
 
                         word += '\n';
                        
-                        if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null
-                            && listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] != null)
+                        if (listAction[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null
+                            && listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)] != null)
                         {
                             // Only if GT == Predict, decide whether to give service
-                            if (listAction[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)] == listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)])
+                            if (listAction[currentFrameNum][listRec[currentFrameNum - 1].IndexOf(ret)] == listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)])
                             {
                                 e.Graphics.DrawString(word, myFont, Brushes.LimeGreen, new Point(ret.X, ret.Y));
 
-                                predictRes = listPredict[currentFrameNum][listRec[currentFrameNum].IndexOf(ret)];
+                                predictRes = listPredict[currentFrameNum - 1][listRec[currentFrameNum - 1].IndexOf(ret)];
                                 switch (predictRes)
                                 {
                                     case "sitting":
@@ -777,6 +777,7 @@ namespace VideoLabelTool
             listAction = new List<List<String>>();
             listPersonColor = new List<PersonColor>();
             listKeypoints = new List<List<Keypoints>>();
+            listPredict = new List<List<String>>();
             int x = -1;
             int y = -1;
             int weight = -1;
