@@ -99,7 +99,7 @@ You can skip the next section `Build from source` if you don't want to build the
 
 
 ## Getting started
-TODO
+
 *We provide a demo video on [YouTube](https://www.youtube.com/channel/UCsyySKrzEMsRFsWW1Oz-6aA/) showing how to use HAVPTAT.*
 
 Then simply run `VideoLabelTool.exe` and the application will open.
