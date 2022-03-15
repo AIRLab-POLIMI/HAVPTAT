@@ -133,7 +133,7 @@ namespace VideoLabelTool
 
 
         private void drawPose(PaintEventArgs e, Pen pen, List<FrameObj> listFrames, int frameNum, int personNum, int pointA, int pointB)
-        {            
+        {                    
             if (listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].visibility != 0 && listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].visibility != 0)
                 e.Graphics.DrawLine(pen, new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointA].y), new PointF(listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].x, listKeypoints[listFrames[frameNum].frame - 1][personNum].pose[pointB].y));
         }
@@ -374,8 +374,8 @@ namespace VideoLabelTool
                         }
 
                         // Hide/Show Complete Human Pose
-                        if (checkBoxShowPose.Checked == true)
-                            plotPose(e, myPen, listFrames, currentFrameNum, ret);
+                        if (checkBoxShowPose.Checked == true)                            
+                            plotPose(e, myPen, listFrames, currentFrameNum - 1, ret);
                     }
                 }
             }
@@ -735,7 +735,8 @@ namespace VideoLabelTool
             lineByFrame = new List<List<string>>();
             lineByFrame.Add(new List<string>());
             listRec = new List<List<Rectangle>>();            
-            listAction = new List<List<String>>();            
+            listAction = new List<List<String>>();
+            listPredict = new List<List<String>>();
             listPersonColor = new List<PersonColor>();
             listKeypoints = new List<List<Keypoints>>();
             int x = -1;
