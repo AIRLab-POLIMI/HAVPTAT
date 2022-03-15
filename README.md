@@ -1,14 +1,15 @@
-﻿[![Anaconda-Server Badge](https://anaconda.org/bsteubing/activity-browser/badges/version.svg)](https://anaconda.org/bsteubing/activity-browser)
+﻿<!---
+[![Anaconda-Server Badge](https://anaconda.org/bsteubing/activity-browser/badges/version.svg)](https://anaconda.org/bsteubing/activity-browser)
 [![Anaconda-Server Badge](https://anaconda.org/bsteubing/activity-browser/badges/downloads.svg)](https://anaconda.org/bsteubing/activity-browser)
-![windows](https://raw.githubusercontent.com/vorillaz/devicons/master/!PNG/windows.png)
-
 [![Pull request tests](https://github.com/LCA-ActivityBrowser/activity-browser/actions/workflows/main.yaml/badge.svg)](https://github.com/LCA-ActivityBrowser/activity-browser/actions/workflows/main.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/LCA-ActivityBrowser/activity-browser/badge.svg?branch=master)](https://coveralls.io/github/LCA-ActivityBrowser/activity-browser?branch=master)
-
+-->
 
 # HAVPTAT: A Human Activity Video Pose Tracking Annotation Tool
 
-<img src="https://user-images.githubusercontent.com/33026150/54299977-47a9f680-45bc-11e9-81c6-b99462f84d0b.png" width=100%/>
+<img src=".\src\windows.png"/>
+
+<img src=".\src\feature.png" width=100%/>
 
 Human Activity Video Pose Tracking Annotation Tool (HAVPTAT) is a new semi-automatic annotation software.
 It can automatically detect and track multiple people and their pose in the video to improve work efficiency. HAVPTAT also provides the dynamical visualization of human pose, bounding boxes, person tracking ID, and possible prediction results together. The lightweight software can be launched in a few seconds and easily distributed. Its ease of use will allow non-professionals to get started quickly. This software will accelerate the development of human activity recognition models and service robots.
@@ -19,10 +20,10 @@ It can automatically detect and track multiple people and their pose in the vide
 -	Automatic human pose detection and tracking in video
 -	Lightweight and easy to use
 
-<!---
-## Youtube tutorials
-Watch our videos on [youtube](https://www.youtube.com/channel/UCsyySKrzEMsRFsWW1Oz-6aA/) to learn how to install and use the Activity Browser.
--->
+
+## Demo
+Watch our video on [YouTube](https://youtu.be/iTE9zTa5Bdk) to learn how to use HAVPTAT.
+
 
 ## Contents
 - [Prerequisites](#prerequisites)
